@@ -21,6 +21,10 @@ Suggests:
     covr (>= 3.2.1)
 RoxygenNote: 6.1.1
 Imports: 
-    kwb.utils (>= 0.4.0)
+    fs (>= 1.2.6),
+    kwb.utils (>= 0.4.0),
+    lubridate (>= 1.7.4),
+    magrittr (>= 1.5),
+    stringr (>= 1.4.0)
 Remotes:
     github::kwb-r/kwb.utils
