@@ -7,3 +7,5 @@
 ^appveyor\.yml$
 ^index\.Rmd$
 ^README\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
