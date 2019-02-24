@@ -5,7 +5,7 @@ package <- "kwb.dwd"
 pkg_dir <- file.path("~/HAUKE/R", package)
 
 # Create a default package structure
-withr::with_dir(pkg_dir, {kwb.pkgbuild::use_pkg_skeleton(package)})
+withr::with_dir(pkg_dir, kwb.pkgbuild::use_pkg_skeleton(package))
 
 #kwb.orcid::get_kwb_orcids()
 
@@ -14,7 +14,7 @@ author <- list(
   orcid = "0000-0001-9134-2871"
 )
 
-collapse = description <- list(
+description <- list(
   name = package,
   title = "Access Information from Deutscher Wetterdienst (DWD)",
   desc  = paste(
@@ -24,3 +24,9 @@ collapse = description <- list(
   )
 )
 
+withr::with_dir(pkg_dir, kwb.pkgbuild::use_pkg(
+  author,
+  description,
+  version = "0.0.0.9000",
+  stage = "experimental"
+))
