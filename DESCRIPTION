@@ -9,9 +9,15 @@ Authors@R:
              comment = structure("0000-0001-9134-2871", .Names = "ORCID")),
       person(given = "Kompetenzzentrum Wasser Berlin gGmbH (KWB)",
              role = "cph"))
-Description: This package provides functions to simplify
-    the access to the data provided online by the Deutscher Wetterdienst
-    (DWD).
+Description: This package provides functions to simplify the access to the data 
+    provided online by the Deutscher Wetterdienst (DWD, https://www.dwd.de).
+    It currently contains a function \code{get_radolan_urls} that returns the
+    internet addresses (Unified Resource Locators, URLs) to the zip files 
+    containing rain data from the RADOLAN system in daily or hourly resolution
+    (see https://www.dwd.de/DE/leistungen/radolan/radolan.html). The function
+    \code{download_radolan} helps you to download these files. But take care,
+    you should rescrict the time period as each file contains the data for 
+    all of Germany.
 License: MIT + file LICENSE
 URL: https://github.com/KWB-R/kwb.dwd
 BugReports: https://github.com/KWB-R/kwb.dwd/issues
