@@ -1,0 +1,21 @@
+Package: kwb.dwd
+Title: Access Information from Deutscher Wetterdienst (DWD)
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Hauke",
+             family = "Sonnenberg",
+             role = c("aut", "cre"),
+             email = "hauke.sonnenberg@kompetenz-wasser.de",
+             comment = structure("0000-0001-9134-2871", .Names = "ORCID")),
+      person(given = "Kompetenzzentrum Wasser Berlin gGmbH (KWB)",
+             role = "cph"))
+Description: This package provides functions to simplify
+    the access to the data provided online by the Deutscher Wetterdienst
+    (DWD).
+License: MIT + file LICENSE
+URL: https://github.com/KWB-R/kwb.dwd
+BugReports: https://github.com/KWB-R/kwb.dwd/issues
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    covr
