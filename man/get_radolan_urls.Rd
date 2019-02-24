@@ -4,23 +4,22 @@
 \alias{get_radolan_urls}
 \title{Get URLs to Available Radolan Files on DWD Server}
 \usage{
-get_radolan_urls(date_start_daily = "2006-10-01",
-  date_start_hourly = "2005-06-01",
-  date_end_daily = lubridate::rollback(Sys.Date(), roll_to_first = TRUE),
-  date_end_hourly = date_end_daily)
+get_radolan_urls(start_daily = "2006-10", start_hourly = "2005-06",
+  end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(),
+  roll_to_first = TRUE)), end_hourly = end_daily)
 }
 \arguments{
-\item{date_start_daily}{date string (yyyy-mm-dd) of first day of daily
-records. Default: "2006-10-01"}
+\item{start_daily}{month string (yyyy-mm) of first daily record.
+Default: "2006-10"}
 
-\item{date_start_hourly}{date string (yyyy-mm-dd) of first day of hourly
-records. Default: "2005-06-01"}
+\item{start_hourly}{month string (yyyy-mm) of first hourly record.
+Default: "2005-06"}
 
-\item{date_end_daily}{date string (yyyy-mm-dd) of last day of daily
-records. Defaults to the first day of the current month.}
+\item{end_daily}{month string (yyyy-mm) of last daily record. Defaults to the
+current month.}
 
-\item{date_end_hourly}{date string (yyyy-mm-dd) of last day of hourly
-records. Defaults to \code{date_end_daily}.}
+\item{end_hourly}{month string (yyyy-mm) of last hourly records. Defaults to
+\code{end_daily}.}
 }
 \value{
 list with "daily_historical_urls" and "hourly_historical_urls"

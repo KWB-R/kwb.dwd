@@ -4,7 +4,7 @@
 \alias{download_radolan}
 \title{Download Radolan Files on DWD Server}
 \usage{
-download_radolan(resolution = "daily", export_dir = "data")
+download_radolan(resolution = "daily", export_dir = "data", ...)
 }
 \arguments{
 \item{resolution}{temporal resolution, one of "daily" or "hourly" (default:
@@ -12,6 +12,8 @@ download_radolan(resolution = "daily", export_dir = "data")
 
 \item{export_dir}{export directory (default: "data" in current working
 directory)}
+
+\item{\dots}{arguments passed to \code{get_radolan_urls}}
 }
 \value{
 list with "daily_historical_urls" and "hourly_historical_urls"

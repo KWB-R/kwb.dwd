@@ -10,6 +10,14 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
   x[safe_element(element, names(x), name)]
 }
 
+# month_sequence ---------------------------------------------------------------
+month_sequence <- function(start, end)
+{
+  to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
+
+  seq(to_date(start), to_date(end), by = 'months')
+}
+
 # safe_element -----------------------------------------------------------------
 safe_element <- function(element, elements, name = deparse(substitute(element)))
 {
