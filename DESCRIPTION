@@ -24,7 +24,9 @@ BugReports: https://github.com/KWB-R/kwb.dwd/issues
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    covr (>= 3.2.1)
+    covr (>= 3.2.1),
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.1
 Imports: 
     fs (>= 1.2.6),
@@ -34,3 +36,4 @@ Imports:
     stringr (>= 1.4.0)
 Remotes:
     github::kwb-r/kwb.utils
+VignetteBuilder: knitr

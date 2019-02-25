@@ -1,0 +1,66 @@
+---
+title: "Download RADOLAN Data"
+author: "Hauke Sonnenberg"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Download RADOLAN Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Install this package
+
+```{r}
+# If required, install the remotes package from CRAN
+# install.packages("remotes")
+
+# Download kwb.dwd from GitHub
+remotes::install_github("kwb-r/kwb.dwd")
+```
+
+## Download zipped RADOLAN files from DWD's FTP server
+
+```{r}
+# Set the working directory to the target directory
+old_wd <- setwd(file.path(kwb.utils::desktop(), "tmp"))
+
+# Define first and last month of data to be downloaded
+start <- "2018-07"
+end <- "2018-08"
+
+# Download corresponding RADOLAN files from DWD's FTP server
+kwb.dwd::download_radolan("daily", start_daily = start, end_daily = end)
+
+# Reset the working directory
+setwd(old_wd)
+```
+
+The output should look like this:
+
+```
+Download: 'daily' historical radolan data ... 
+Download: "daily, historical" and save to daily/data/historical/SF201807.tar.gz ... 
+trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201807.tar.gz'
+downloaded 132.2 MB
+
+ok. 
+Download: "daily, historical" and save to daily/data/historical/SF201808.tar.gz ... 
+trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201808.tar.gz'
+downloaded 173.5 MB
+
+ok. 
+ok. 
+ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201807.tar.gz 
+                                                                                       0 
+ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201808.tar.gz 
+                                                                                       0 
+```
