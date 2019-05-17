@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples
-#' Get all expected URLs
+#' # Get all expected URLs
 #' urls <- kwb.dwd::get_radolan_urls()
 #'
 #' # Show the first URLs of each category (daily, hourly)

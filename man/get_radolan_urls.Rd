@@ -2,7 +2,7 @@
 % Please edit documentation in R/dwd_radolan.R
 \name{get_radolan_urls}
 \alias{get_radolan_urls}
-\title{Get URLs to Available Radolan Files on DWD Server}
+\title{Get URLs to Available Radolan Files}
 \usage{
 get_radolan_urls(start_daily = "2006-10", start_hourly = "2005-06",
   end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(),
@@ -25,5 +25,26 @@ current month.}
 list with "daily_historical_urls" and "hourly_historical_urls"
 }
 \description{
-Get URLs to Available Radolan Files on DWD Server
+Get URLs to available radolan files on the DWD FTP server below this base
+address: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany}. The user can
+choose between daily records and hourly records that are located at different
+paths on the server. The paths to the files are not read from the FTP server
+but generated, given the knowledge of where the files should reside and how
+they are expected to be named.
+}
+\examples{
+# Get all expected URLs
+urls <- kwb.dwd::get_radolan_urls()
+
+# Show the first URLs of each category (daily, hourly)
+head(urls$daily_historical_urls)
+head(urls$hourly_historical_urls)
+
+# Set the start and end months
+urls <- kwb.dwd::get_radolan_urls(
+  start_daily = "2017-01", end_daily = "2017-03"
+)
+
+urls$daily_historical_urls
+
 }
