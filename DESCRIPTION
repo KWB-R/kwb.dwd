@@ -33,6 +33,7 @@ Imports:
     kwb.utils (>= 0.4.0),
     lubridate (>= 1.7.4),
     magrittr (>= 1.5),
+    raster (>= 2.8),
     stringr (>= 1.4.0)
 Remotes:
     github::kwb-r/kwb.utils

@@ -3,6 +3,7 @@
 export(download_radolan)
 export(get_dwd_urls_metadata)
 export(get_radolan_urls)
+export(read_relevant_years_radolan)
 importFrom(fs,dir_create)
 importFrom(kwb.utils,catAndRun)
 importFrom(kwb.utils,resolve)
