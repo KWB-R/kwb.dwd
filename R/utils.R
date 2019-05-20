@@ -4,6 +4,14 @@ clean_stop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# date_in_bathing_season -------------------------------------------------------
+date_in_bathing_season <- function(x)
+{
+  months <- lubridate::month(x)
+
+  months >= 5 & months < 10
+}
+
 # get_element_or_stop ----------------------------------------------------------
 get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 {
