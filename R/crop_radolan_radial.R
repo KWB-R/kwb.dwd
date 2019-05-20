@@ -7,9 +7,14 @@
 #' @param longitude longitude
 #' @param latitude latitude
 #' @param radius distance from point (latitude/longitude) in km
+#' @param as_data_frame if \code{TRUE}, a data frame with columns
+#'   \code{SAMPLE_DATE} and \code{rain_mean} is returned, otherwise the raster
+#'   object returned by \code{\link[raster]{crop}}
 #' @export
 #'
-crop_radolan_radial <- function(radolan, longitude, latitude, radius = 10)
+crop_radolan_radial <- function(
+  radolan, longitude, latitude, radius = 10, as_data_frame = TRUE
+)
 {
   coord <- data.frame(lat = latitude, lon = longitude)
 
@@ -44,6 +49,11 @@ crop_radolan_radial <- function(radolan, longitude, latitude, radius = 10)
 
   # Extract rain data for buffer area from radolan raster stack
   crop_location <- raster::crop(radolan, location_buffer)
+
+  if (! as_data_frame) {
+
+    return(crop_location)
+  }
 
   # Calculate average rainfall of cropped raster
   x <- raster::cellStats(crop_location, mean) / 10
