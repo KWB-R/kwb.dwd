@@ -13,7 +13,9 @@ download_radolan(resolution = "daily", export_dir = "data", ...)
 \item{export_dir}{export directory (default: "data" in current working
 directory)}
 
-\item{\dots}{arguments passed to \code{get_radolan_urls}}
+\item{\dots}{arguments passed to \code{\link{get_radolan_urls}}, such as
+\code{start_daily}, \code{start_hourly}, \code{end_daily},
+\code{end_hourly}}
 }
 \value{
 list with "daily_historical_urls" and "hourly_historical_urls"

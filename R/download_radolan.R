@@ -3,7 +3,9 @@
 #'   "daily")
 #' @param export_dir export directory (default: "data" in current working
 #'   directory)
-#' @param \dots arguments passed to \code{get_radolan_urls}
+#' @param \dots arguments passed to \code{\link{get_radolan_urls}}, such as
+#'   \code{start_daily}, \code{start_hourly}, \code{end_daily},
+#'   \code{end_hourly}
 #' @importFrom magrittr %>%
 #' @importFrom kwb.utils catAndRun
 #' @importFrom fs dir_create
@@ -22,7 +24,7 @@ download_radolan <- function(resolution = "daily", export_dir = "data", ...)
   # Define helper function
   download_historical <- function(url, resolution) {
 
-    hist_dir <- sprintf("%s/%s/historical", resolution, export_dir)
+    hist_dir <- sprintf("%s/%s/historical", export_dir, resolution)
 
     fs::dir_create(hist_dir, recursive = TRUE)
 
@@ -39,15 +41,16 @@ download_radolan <- function(resolution = "daily", export_dir = "data", ...)
     )
   }
 
+  arguments <- list(...)
+  #arguments <- list()
+
+  urls <- do.call(get_radolan_urls, arguments)
+
+  urls_historical <- urls[[paste0(resolution, "_historical_urls")]]
+
   kwb.utils::catAndRun(
     messageText = sprintf("Download: '%s' historical radolan data", resolution),
     newLine = 3,
-    expr = {
-      sapply(
-        X = get_radolan_urls(...)[[paste0(resolution, "_historical_urls")]],
-        FUN = download_historical,
-        resolution = resolution
-      )
-    }
+    expr = sapply(urls_historical, download_historical, resolution = resolution)
   )
 }
