@@ -7,6 +7,7 @@
 #'   and extent of the raster object are set to the Radolan specific values,
 #'   returned by \code{kwb.dwd:::get_radolan_projection_string()} and
 #'   \code{get_radolan_extension()}, respectively.
+#' @export
 #'
 read_binary_radolan_file <- function(path, set_projection_and_extent = TRUE)
 {
