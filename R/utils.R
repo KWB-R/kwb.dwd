@@ -23,7 +23,7 @@ get_date_time_from_bin_filename <- function(x)
   if (any(is_na)) {
     warning(
       "For ", sum(is_na), " files, the date and time could not be determined: ",
-      kwb.utils::stringList(head(x[is_na])), call. = FALSE
+      kwb.utils::stringList(utils::head(x[is_na])), call. = FALSE
     )
   }
 
