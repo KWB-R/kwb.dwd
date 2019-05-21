@@ -4,7 +4,8 @@
 \alias{crop_radolan_radial}
 \title{Crop Radolan Data}
 \usage{
-crop_radolan_radial(radolan, longitude, latitude, radius = 10)
+crop_radolan_radial(radolan, longitude, latitude, radius = 10,
+  as_data_frame = TRUE)
 }
 \arguments{
 \item{radolan}{radolan data as returned by
@@ -15,6 +16,10 @@ crop_radolan_radial(radolan, longitude, latitude, radius = 10)
 \item{latitude}{latitude}
 
 \item{radius}{distance from point (latitude/longitude) in km}
+
+\item{as_data_frame}{if \code{TRUE}, a data frame with columns
+\code{SAMPLE_DATE} and \code{rain_mean} is returned, otherwise the raster
+object returned by \code{\link[raster]{crop}}}
 }
 \description{
 Crop Radolan Data
