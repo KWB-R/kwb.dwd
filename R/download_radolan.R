@@ -26,7 +26,7 @@ download_radolan <- function(resolution = "daily", export_dir = "data", ...)
 
     hist_dir <- sprintf("%s/%s/historical", export_dir, resolution)
 
-    fs::dir_create(hist_dir, recursive = TRUE)
+    fs::dir_create(hist_dir, recurse = TRUE)
 
     export_path <- sprintf("%s/%s", hist_dir, basename(url))
 
