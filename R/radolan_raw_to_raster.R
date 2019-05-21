@@ -1,5 +1,5 @@
 # radolan_raw_to_raster --------------------------------------------------------
-radolan_raw_to_raster <- function(rbi, version = 1)
+radolan_raw_to_raster <- function(rbi, version = 3)
 {
   stopifnot(version %in% 1:3)
 
