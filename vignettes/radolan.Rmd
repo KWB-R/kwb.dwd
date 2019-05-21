@@ -23,44 +23,67 @@ knitr::opts_chunk$set(
 # If required, install the remotes package from CRAN
 # install.packages("remotes")
 
-# Download kwb.dwd from GitHub
+# Install kwb.dwd from GitHub
 remotes::install_github("kwb-r/kwb.dwd")
+
+# Install the current development version
+remotes::install_github("kwb-r/kwb.dwd@dev")
 ```
 
 ## Download zipped RADOLAN files from DWD's FTP server
 
 ```{r}
-# Set the working directory to the target directory
-old_wd <- setwd(file.path(kwb.utils::desktop(), "tmp"))
-
-# Define first and last month of data to be downloaded
-start <- "2018-07"
-end <- "2018-08"
+# Set the target directory
+export_dir <- "~/Downloads/radolan"
 
 # Download corresponding RADOLAN files from DWD's FTP server
-kwb.dwd::download_radolan("daily", start_daily = start, end_daily = end)
-
-# Reset the working directory
-setwd(old_wd)
+kwb.dwd::download_radolan(
+  resolution = "daily",  
+  export_dir = export_dir, 
+  start_daily = "2018-07", 
+  end_daily = "2018-08"
+)
 ```
 
 The output should look like this:
 
 ```
 Download: 'daily' historical radolan data ... 
-Download: "daily, historical" and save to daily/data/historical/SF201807.tar.gz ... 
+Download: "daily, historical" and save to ~/Downloads/radolan/daily/historical/SF201807.tar.gz ... 
 trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201807.tar.gz'
-downloaded 132.2 MB
-
-ok. 
-Download: "daily, historical" and save to daily/data/historical/SF201808.tar.gz ... 
+Content type 'unknown' length 138580953 bytes (132.2 MB)
+==================================================
+ok. (1.82s) 
+Download: "daily, historical" and save to ~/Downloads/radolan/daily/historical/SF201808.tar.gz ... 
 trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201808.tar.gz'
-downloaded 173.5 MB
+Content type 'unknown' length 181877215 bytes (173.5 MB)
+==================================================
+ok. (2.43s) 
+ok. (4.26s) 
+```
 
-ok. 
-ok. 
-ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201807.tar.gz 
-                                                                                       0 
-ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201808.tar.gz 
-                                                                                       0 
+## Unzip the downloaded files
+
+```
+# Get the paths to the zipped files
+files <- dir(export_dir, "\\.tar\\.gz", recursive = TRUE, full.names = TRUE)
+
+# Unzip all files to the export directory
+lapply(files, untar, exdir = export_dir)
+```
+
+## Read the binary Radolan files
+
+```
+# Get the paths to all binary Radolan files in the export directory
+files_bin <- dir(export_dir, "---bin$", full.names = TRUE)
+
+# Read all Radolan files (raw format: vectors of integer values)
+contents_bin <- lapply(files_bin, function(file) kwb.utils::catAndRun(
+  paste("Reading", file),
+  kwb.dwd:::read_binary_radolan_file_raw(file)
+))
+
+# Convert Radolan raw data to raster objects
+raster_objects <- lapply(contents_bin, kwb.dwd:::radolan_raw_to_raster)
 ```
