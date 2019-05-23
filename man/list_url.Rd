@@ -4,7 +4,7 @@
 \alias{list_url}
 \title{List Files or Folders in a FTP Directory}
 \usage{
-list_url(url, recursive = FALSE, n_attempts = 3)
+list_url(url, recursive = FALSE, ...)
 }
 \arguments{
 \item{url}{URL to FTP server, including "ftp://"}
@@ -12,7 +12,8 @@ list_url(url, recursive = FALSE, n_attempts = 3)
 \item{recursive}{logical indicating whether to list files in all
 subdirectories (default: \code{FALSE})}
 
-\item{n_attempts}{number of attempts when trying to access an URL.}
+\item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
+\code{n_trials}, \code{timeout}, or \code{sleep_time}}
 }
 \description{
 List Files or Folders in a FTP Directory

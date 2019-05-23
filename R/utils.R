@@ -1,3 +1,27 @@
+# back -------------------------------------------------------------------------
+back <- function(n)
+{
+  repeated("\b", n)
+}
+
+# cat0 -------------------------------------------------------------------------
+cat0 <- function(...)
+{
+  cat(paste0(...))
+}
+
+# cat_progress -----------------------------------------------------------------
+cat_progress <- function(i, n, success = TRUE, chars = c(".", "x"))
+{
+  space_function <- function(n) repeated(" ", n)
+
+  if (i == 0) {
+    cat0("[", space_function(n), "]")
+  } else {
+    cat0(back(n - i + 2), chars[success + 1], space_function(n - i), "]")
+  }
+}
+
 # clean_stop -------------------------------------------------------------------
 clean_stop <- function(...)
 {
@@ -57,6 +81,12 @@ month_sequence <- function(start, end)
   to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
 
   seq(to_date(start), to_date(end), by = 'months')
+}
+
+# repeated ---------------------------------------------------------------------
+repeated <- function(x, n)
+{
+  paste(rep(x, n), collapse = "")
 }
 
 # safe_element -----------------------------------------------------------------
