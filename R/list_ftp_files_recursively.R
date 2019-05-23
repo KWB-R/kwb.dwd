@@ -9,7 +9,7 @@ list_ftp_files_recursively <- function(
     if (length(failed)) {
       merge_url_list(result)
     } else {
-      paste0(url, "/", sort(unlist(result)))
+      paste0(assert_trailing_slash(url), sort(unlist(result)))
     }
   ))
 

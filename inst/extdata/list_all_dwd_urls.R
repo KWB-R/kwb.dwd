@@ -3,34 +3,27 @@ if (FALSE)
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
-  #urls <- kwb.dwd::list_url(base_url, recursive = TRUE, n_attempts = 1)
-  #failed <- attr(urls, "failed")
+  system.time(result_urls <- kwb.dwd:::list_ftp_files_recursively(
+    base_url,
+    n_trials = 5,
+    sleep_between_trials = 0.1,
+    sleep_between_runs = 1
+  ))
 
-  result_urls <- kwb.dwd:::list_ftp_files_recursively(
-    base_url, n_trials = 5, sleep_between_trials = 0.1, sleep_between_runs = 1,
-    max_depth = 2
-  )
+  # User  System verstrichen
+  # 37.86   4.30      795.86
 
   subdir_matrix <- kwb.file:::to_subdir_matrix(result_urls)
 
   View(subdir_matrix)
+}
 
-  # Trying to read 6 failing URLs again...
-  # ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_13/historical/: ok.
-  # ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_16/historical/: ok.
-  # ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_16/recent/: ok.
-  # ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_18/historical/: ok.
-  # ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_18/recent/: ok.
-
-  url <- "ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_13/historical/"
-  kwb.dwd::list_url(url)
-  RCurl::getURL(url)
-
-  length(result_urls)
-
+# Save all URLs in a text file -------------------------------------------------
+if (FALSE)
+{
   file <- format(Sys.time(), format = "inst/extdata/urls_dwd_%Y%m%d_%H%M.txt")
 
-  getwd()
+  stopifnot(basename(getwd()) == "kwb.dwd")
 
   writeLines(result_urls, file)
 
@@ -49,4 +42,36 @@ if (FALSE)
   lapply(attr(urls, "failed"), kwb.dwd::list_url, recursive = TRUE)
 
   View(data.frame(url = urls))
+}
+
+# Provide all URLs as data in the package --------------------------------------
+if (FALSE)
+{
+  files <- dir("inst/extdata", "^urls_dwd", full.names = TRUE)
+
+  # Read all files
+  urls_list <- lapply(files, readLines)
+
+  # Are the URLs unsorted?
+  sapply(urls_list, is.unsorted)
+
+  a <- urls_list[[1]]
+  b <- urls_list[[2]]
+
+  head(a[!a %in% b])
+  head(b[!b %in% a])
+
+  # Select the URLs of one file only
+  urls <- urls_list[[2]]
+
+  urls[duplicated(urls)]
+
+  url_data <- kwb.utils::noFactorDataFrame(
+    path = dirname(urls),
+    file = basename(urls)
+  )
+
+  View(url_data)
+
+  tail(sort(table(url_data$file)))
 }

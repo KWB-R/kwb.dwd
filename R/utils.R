@@ -1,3 +1,11 @@
+# assert_trailing_slash --------------------------------------------------------
+assert_trailing_slash <- function(x)
+{
+  has_no_slash <- ! grepl("/$", x)
+
+  `[<-`(x, has_no_slash, paste0(x[has_no_slash], "/"))
+}
+
 # back -------------------------------------------------------------------------
 back <- function(n)
 {

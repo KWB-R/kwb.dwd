@@ -18,16 +18,14 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
   stopifnot(length(url) == 1)
 
   # Append slash if necessary
-  if (! grepl("/$", url)) {
-    url <- paste0(url, "/")
-  }
+  url <- assert_trailing_slash(url)
 
   # Get a response from the FTP server
   response <- try_to_get_url(url, ...)
   #response <- kwb.dwd:::try_to_get_url(url)
 
-  # Return NULL if the response is NULL (in case of an error) or if the
-  # response is empty
+  # Return empty character vector with attribute "failed" if the response is
+  # NULL (indicating that an error occurred when reading from the url)
   if (is.null(response)) {
     return(structure(character(), failed = url))
   }
@@ -40,16 +38,24 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
   # Convert response string to data frame
   info <- response_to_data_frame(response)
 
+  # Extract permission strings (to check for the directory flag "d")
   permissions <- kwb.utils::selectColumns(info, "permissions")
 
+  # Extract the file names
   files <- kwb.utils::selectColumns(info, "file")
 
+  # Which files represent directories?
   is_directory <- grepl("^d", permissions)
 
+  # Return the file list if no recursive listing is requested or if we are
+  # already at maximum depth
   if (! recursive || (! is.na(max_depth) && depth == max_depth)) {
-    return(files)
+
+    # Indicate directories with trailing slash
+    return(`[<-`(files, is_directory, paste0(files[is_directory], "/")))
   }
 
+  # If we arrive here, a recursive listing is requested
   if (any(is_directory)) {
 
     # URLs representing directories
@@ -66,9 +72,9 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
     )
 
     files_in_dirs <- unlist(lapply(seq_along(directories), function(i) {
-      files <- result[[i]]
-      if (length(files)) {
-        paste0(directories[i], "/", files)
+      files_in_dir <- result[[i]]
+      if (length(files_in_dir)) {
+        paste0(directories[i], "/", files_in_dir)
       }
     }))
 
@@ -80,7 +86,15 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
     failed <- NULL
   }
 
-  structure(sort(c(files[! is_directory], files_in_dirs)), failed = failed)
+  # Merge files at this level with files in subdirectories
+  all_files <- c(
+    files[! is_directory], # files at this level
+    files_in_dirs # files in subdirectories
+  )
+
+  # Return the sorted file list with attribute "failed" if any directory URL
+  # could not be accessed
+  structure(sort(all_files), failed = failed)
 }
 
 # try_to_get_url ---------------------------------------------------------------
