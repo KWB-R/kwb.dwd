@@ -21,6 +21,7 @@ list_url <- function(url, recursive = FALSE, ...)
 
   # Get a response from the FTP server
   response <- try_to_get_url(url, ...)
+  #response <- kwb.dwd:::try_to_get_url(url)
 
   # Return NULL if the response is NULL (in case of an error) or if the
   # response is empty
@@ -120,17 +121,17 @@ try_to_get_url <- function(url, n_trials = 3, timeout = NULL, sleep_time = 5)
 # response_to_data_frame -------------------------------------------------------
 response_to_data_frame <- function(response)
 {
-  # Template string for the info block with file's metadata
-  info_template <- "-rw-rw-rw-   1 32230    ftp-dwd    286493 Mar 12 15:05"
-
   # Split response at new line character into rows
-  rows <- strsplit(response, "\n")[[1]]
+  rows <- strsplit(response, "\r?\n")[[1]]
 
-  # Width of the info block in number of characters
-  info_width <- nchar(info_template)
+  # Widths of the info parts of the rows in number of characters
+  pattern <- "^(((\\S+)\\s+){8})"
+  info_list <- kwb.utils::subExpressionMatches(pattern, rows, select = 1)
+  info_widths <- nchar(unlist(lapply(info_list, "[[", 1)))
 
   # Read the info block into a data frame
-  text <- unlist(lapply(rows, substr, 1, info_width))
+  #text <- unlist(lapply(rows, substr, 1, info_width))
+  text <- unlist(lapply(seq_along(rows), function(i) substr(rows[i], 1, info_widths[i])))
   info <- utils::read.table(text = text, stringsAsFactors = FALSE)
 
   # Name the columns
@@ -139,8 +140,9 @@ response_to_data_frame <- function(response)
   )
 
   # Append the file names (keeping possible spaces!)
-  info$file <- unlist(lapply(rows, function(x) {
-    substr(x, info_width + 2, nchar(x))
+  info$file <- unlist(lapply(seq_along(rows), function(i) {
+    row <- rows[i]
+    substr(row, info_widths[i] + 1, nchar(row))
   }))
 
   # Return info data frame
