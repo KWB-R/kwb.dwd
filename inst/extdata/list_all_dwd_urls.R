@@ -3,6 +3,8 @@ if (FALSE)
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
+  kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/Unterstuetzungsdokumente/")
+
   system.time(result_urls <- kwb.dwd:::list_ftp_files_recursively(
     base_url,
     n_trials = 5,

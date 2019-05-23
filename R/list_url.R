@@ -24,15 +24,12 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
   response <- try_to_get_url(url, ...)
   #response <- kwb.dwd:::try_to_get_url(url)
 
-  # Return empty character vector with attribute "failed" if the response is
-  # NULL (indicating that an error occurred when reading from the url)
-  if (is.null(response)) {
-    return(structure(character(), failed = url))
-  }
-
-  # Return empty character vector if the response is the empty string
-  if (grepl("^\\s*$", response)) {
-    return(character())
+  # Return empty character vector if the response is NULL or equal to an empty
+  # string. A response of NULL indicates that an error occurred when reading
+  # from the url. In this case, the attribute "failed" is set to the URL that
+  # failed to be accessed.
+  if (is.null(response) || grepl("^\\s*$", response)) {
+    return(structure(character(), failed = if (is.null(response)) url))
   }
 
   # Convert response string to data frame
@@ -137,11 +134,9 @@ try_to_get_url <- function(url, n_trials = 3, timeout = NULL, sleep_time = 5)
 
   cat0(ifelse(success, " ok.\n", " failed.\n"))
 
-  if (! success) {
-    return(NULL)
-  }
-
-  response
+  if (success) {
+    response
+  } # else NULL implicitly
 }
 
 # response_to_data_frame -------------------------------------------------------
@@ -151,7 +146,8 @@ response_to_data_frame <- function(response)
   rows <- strsplit(response, "\r?\n")[[1]]
 
   # Widths of the info parts of the rows in number of characters
-  pattern <- "^(((\\S+)\\s+){8})"
+  #pattern <- "^(((\\S+)\\s+){8})"
+  pattern <- "^((([^ ]+) +){8})"
   info_list <- kwb.utils::subExpressionMatches(pattern, rows, select = 1)
   info_widths <- nchar(unlist(lapply(info_list, "[[", 1)))
 
