@@ -5,11 +5,14 @@
 #' @param url URL to FTP server, including "ftp://"
 #' @param recursive logical indicating whether to list files in all
 #'   subdirectories (default: \code{FALSE})
+#' @param max_depth maximum folder depth to consider when
+#'   \code{recursive = TRUE}
 #' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
 #'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
+#' @param depth for start depth when \code{recursive = TRUE}
 #' @export
 #'
-list_url <- function(url, recursive = FALSE, ...)
+list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
 {
   stopifnot(is.character(url))
   stopifnot(length(url) == 1)
@@ -25,18 +28,25 @@ list_url <- function(url, recursive = FALSE, ...)
 
   # Return NULL if the response is NULL (in case of an error) or if the
   # response is empty
-  if (is.null(response) || grepl("^\\s*$", response)) {
+  if (is.null(response)) {
     return(structure(character(), failed = url))
   }
 
+  # Return empty character vector if the response is the empty string
+  if (grepl("^\\s*$", response)) {
+    return(character())
+  }
+
+  # Convert response string to data frame
   info <- response_to_data_frame(response)
 
   permissions <- kwb.utils::selectColumns(info, "permissions")
+
   files <- kwb.utils::selectColumns(info, "file")
 
   is_directory <- grepl("^d", permissions)
 
-  if (! recursive) {
+  if (! recursive || (! is.na(max_depth) && depth == max_depth)) {
     return(files)
   }
 
@@ -50,7 +60,9 @@ list_url <- function(url, recursive = FALSE, ...)
       paste0(url, directories),
       list_url,
       recursive = recursive,
-      ...
+      ...,
+      depth = depth + 1,
+      max_depth = max_depth
     )
 
     files_in_dirs <- unlist(lapply(seq_along(directories), function(i) {
