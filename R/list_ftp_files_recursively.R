@@ -1,19 +1,29 @@
 # list_ftp_files_recursively ---------------------------------------------------
 list_ftp_files_recursively <- function(
-  url, n_trials = 3, sleep_between_trials = 5, sleep_between_runs = 10
+  url, n_trials = 3, sleep_between_trials = 5, sleep_between_runs = 10, ...
 )
 {
   result <- list()
+
+  on.exit(return(
+    if (length(failed)) {
+      merge_url_list(result)
+    } else {
+      paste0(url, "/", sort(unlist(result)))
+    }
+  ))
+
   failed <- url
 
   while (length(failed)) {
 
     url_list <- lapply(
       failed,
-      kwb.dwd::list_url,
+      list_url,
       recursive = TRUE,
       n_trials = n_trials,
-      sleep_time = sleep_between_trials
+      sleep_time = sleep_between_trials,
+      ...
     )
 
     urls <- merge_url_list(url_list)
@@ -26,13 +36,13 @@ list_ftp_files_recursively <- function(
       Sys.sleep(sleep_between_runs)
     }
   }
-
-  paste0(url, "/", sort(unlist(result)))
 }
 
 # merge_url_list ---------------------------------------------------------------
 merge_url_list <- function(url_list)
 {
-  failed <- unlist(lapply(url_list, attr, "failed"))
-  structure(unlist(url_list), failed = failed)
+  structure(
+    if (length(url_list)) unlist(url_list) else character(),
+    failed = unlist(lapply(url_list, attr, "failed"))
+  )
 }
