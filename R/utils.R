@@ -68,6 +68,13 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
   x[safe_element(element, names(x), name)]
 }
 
+# indicate_directories ---------------------------------------------------------
+indicate_directories <- function(x, is_directory)
+{
+  x[is_directory] <- assert_trailing_slash(x[is_directory])
+  x
+}
+
 # list_files_in_zip_files ------------------------------------------------------
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
