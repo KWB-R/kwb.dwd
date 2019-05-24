@@ -3,7 +3,7 @@ if (FALSE)
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
-  kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/Unterstuetzungsdokumente/")
+  x <- kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan")
 
   system.time(result_urls <- kwb.dwd:::list_ftp_files_recursively(
     base_url,
@@ -28,7 +28,11 @@ if (FALSE)
   stopifnot(basename(getwd()) == "kwb.dwd")
 
   writeLines(result_urls, file)
+}
 
+# ------------------------------------------------------------------------------
+if (FALSE)
+{
   urls_list
 
   url_hourly <- paste0(base_url, "/hourly")

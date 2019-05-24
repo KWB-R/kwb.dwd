@@ -44,44 +44,36 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
   # Which files represent directories?
   is_directory <- grepl("^d", permissions)
 
+  # Are we at maximum depth?
+  at_maximum_depth <- (! is.na(max_depth) && depth == max_depth)
+
   # Return the file list if no recursive listing is requested or if we are
-  # already at maximum depth
-  if (! recursive || (! is.na(max_depth) && depth == max_depth)) {
+  # already at maximum depth or if there are no directories
+  if (! recursive || at_maximum_depth || ! any(is_directory)) {
 
     # Indicate directories with trailing slash
-    return(`[<-`(files, is_directory, paste0(files[is_directory], "/")))
+    return(indicate_directories(files, is_directory))
   }
 
   # If we arrive here, a recursive listing is requested
-  if (any(is_directory)) {
+  files_in_dirs <- if (any(is_directory)) {
 
     # URLs representing directories
     directories <- files[is_directory]
 
     # List all directories
-    result <- lapply(
-      paste0(url, directories),
-      list_url,
+    url_lists <- lapply(
+      X = paste0(url, directories),
+      FUN = list_url,
       recursive = recursive,
       ...,
       depth = depth + 1,
       max_depth = max_depth
     )
 
-    files_in_dirs <- unlist(lapply(seq_along(directories), function(i) {
-      files_in_dir <- result[[i]]
-      if (length(files_in_dir)) {
-        paste0(directories[i], "/", files_in_dir)
-      }
-    }))
+    merge_url_lists(url_lists, directories)
 
-    failed <- unlist(lapply(result, attr, which = "failed"))
-
-  } else {
-
-    files_in_dirs <- NULL
-    failed <- NULL
-  }
+  } # else NULL implicitly
 
   # Merge files at this level with files in subdirectories
   all_files <- c(
@@ -91,7 +83,30 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
 
   # Return the sorted file list with attribute "failed" if any directory URL
   # could not be accessed
-  structure(sort(all_files), failed = failed)
+  structure(sort(all_files), failed = attr(files_in_dirs, "failed"))
+}
+
+# merge_url_lists --------------------------------------------------------------
+merge_url_lists <- function(url_lists, directories)
+{
+  stopifnot(is.list(url_lists))
+
+  if (length(url_lists) == 0) {
+    return(character())
+  }
+
+  # Merge the file lists returned for each directory
+  files <- unlist(lapply(seq_along(url_lists), function(i) {
+    if (length(x <- url_lists[[i]])) {
+      paste0(directories[i], "/", x)
+    }
+  }))
+
+  # Merge the URLs of directories that could not be read
+  failed <- unlist(lapply(url_lists, attr, which = "failed"))
+
+  # Return the vector of files with an attribute "failed"
+  structure(files, failed = failed)
 }
 
 # try_to_get_url ---------------------------------------------------------------
