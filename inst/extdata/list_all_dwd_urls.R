@@ -3,10 +3,12 @@ if (FALSE)
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
+  x <- kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_16", recursive = TRUE)
   x <- kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan")
+  x <- kwb.dwd::list_url(url = base_url, recursive = TRUE)
 
   system.time(result_urls <- kwb.dwd:::list_ftp_files_recursively(
-    base_url,
+    url = base_url,
     n_trials = 5,
     sleep_between_trials = 0.1,
     sleep_between_runs = 1

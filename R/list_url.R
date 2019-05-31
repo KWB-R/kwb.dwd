@@ -14,6 +14,7 @@
 #'
 list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
 {
+  #kwb.utils::assignPackageObjects("kwb.dwd")
   stopifnot(is.character(url))
   stopifnot(length(url) == 1)
 
@@ -56,6 +57,8 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
   }
 
   # If we arrive here, a recursive listing is requested
+
+  # If there are directories, list them by calling this function recursively
   files_in_dirs <- if (any(is_directory)) {
 
     # URLs representing directories
@@ -89,6 +92,7 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
 # merge_url_lists --------------------------------------------------------------
 merge_url_lists <- function(url_lists, directories)
 {
+  #url_lists <- list(character(), character())
   stopifnot(is.list(url_lists))
 
   if (length(url_lists) == 0) {
@@ -96,17 +100,23 @@ merge_url_lists <- function(url_lists, directories)
   }
 
   # Merge the file lists returned for each directory
-  files <- unlist(lapply(seq_along(url_lists), function(i) {
-    if (length(x <- url_lists[[i]])) {
-      paste0(directories[i], "/", x)
+  files <- kwb.utils::excludeNULL(lapply(seq_along(url_lists), function(i) {
+    #i <- 1
+    urls <- url_lists[[i]]
+    if (length(urls)) {
+      paste0(directories[i], "/", urls)
     }
   }))
 
+  if (length(files) == 0) {
+    return(character())
+  }
+
   # Merge the URLs of directories that could not be read
-  failed <- unlist(lapply(url_lists, attr, which = "failed"))
+  failed <- kwb.utils::excludeNULL(lapply(url_lists, attr, which = "failed"))
 
   # Return the vector of files with an attribute "failed"
-  structure(files, failed = failed)
+  structure(unlist(files), failed = unlist(failed))
 }
 
 # try_to_get_url ---------------------------------------------------------------
