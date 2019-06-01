@@ -10,13 +10,17 @@
 #' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
 #'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
 #' @param depth for start depth when \code{recursive = TRUE}
+#' @param full_info if \code{TRUE}, not only the path and filename are returned
+#'   but also the file properties. The default is \code{FALSE}.
 #' @export
 #'
-list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
+list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0,
+                     full_info = FALSE)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
   stopifnot(is.character(url))
   stopifnot(length(url) == 1)
+  stopifnot(RCurl::url.exists(url))
 
   # Append slash if necessary
   url <- assert_trailing_slash(url)
@@ -35,6 +39,10 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0)
 
   # Convert response string to data frame
   info <- response_to_data_frame(response)
+
+  if (full_info) {
+    return(info_to_file_info(info))
+  }
 
   # Extract permission strings (to check for the directory flag "d")
   permissions <- kwb.utils::selectColumns(info, "permissions")
@@ -171,19 +179,20 @@ response_to_data_frame <- function(response)
   rows <- strsplit(response, "\r?\n")[[1]]
 
   # Widths of the info parts of the rows in number of characters
-  #pattern <- "^(((\\S+)\\s+){8})"
   pattern <- "^((([^ ]+) +){8})"
   info_list <- kwb.utils::subExpressionMatches(pattern, rows, select = 1)
   info_widths <- nchar(unlist(lapply(info_list, "[[", 1)))
 
   # Read the info block into a data frame
-  #text <- unlist(lapply(rows, substr, 1, info_width))
-  text <- unlist(lapply(seq_along(rows), function(i) substr(rows[i], 1, info_widths[i])))
+  text <- unlist(lapply(seq_along(rows), function(i) {
+    substr(rows[i], 1, info_widths[i])
+  }))
+
   info <- utils::read.table(text = text, stringsAsFactors = FALSE)
 
   # Name the columns
   names(info) <- c(
-    "permissions", "V2", "V3", "group", "size", "month", "day", "time"
+    "permissions", "links", "user", "group", "size", "month", "day", "time"
   )
 
   # Append the file names (keeping possible spaces!)
@@ -194,4 +203,36 @@ response_to_data_frame <- function(response)
 
   # Return info data frame
   info
+}
+
+# info_to_file_info ------------------------------------------------------------
+info_to_file_info <- function(info, url = NULL)
+{
+  months <- list(
+    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
+    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
+  )
+
+  info$type <- ifelse(grepl("^d", info$permissions), "directory", "file")
+
+  is_this_year <- grepl(":", info$time)
+
+  info$year <- info$time
+  info$year[is_this_year] <- kwb.datetime::currentYear()
+
+  info$time[! is_this_year] <- "00:00"
+
+  info$modification_time <- sprintf(
+    "%04d-%02d-%02d %s",
+    as.integer(info$year),
+    sapply(info$month, kwb.utils::selectElements, x = months),
+    as.integer(info$day),
+    info$time
+  )
+
+  info <- kwb.utils::removeColumns(info, c("year", "month", "day", "time"))
+
+  kwb.utils::moveColumnsToFront(info, c(
+    "file", "type", "size", "permissions", "modification_time", "user", "group"
+  ))
 }
