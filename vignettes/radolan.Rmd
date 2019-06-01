@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
+
+ftp_root <- "ftp://opendata.dwd.de/climate_environment/CDC/"
 ```
 
 ## Install this package
@@ -28,6 +30,45 @@ remotes::install_github("kwb-r/kwb.dwd")
 
 # Install the current development version
 remotes::install_github("kwb-r/kwb.dwd@dev")
+```
+
+## List files available on DWD's FTP server
+
+This package contains a function that lists the files that are available on an
+FTP server. It allows for recursive listing, i.e. listing the files in folders
+and subfolders. For example, to list all historical RADOLAN files, do:
+
+```{r}
+# Define the root path to DWD's FTP server
+ftp_root <- "ftp://opendata.dwd.de/climate_environment/CDC/"
+
+# Define the URL to the historical RADOLAN files
+url <- paste0(ftp_root, "grids_germany/daily/radolan/historical")
+
+# List all historical RADOLAN files
+urls <- kwb.dwd::list_url(url, recursive = TRUE)
+```
+
+It takes about six seconds to get the file list. All file paths and file names
+(as they were listed on 2019-06-01) are also contained in the data frame
+`opendata_files` that is available in the package. You can browse through this
+data frame to find the files that you are looking for:
+
+```{r eval = TRUE}
+# Get data frame of all files
+dwd_files <- kwb.dwd::opendata_files
+
+# Filter for historical RADOLAN files
+radolan_files <- dwd_files[grep("radolan/historical", dwd_files$path), ]
+
+# Shorten the path for better display
+radolan_files$path <- gsub(ftp_root, "<root>/", radolan_files$path)
+
+# Show the first file paths
+head(kwb.utils::resetRowNames(radolan_files))
+
+# Show the last file paths
+tail(kwb.utils::resetRowNames(radolan_files))
 ```
 
 ## Download zipped RADOLAN files from DWD's FTP server
