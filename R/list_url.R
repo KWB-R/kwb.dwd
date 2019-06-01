@@ -103,83 +103,6 @@ list_url <- function(
   structure(sort(all_files), failed = attr(files_in_dirs, "failed"))
 }
 
-# merge_url_lists --------------------------------------------------------------
-merge_url_lists <- function(url_lists, directories)
-{
-  #url_lists <- list(character(), character())
-  stopifnot(is.list(url_lists))
-
-  if (length(url_lists) == 0) {
-    return(character())
-  }
-
-  # Merge the file lists returned for each directory
-  files <- kwb.utils::excludeNULL(lapply(seq_along(url_lists), function(i) {
-    #i <- 1
-    urls <- url_lists[[i]]
-    if (length(urls)) {
-      paste0(directories[i], "/", urls)
-    }
-  }))
-
-  if (length(files) == 0) {
-    return(character())
-  }
-
-  # Merge the URLs of directories that could not be read
-  failed <- kwb.utils::excludeNULL(lapply(url_lists, attr, which = "failed"))
-
-  # Return the vector of files with an attribute "failed"
-  structure(unlist(files), failed = unlist(failed))
-}
-
-# try_to_get_url ---------------------------------------------------------------
-try_to_get_url <- function(
-  url, n_trials = 3, timeout = NULL, sleep_time = 5, ...
-)
-{
-  stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
-
-  success <- FALSE
-  trial <- 0
-
-  if (is.null(timeout)) {
-    timeout <- RCurl::getCurlOptionsConstants()[["connecttimeout"]]
-  }
-
-  curl_options <- RCurl::curlOptions(connecttimeout = timeout)
-
-  cat(sprintf("%s:", url))
-
-  while (! success && trial < n_trials) {
-
-    trial <- trial + 1
-    response <- try(silent = TRUE, RCurl::getURL(url, .opts = curl_options, ...))
-    success <- ! inherits(response, "try-error")
-
-    if (! success && trial == 1) {
-      cat(" ")
-      cat_progress(0, n_trials)
-      cat_progress(1, n_trials, success)
-    }
-
-    if (trial > 1) {
-      cat_progress(trial, n_trials, success)
-    }
-
-    if (! success && trial < n_trials) {
-      Sys.sleep(sleep_time)
-    }
-  }
-
-  cat0(ifelse(success, " ok.\n", " failed.\n"))
-
-  if (success) {
-    response
-  } # else NULL implicitly
-}
-
 # response_to_data_frame -------------------------------------------------------
 response_to_data_frame <- function(response)
 {
@@ -243,4 +166,34 @@ info_to_file_info <- function(info, url = NULL)
   kwb.utils::moveColumnsToFront(info, c(
     "file", "type", "size", "permissions", "modification_time", "user", "group"
   ))
+}
+
+# merge_url_lists --------------------------------------------------------------
+merge_url_lists <- function(url_lists, directories)
+{
+  #url_lists <- list(character(), character())
+  stopifnot(is.list(url_lists))
+
+  if (length(url_lists) == 0) {
+    return(character())
+  }
+
+  # Merge the file lists returned for each directory
+  files <- kwb.utils::excludeNULL(lapply(seq_along(url_lists), function(i) {
+    #i <- 1
+    urls <- url_lists[[i]]
+    if (length(urls)) {
+      paste0(directories[i], "/", urls)
+    }
+  }))
+
+  if (length(files) == 0) {
+    return(character())
+  }
+
+  # Merge the URLs of directories that could not be read
+  failed <- kwb.utils::excludeNULL(lapply(url_lists, attr, which = "failed"))
+
+  # Return the vector of files with an attribute "failed"
+  structure(unlist(files), failed = unlist(failed))
 }

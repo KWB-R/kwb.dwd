@@ -125,4 +125,3 @@ frequency_prefix <- function(frequency)
 {
   get_element_or_stop(c(daily = "Tages", hourly = "Stunden"), frequency)
 }
-
