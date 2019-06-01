@@ -3,9 +3,12 @@ if (FALSE)
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
   base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
-  x <- kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/derived_germany/techn/monthly/cooling_degreehours/cdh_16", recursive = TRUE)
-  x <- kwb.dwd::list_url(url = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan")
-  x <- kwb.dwd::list_url(url = base_url, recursive = TRUE)
+  kwb.utils::clearConsole()
+
+  system.time({
+    x <- kwb.dwd::list_url(base_url, recursive = TRUE)
+    result_urls <- paste0(kwb.dwd:::assert_trailing_slash(base_url), x)
+  })
 
   system.time(result_urls <- kwb.dwd:::list_ftp_files_recursively(
     url = base_url,
@@ -65,21 +68,26 @@ if (FALSE)
 
   a <- urls_list[[1]]
   b <- urls_list[[2]]
+  c <- urls_list[[3]]
 
-  head(a[!a %in% b])
-  head(b[!b %in% a])
+  kwb.utils::compareSets(a, b)
+  kwb.utils::compareSets(a, c)
+  kwb.utils::compareSets(b, c)
 
   # Select the URLs of one file only
-  urls <- urls_list[[2]]
+  urls <- c
 
   urls[duplicated(urls)]
 
-  url_data <- kwb.utils::noFactorDataFrame(
+  dwd_files <- kwb.utils::noFactorDataFrame(
     path = dirname(urls),
     file = basename(urls)
   )
 
-  View(url_data)
+  View(dwd_files)
 
-  tail(sort(table(url_data$file)))
+  # Most frequent file names
+  tail(sort(table(dwd_files$file)))
+
+  usethis::use_data(dwd_files)
 }
