@@ -5,7 +5,7 @@
 \title{List Files or Folders in a FTP Directory}
 \usage{
 list_url(url, recursive = FALSE, max_depth = NA, ..., depth = 0,
-  full_info = FALSE)
+  full_info = FALSE, curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE))
 }
 \arguments{
 \item{url}{URL to FTP server, including "ftp://"}
@@ -23,6 +23,8 @@ subdirectories (default: \code{FALSE})}
 
 \item{full_info}{if \code{TRUE}, not only the path and filename are returned
 but also the file properties. The default is \code{FALSE}.}
+
+\item{curl}{RCurl handle passed to \code{kwb.dwd:::try_to_get_url}}
 }
 \description{
 List Files or Folders in a FTP Directory

@@ -12,21 +12,23 @@
 #' @param depth for start depth when \code{recursive = TRUE}
 #' @param full_info if \code{TRUE}, not only the path and filename are returned
 #'   but also the file properties. The default is \code{FALSE}.
+#' @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
 #' @export
 #'
-list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0,
-                     full_info = FALSE)
+list_url <- function(
+  url, recursive = FALSE, max_depth = NA, ..., depth = 0,
+  full_info = FALSE, curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
+)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
   stopifnot(is.character(url))
   stopifnot(length(url) == 1)
-  stopifnot(RCurl::url.exists(url))
 
   # Append slash if necessary
   url <- assert_trailing_slash(url)
 
   # Get a response from the FTP server
-  response <- try_to_get_url(url, ...)
+  response <- try_to_get_url(url, curl = curl, ...)
   #response <- kwb.dwd:::try_to_get_url(url)
 
   # Return empty character vector if the response is NULL or equal to an empty
@@ -73,14 +75,18 @@ list_url <- function(url, recursive = FALSE, max_depth = NA, ..., depth = 0,
     directories <- files[is_directory]
 
     # List all directories
-    url_lists <- lapply(
-      X = paste0(url, directories),
-      FUN = list_url,
-      recursive = recursive,
-      ...,
-      depth = depth + 1,
-      max_depth = max_depth
-    )
+    n_directories <- length(directories)
+    url_lists <- lapply(seq_len(n_directories), function(i) {
+      cat(sprintf("%s%d/%d: ", repeated("  ", depth), i, n_directories))
+      list_url(
+        paste0(url, directories[i]),
+        recursive = recursive,
+        ...,
+        depth = depth + 1,
+        max_depth = max_depth,
+        curl = curl
+      )
+    })
 
     merge_url_lists(url_lists, directories)
 
@@ -128,7 +134,9 @@ merge_url_lists <- function(url_lists, directories)
 }
 
 # try_to_get_url ---------------------------------------------------------------
-try_to_get_url <- function(url, n_trials = 3, timeout = NULL, sleep_time = 5)
+try_to_get_url <- function(
+  url, n_trials = 3, timeout = NULL, sleep_time = 5, ...
+)
 {
   stopifnot(is.character(url))
   stopifnot(length(url) == 1)
@@ -147,7 +155,7 @@ try_to_get_url <- function(url, n_trials = 3, timeout = NULL, sleep_time = 5)
   while (! success && trial < n_trials) {
 
     trial <- trial + 1
-    response <- try(silent = TRUE, RCurl::getURL(url, .opts = curl_options))
+    response <- try(silent = TRUE, RCurl::getURL(url, .opts = curl_options, ...))
     success <- ! inherits(response, "try-error")
 
     if (! success && trial == 1) {
@@ -218,7 +226,7 @@ info_to_file_info <- function(info, url = NULL)
   is_this_year <- grepl(":", info$time)
 
   info$year <- info$time
-  info$year[is_this_year] <- kwb.datetime::currentYear()
+  info$year[is_this_year] <- format(Sys.Date(), "%Y") # current year
 
   info$time[! is_this_year] <- "00:00"
 
