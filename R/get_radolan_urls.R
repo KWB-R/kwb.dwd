@@ -44,50 +44,78 @@
 get_radolan_urls <- function(
   start_daily = "2006-10",
   start_hourly = "2005-06",
-  end_daily = format(format = "%Y-%m", lubridate::rollback(
-    Sys.Date(), roll_to_first = TRUE
-  )),
+  end_daily = format(
+    format = "%Y-%m", lubridate::rollback(Sys.Date(), roll_to_first = TRUE)
+  ),
   end_hourly = end_daily
 )
 {
-  grammar <- list(
-    base = "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany",
-    endpoint = "<base>/<resolution>/radolan/<currentness>/<subdir>",
-    subdir_daily = "",
-    subdir_hourly = "bin/"
-  )
-
-  get_base_url <- function(resolution, currentness) {
-    kwb.utils::resolve(
-      "endpoint", grammar,
-      resolution = resolution,
-      currentness = currentness,
-      subdir = paste0("subdir_", resolution)
-    )
+  # helper function
+  get_year_month <- function(start, end) {
+    yyyymm <- function(yyyy_mm) gsub("-", "", yyyy_mm)
+    year_month_01 <- as.character(month_sequence(yyyymm(start), yyyymm(end)))
+    substr(gsub("-", "", year_month_01), 1, 6)
   }
 
-  # Define helper function
-  url_file <- function(base, dates, prefixes, change_year) {
-    years <- lubridate::year(dates)
-    months <- lubridate::month(dates)
-    # Trick: FALSE = 0 -> use first prefix, TRUE = 1 -> use second prefix
-    prefixes <- prefixes[(years >= change_year) + 1]
-    sprintf("%s%s/%s%02d%02d.tar.gz", base, years, prefixes, years, months)
-  }
+  yyyymm_daily <- get_year_month(start_daily, end_daily)
+  yyyymm_hourly <- get_year_month(start_hourly, end_hourly)
 
   # Return download links for "hourly" and "daily" in a list
   list(
-    daily_historical_urls = url_file(
-      base = get_base_url("daily", "historical"),
-      dates = month_sequence(start_daily, end_daily),
-      prefixes = c("SF-", "SF"),
-      change_year = 2009
-    ),
-    hourly_historical_urls = url_file(
-      base = get_base_url("hourly", "historical"),
-      dates = month_sequence(start_hourly, end_hourly),
-      prefixes = c("RW-", "RW"),
-      change_year = 2006
-    )
+    daily_historical_urls = get_radolan_url("daily", yyyymm_daily),
+    hourly_historical_urls = get_radolan_url("hourly", yyyymm_hourly)
   )
+}
+
+# get_radolan_url --------------------------------------------------------------
+get_radolan_url <- function(frequency, year_month)
+{
+  # Define first available year and month and year when naming schemes changed
+  starts <- c(hourly = "200506", daily = "200610")
+  switches <- c(hourly = 2006, daily = 2009)
+
+  # Check argument "frequency"
+  frequency <- safe_element(frequency, names(starts))
+
+  # Check argument "year_month"
+  if (! all(grepl("^20[0-9]{2}[01][0-9]$", year_month))) clean_stop(
+    "year_month must be a string of six numeric characters giving the ",
+    "year and month of the data to be downloaded: e.g. '200807' for July 2008."
+  )
+
+  # Check that year_month strings are not before the first available string
+  if (any(year_month < starts[frequency])) clean_stop(sprintf(
+    "The first avaible year and month is '%s'. You requested: '%s'",
+    starts[[frequency]], kwb.utils::stringList(year_month)
+  ))
+
+  # Extract the year number
+  year <- as.integer(substr(year_month, 1, 4))
+
+  # Use old or new version of file name?
+  is_old <- year < switches[frequency]
+
+  # Set subdirectory and filename prefix depending on frequency and is_old
+  if (frequency == "hourly") {
+
+    subdir <- "bin/"
+    prefix <- ifelse(is_old, "RW-", "RW")
+
+  } else if (frequency == "daily") {
+
+    subdir <- ""
+    prefix <- ifelse(is_old, "SF-", "SF")
+  }
+
+  # Root path of the URL
+  ftp_root <- "ftp://ftp-cdc.dwd.de/pub/CDC"
+
+  # Define the URL path's format string for sprintf()
+  format_string <- "%s/grids_germany/%s/radolan/historical/%s%s"
+
+  # Compose the URL's path
+  path <- sprintf(format_string, ftp_root, frequency, subdir, year)
+
+  # Compose the full URL
+  sprintf("%s/%s%s.tar.gz", path, prefix, year_month)
 }
