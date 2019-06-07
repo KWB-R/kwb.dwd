@@ -1,6 +1,10 @@
 language: r
 sudo: required
 cache: packages
+apt_packages:
+- libudunits2-dev
+- libgdal-dev
+- libspatialite-dev
 r_packages:
 - remotes
 - covr
