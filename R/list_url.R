@@ -118,7 +118,7 @@ list_url <- function(
   # Return the sorted file list with attribute "failed" if any directory URL
   # could not be accessed
   result <- if (full_info) {
-    all_files[order(all_files$file), ]
+    kwb.utils::resetRowNames(all_files[order(all_files$file), ])
   } else {
     sort(all_files)
   }
