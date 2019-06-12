@@ -4,8 +4,9 @@
 \alias{list_url}
 \title{List Files or Folders in a FTP Directory}
 \usage{
-list_url(url, recursive = FALSE, max_depth = NA, ..., depth = 0,
-  full_info = FALSE, curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE))
+list_url(url, recursive = !is.na(max_depth), max_depth = NA, ...,
+  depth = 0, full_info = FALSE,
+  curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE))
 }
 \arguments{
 \item{url}{URL to FTP server, including "ftp://"}

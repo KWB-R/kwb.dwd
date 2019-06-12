@@ -16,7 +16,7 @@
 #' @export
 #'
 list_url <- function(
-  url, recursive = FALSE, max_depth = NA, ..., depth = 0,
+  url, recursive = ! is.na(max_depth), max_depth = NA, ..., depth = 0,
   full_info = FALSE, curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
 )
 {
@@ -36,15 +36,19 @@ list_url <- function(
   # from the url. In this case, the attribute "failed" is set to the URL that
   # failed to be accessed.
   if (is.null(response) || grepl("^\\s*$", response)) {
-    return(structure(character(), failed = if (is.null(response)) url))
+
+    return(structure(
+      if (full_info) data.frame() else character(),
+      failed = if (is.null(response)) url
+    ))
   }
 
   # Convert response string to data frame
   info <- response_to_data_frame(response)
 
-  if (full_info) {
-    return(info_to_file_info(info))
-  }
+  # if (full_info) {
+  #   return(info_to_file_info(info))
+  # }
 
   # Extract permission strings (to check for the directory flag "d")
   permissions <- kwb.utils::selectColumns(info, "permissions")
@@ -63,7 +67,13 @@ list_url <- function(
   if (! recursive || at_maximum_depth || ! any(is_directory)) {
 
     # Indicate directories with trailing slash
-    return(indicate_directories(files, is_directory))
+    info$file <- indicate_directories(files, is_directory)
+
+    return (if (full_info) {
+      info_to_file_info(info)
+    } else {
+      info$file
+    })
   }
 
   # If we arrive here, a recursive listing is requested
@@ -84,23 +94,36 @@ list_url <- function(
         ...,
         depth = depth + 1,
         max_depth = max_depth,
+        full_info = full_info,
         curl = curl
       )
     })
 
-    merge_url_lists(url_lists, directories)
+    merge_url_lists(url_lists, directories, full_info)
 
   } # else NULL implicitly
 
   # Merge files at this level with files in subdirectories
-  all_files <- c(
+  all_files <- if (full_info) rbind(
+
+    info_to_file_info(info[! is_directory, ]),
+    files_in_dirs
+
+  ) else c(
+
     files[! is_directory], # files at this level
     files_in_dirs # files in subdirectories
   )
 
   # Return the sorted file list with attribute "failed" if any directory URL
   # could not be accessed
-  structure(sort(all_files), failed = attr(files_in_dirs, "failed"))
+  result <- if (full_info) {
+    all_files[order(all_files$file), ]
+  } else {
+    sort(all_files)
+  }
+
+  structure(result, failed = attr(files_in_dirs, "failed"))
 }
 
 # response_to_data_frame -------------------------------------------------------
@@ -169,31 +192,40 @@ info_to_file_info <- function(info, url = NULL)
 }
 
 # merge_url_lists --------------------------------------------------------------
-merge_url_lists <- function(url_lists, directories)
+merge_url_lists <- function(url_lists, directories, full_info)
 {
   #url_lists <- list(character(), character())
   stopifnot(is.list(url_lists))
 
   if (length(url_lists) == 0) {
-    return(character())
+    return(if (full_info) data.frame() else character())
   }
 
   # Merge the file lists returned for each directory
   files <- kwb.utils::excludeNULL(lapply(seq_along(url_lists), function(i) {
     #i <- 1
     urls <- url_lists[[i]]
-    if (length(urls)) {
+    if (full_info && nrow(urls)) {
+      urls$file <- paste0(directories[i], "/", urls$file)
+      urls
+    } else if (length(urls)) {
       paste0(directories[i], "/", urls)
     }
   }))
 
   if (length(files) == 0) {
-    return(character())
+    return(if (full_info) data.frame() else character())
   }
 
   # Merge the URLs of directories that could not be read
   failed <- kwb.utils::excludeNULL(lapply(url_lists, attr, which = "failed"))
 
   # Return the vector of files with an attribute "failed"
-  structure(unlist(files), failed = unlist(failed))
+  result <- if (full_info) {
+    do.call(rbind, files)
+  } else {
+    unlist(files)
+  }
+
+  structure(result, failed = unlist(failed))
 }
