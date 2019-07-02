@@ -43,7 +43,7 @@ try_to_get_url <- function(
     }
   }
 
-  cat0(ifelse(success, " ok.\n", " failed.\n"))
+  kwb.utils::catIf(dbg, ifelse(success, " ok.\n", " failed.\n"))
 
   if (success) {
     response
