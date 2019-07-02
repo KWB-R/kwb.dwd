@@ -1,6 +1,6 @@
 # try_to_get_url ---------------------------------------------------------------
 try_to_get_url <- function(
-  url, n_trials = 3, timeout = NULL, sleep_time = 5, ...
+  url, n_trials = 3, timeout = NULL, sleep_time = 5, user_pwd = NULL, ...
 )
 {
   stopifnot(is.character(url))
@@ -14,6 +14,10 @@ try_to_get_url <- function(
   }
 
   curl_options <- RCurl::curlOptions(connecttimeout = timeout)
+
+  if (! is.null(user_pwd)) {
+    curl_options <- c(curl_options, RCurl::curlOptions(userpwd = user_pwd))
+  }
 
   cat(sprintf("%s:", url))
 
