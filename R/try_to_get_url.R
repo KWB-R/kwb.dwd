@@ -1,6 +1,7 @@
 # try_to_get_url ---------------------------------------------------------------
 try_to_get_url <- function(
-  url, n_trials = 3, timeout = NULL, sleep_time = 5, user_pwd = NULL, ...
+  url, n_trials = 3, timeout = NULL, sleep_time = 5, user_pwd = NULL, ...,
+  dbg = TRUE
 )
 {
   stopifnot(is.character(url))
@@ -19,7 +20,7 @@ try_to_get_url <- function(
     curl_options <- c(curl_options, RCurl::curlOptions(userpwd = user_pwd))
   }
 
-  cat(sprintf("%s:", url))
+  kwb.utils::catIf(dbg, sprintf("%s:", url))
 
   while (! success && trial < n_trials) {
 
