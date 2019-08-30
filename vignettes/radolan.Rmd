@@ -1,0 +1,130 @@
+---
+title: "Download RADOLAN Data"
+author: "Hauke Sonnenberg"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Download RADOLAN Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+
+ftp_root <- "ftp://opendata.dwd.de/climate_environment/CDC/"
+```
+
+## Install this package
+
+```{r}
+# If required, install the remotes package from CRAN
+# install.packages("remotes")
+
+# Install kwb.dwd from GitHub
+remotes::install_github("kwb-r/kwb.dwd")
+
+# Install the current development version
+remotes::install_github("kwb-r/kwb.dwd@dev")
+```
+
+## List files available on DWD's FTP server
+
+This package contains a function that lists the files that are available on an
+FTP server. It allows for recursive listing, i.e. listing the files in folders
+and subfolders. For example, to list all historical RADOLAN files, do:
+
+```{r}
+# Define the root path to DWD's FTP server
+ftp_root <- "ftp://opendata.dwd.de/climate_environment/CDC/"
+
+# Define the URL to the historical RADOLAN files
+url <- paste0(ftp_root, "grids_germany/daily/radolan/historical")
+
+# List all historical RADOLAN files
+urls <- kwb.dwd::list_url(url, recursive = TRUE)
+```
+
+It takes about six seconds to get the file list. All file paths and file names
+(as they were listed on 2019-06-01) are also contained in the data frame
+`dwd_files` that is available in the package. You can browse through this
+data frame to find the files that you are looking for:
+
+```{r eval = TRUE}
+# Get data frame of all files
+dwd_files <- kwb.dwd::dwd_files
+
+# Filter for historical RADOLAN files
+radolan_files <- dwd_files[grep("radolan/historical", dwd_files$url), ]
+
+# Shorten the path for better display
+radolan_files$path <- gsub(ftp_root, "<root>/", radolan_files$url)
+
+# Show the first file paths
+head(kwb.utils::resetRowNames(radolan_files))
+
+# Show the last file paths
+tail(kwb.utils::resetRowNames(radolan_files))
+```
+
+## Download zipped RADOLAN files from DWD's FTP server
+
+```{r}
+# Set the target directory
+export_dir <- "~/Downloads/radolan"
+
+# Download corresponding RADOLAN files from DWD's FTP server
+kwb.dwd::download_radolan(
+  resolution = "daily",  
+  export_dir = export_dir, 
+  start_daily = "2018-07", 
+  end_daily = "2018-08"
+)
+```
+
+The output should look like this:
+
+```
+Download: 'daily' historical radolan data ... 
+Download: "daily, historical" and save to ~/Downloads/radolan/daily/historical/SF201807.tar.gz ... 
+trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201807.tar.gz'
+Content type 'unknown' length 138580953 bytes (132.2 MB)
+==================================================
+ok. (1.82s) 
+Download: "daily, historical" and save to ~/Downloads/radolan/daily/historical/SF201808.tar.gz ... 
+trying URL 'ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2018/SF201808.tar.gz'
+Content type 'unknown' length 181877215 bytes (173.5 MB)
+==================================================
+ok. (2.43s) 
+ok. (4.26s) 
+```
+
+## Unzip the downloaded files
+
+```
+# Get the paths to the zipped files
+files <- dir(export_dir, "\\.tar\\.gz", recursive = TRUE, full.names = TRUE)
+
+# Unzip all files to the export directory
+lapply(files, untar, exdir = export_dir)
+```
+
+## Read the binary Radolan files
+
+```
+# Get the paths to all binary Radolan files in the export directory
+files_bin <- dir(export_dir, "---bin$", full.names = TRUE)
+
+# Read all Radolan files (raw format: vectors of integer values)
+contents_bin <- lapply(files_bin, function(file) kwb.utils::catAndRun(
+  paste("Reading", file),
+  kwb.dwd:::read_binary_radolan_file_raw(file)
+))
+
+# Convert Radolan raw data to raster objects
+raster_objects <- lapply(contents_bin, kwb.dwd:::radolan_raw_to_raster)
+```
