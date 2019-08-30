@@ -1,7 +1,6 @@
 # extract_radolan_zip_files ----------------------------------------------------
 extract_radolan_zip_files <- function(radolan_dir)
 {
-
   # Get the paths to the zipped files
   pattern <- "\\.tar\\.gz"
   zip_files <- dir(radolan_dir, pattern, recursive = TRUE, full.names = TRUE)

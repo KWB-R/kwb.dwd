@@ -16,20 +16,13 @@ crop_radolan_radial <- function(
   radolan, longitude, latitude, radius = 10, as_data_frame = TRUE
 )
 {
-  coord <- data.frame(lat = latitude, lon = longitude)
-
-  # Transform lat/lon input to st object
-  location <- sf::st_as_sf(coord, coords = c("lon", "lat"), crs = 4326)
-
-  # Define coordinate reference system for Radolan data
-  reference_system <- raster::crs(asText = TRUE, sp::CRS(
-    get_radolan_projection_string()
-  ))
-
   # Apply radolan projection to location
-  location_crs <- sf::st_transform(x = location, crs = reference_system)
+  location_crs <- sf::st_transform(
+    x = coordinates_to_EPSG_4326(latitude, longitude),
+    crs = get_radolan_projection_string()
+  )
 
-  # Define buffer area around locationdist = 10 km (to be checked)
+  # Define buffer area around location with dist = 10 km (to be checked)
   location_buffer <- sf::st_buffer(location_crs, dist = radius)
 
   # Extract rain data for buffer area from radolan raster stack
@@ -46,5 +39,15 @@ crop_radolan_radial <- function(
   data.frame(
     SAMPLE_DATE = lubridate::ymd(substr(names(x), 2, 7)),
     rain_mean = as.numeric(x)
+  )
+}
+
+# coordinates_to_EPSG_4326 -----------------------------------------------------
+coordinates_to_EPSG_4326 <- function(latitude, longitude)
+{
+  sf::st_as_sf(
+    x = data.frame(lon = longitude, lat = latitude),
+    coords = c("lon", "lat"),
+    crs = 4326
   )
 }
