@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get URLs to DWD Metadata — get_dwd_urls_metadata • kwb.dwd</title>
+<title>Files Available on DWD's FTP Server — dwd_files • kwb.dwd</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,10 @@
 
 
 
-<meta property="og:title" content="Get URLs to DWD Metadata — get_dwd_urls_metadata" />
-<meta property="og:description" content="Get URLs to DWD Metadata" />
+<meta property="og:title" content="Files Available on DWD's FTP Server — dwd_files" />
+<meta property="og:description" content="Information on files that are available for download at
+ftp://opendata.dwd.de/climate_environment/CDC/. The information were
+last updated on 2019-06-22." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,29 +118,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get URLs to DWD Metadata</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/get_dwd_urls_metadata.R'><code>R/get_dwd_urls_metadata.R</code></a></small>
-    <div class="hidden name"><code>get_dwd_urls_metadata.Rd</code></div>
+    <h1>Files Available on DWD's FTP Server</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>dwd_files.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get URLs to DWD Metadata</p>
+    <p>Information on files that are available for download at
+<a href='ftp://opendata.dwd.de/climate_environment/CDC/'>ftp://opendata.dwd.de/climate_environment/CDC/</a>. The information were
+last updated on 2019-06-22.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_dwd_urls_metadata</span>()</pre>
+    <pre class="usage"><span class='no'>dwd_files</span></pre>
 
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>list of character with each element representing a URL to a metadata
-  file provided by Deutscher Wetterdienst (DWT), e.g. files
-  "_Beschreibung_Stationen.txt" describing measurement stations.</p>
+    <p>A data frame with 438548 observations of 5 variables:</p><dl class='dl-horizontal'>
+  <dt>url</dt><dd><p>URL to the file on the FTP server</p></dd>
+  <dt>type</dt><dd><p>either "file" or "directory"</p></dd>
+  <dt>size</dt><dd><p>file size in bytes</p></dd>
+  <dt>permissions</dt><dd><p>string indicating file permissions</p></dd>
+  <dt>modification_time</dt><dd><p>time of last modification of the file</p></dd>
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt'>ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
     </ul>
 
   </div>

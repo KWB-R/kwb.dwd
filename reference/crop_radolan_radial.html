@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get URLs to DWD Metadata — get_dwd_urls_metadata • kwb.dwd</title>
+<title>Crop Radolan Data — crop_radolan_radial • kwb.dwd</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="Get URLs to DWD Metadata — get_dwd_urls_metadata" />
-<meta property="og:description" content="Get URLs to DWD Metadata" />
+<meta property="og:title" content="Crop Radolan Data — crop_radolan_radial" />
+<meta property="og:description" content="Crop Radolan Data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,29 +116,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get URLs to DWD Metadata</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/get_dwd_urls_metadata.R'><code>R/get_dwd_urls_metadata.R</code></a></small>
-    <div class="hidden name"><code>get_dwd_urls_metadata.Rd</code></div>
+    <h1>Crop Radolan Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/crop_radolan_radial.R'><code>R/crop_radolan_radial.R</code></a></small>
+    <div class="hidden name"><code>crop_radolan_radial.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get URLs to DWD Metadata</p>
+    <p>Crop Radolan Data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_dwd_urls_metadata</span>()</pre>
+    <pre class="usage"><span class='fu'>crop_radolan_radial</span>(<span class='no'>radolan</span>, <span class='no'>longitude</span>, <span class='no'>latitude</span>, <span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>as_data_frame</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>radolan</th>
+      <td><p>radolan data as returned by
+<code><a href='read_relevant_years_radolan.html'>read_relevant_years_radolan</a></code></p></td>
+    </tr>
+    <tr>
+      <th>longitude</th>
+      <td><p>longitude</p></td>
+    </tr>
+    <tr>
+      <th>latitude</th>
+      <td><p>latitude</p></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>distance from point (latitude/longitude) in km</p></td>
+    </tr>
+    <tr>
+      <th>as_data_frame</th>
+      <td><p>if <code>TRUE</code>, a data frame with columns
+<code>SAMPLE_DATE</code> and <code>rain_mean</code> is returned, otherwise the raster
+object returned by <code><a href='https://www.rdocumentation.org/packages/raster/topics/crop'>crop</a></code></p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>list of character with each element representing a URL to a metadata
-  file provided by Deutscher Wetterdienst (DWT), e.g. files
-  "_Beschreibung_Stationen.txt" describing measurement stations.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
 
   </div>

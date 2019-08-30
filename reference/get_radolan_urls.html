@@ -6,12 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get URLs to Available Radolan Files on DWD Server — get_radolan_urls • kwb.dwd</title>
+<title>Get URLs to Available Radolan Files — get_radolan_urls • kwb.dwd</title>
+
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,10 +32,16 @@
 
 
 
-<meta property="og:title" content="Get URLs to Available Radolan Files on DWD Server — get_radolan_urls" />
 
-<meta property="og:description" content="Get URLs to Available Radolan Files on DWD Server" />
+<meta property="og:title" content="Get URLs to Available Radolan Files — get_radolan_urls" />
+<meta property="og:description" content="Get URLs to available radolan files on the DWD FTP server below this base
+address: ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany. The user can
+choose between daily records and hourly records that are located at different
+paths on the server. The paths to the files are not read from the FTP server
+but generated, given the knowledge of where the files should reside and how
+they are expected to be named." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -78,11 +86,22 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/radolan.html">Download RADOLAN Data</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/KWB-R/kwb.dwd">
@@ -102,21 +121,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get URLs to Available Radolan Files on DWD Server</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/dwd_radolan.R'><code>R/dwd_radolan.R</code></a></small>
+    <h1>Get URLs to Available Radolan Files</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/get_radolan_urls.R'><code>R/get_radolan_urls.R</code></a></small>
     <div class="hidden name"><code>get_radolan_urls.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Get URLs to Available Radolan Files on DWD Server</p>
-    
+    <p>Get URLs to available radolan files on the DWD FTP server below this base
+address: <a href='ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany'>ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany</a>. The user can
+choose between daily records and hourly records that are located at different
+paths on the server. The paths to the files are not read from the FTP server
+but generated, given the knowledge of where the files should reside and how
+they are expected to be named.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_radolan_urls</span>(<span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2006-10"</span>, <span class='kw'>start_hourly</span> <span class='kw'>=</span> <span class='st'>"2005-06"</span>,
   <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/format'>format</a></span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%Y-%m"</span>, <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/rollback.html'>rollback</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(),
   <span class='kw'>roll_to_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)), <span class='kw'>end_hourly</span> <span class='kw'>=</span> <span class='no'>end_daily</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -141,20 +163,44 @@ current month.</p></td>
 <code>end_daily</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>list with "daily_historical_urls" and "hourly_historical_urls"</p>
-    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Get all expected URLs</span>
+<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/kwb.dwd/topics/get_radolan_urls'>get_radolan_urls</a></span>()
+
+<span class='co'># Show the first URLs of each category (daily, hourly)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200610.tar.gz"
+#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200611.tar.gz"
+#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200612.tar.gz"
+#&gt; [4] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200701.tar.gz"
+#&gt; [5] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200702.tar.gz"
+#&gt; [6] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200703.tar.gz"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>urls</span>$<span class='no'>hourly_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200506.tar.gz"
+#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200507.tar.gz"
+#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200508.tar.gz"
+#&gt; [4] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200509.tar.gz"
+#&gt; [5] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200510.tar.gz"
+#&gt; [6] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200511.tar.gz"</div><div class='input'>
+<span class='co'># Set the start and end months</span>
+<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/kwb.dwd/topics/get_radolan_urls'>get_radolan_urls</a></span>(
+  <span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2017-01"</span>, <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='st'>"2017-03"</span>
+)
+
+<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span></div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201701.tar.gz"
+#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201702.tar.gz"
+#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201703.tar.gz"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

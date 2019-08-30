@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get URLs to DWD Metadata — get_dwd_urls_metadata • kwb.dwd</title>
+<title>List Files or Folders in a FTP Directory — list_url • kwb.dwd</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="Get URLs to DWD Metadata — get_dwd_urls_metadata" />
-<meta property="og:description" content="Get URLs to DWD Metadata" />
+<meta property="og:title" content="List Files or Folders in a FTP Directory — list_url" />
+<meta property="og:description" content="List Files or Folders in a FTP Directory" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,29 +116,62 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get URLs to DWD Metadata</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/get_dwd_urls_metadata.R'><code>R/get_dwd_urls_metadata.R</code></a></small>
-    <div class="hidden name"><code>get_dwd_urls_metadata.Rd</code></div>
+    <h1>List Files or Folders in a FTP Directory</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/list_url.R'><code>R/list_url.R</code></a></small>
+    <div class="hidden name"><code>list_url.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get URLs to DWD Metadata</p>
+    <p>List Files or Folders in a FTP Directory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_dwd_urls_metadata</span>()</pre>
+    <pre class="usage"><span class='fu'>list_url</span>(<span class='no'>url</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> !<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>max_depth</span>), <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>,
+  <span class='kw'>depth</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>full_info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>curl</span> <span class='kw'>=</span> <span class='kw pkg'>RCurl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/RCurl/topics/getCurlHandle'>getCurlHandle</a></span>(<span class='kw'>ftp.use.epsv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>url</th>
+      <td><p>URL to FTP server, including "ftp://"</p></td>
+    </tr>
+    <tr>
+      <th>recursive</th>
+      <td><p>logical indicating whether to list files in all
+subdirectories (default: <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>max_depth</th>
+      <td><p>maximum folder depth to consider when
+<code>recursive = TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>arguments passed to <code>kwb.dwd:::try_to_get_url</code>, such as
+<code>n_trials</code>, <code>timeout</code>, or <code>sleep_time</code></p></td>
+    </tr>
+    <tr>
+      <th>depth</th>
+      <td><p>for start depth when <code>recursive = TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>full_info</th>
+      <td><p>if <code>TRUE</code>, not only the path and filename are returned
+but also the file properties. The default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>curl</th>
+      <td><p>RCurl handle passed to <code>kwb.dwd:::try_to_get_url</code></p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>list of character with each element representing a URL to a metadata
-  file provided by Deutscher Wetterdienst (DWT), e.g. files
-  "_Beschreibung_Stationen.txt" describing measurement stations.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
 
   </div>

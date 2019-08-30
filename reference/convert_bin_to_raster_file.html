@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get URLs to DWD Metadata — get_dwd_urls_metadata • kwb.dwd</title>
+<title>Convert Binary Radolan File to Raster File — convert_bin_to_raster_file • kwb.dwd</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="Get URLs to DWD Metadata — get_dwd_urls_metadata" />
-<meta property="og:description" content="Get URLs to DWD Metadata" />
+<meta property="og:title" content="Convert Binary Radolan File to Raster File — convert_bin_to_raster_file" />
+<meta property="og:description" content="Convert Binary Radolan File to Raster File" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,29 +116,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get URLs to DWD Metadata</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/get_dwd_urls_metadata.R'><code>R/get_dwd_urls_metadata.R</code></a></small>
-    <div class="hidden name"><code>get_dwd_urls_metadata.Rd</code></div>
+    <h1>Convert Binary Radolan File to Raster File</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KWB-R/kwb.dwd/blob/master/R/convert_bin_to_raster_file.R'><code>R/convert_bin_to_raster_file.R</code></a></small>
+    <div class="hidden name"><code>convert_bin_to_raster_file.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get URLs to DWD Metadata</p>
+    <p>Convert Binary Radolan File to Raster File</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_dwd_urls_metadata</span>()</pre>
+    <pre class="usage"><span class='fu'>convert_bin_to_raster_file</span>(<span class='no'>bin_file</span>, <span class='kw'>target_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dbg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>bin_file</th>
+      <td><p>path to binary radolan file or vector of such paths</p></td>
+    </tr>
+    <tr>
+      <th>target_dir</th>
+      <td><p>directory in which to create the raster file(s). By default
+the files are created in a subfolder "rst" parallel to the folder in which
+the first element of <code>bin_file</code> resides.</p></td>
+    </tr>
+    <tr>
+      <th>dbg</th>
+      <td><p>if <code>TRUE</code>, debug messages are shown</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>list of character with each element representing a URL to a metadata
-  file provided by Deutscher Wetterdienst (DWT), e.g. files
-  "_Beschreibung_Stationen.txt" describing measurement stations.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
+      <li><a href="#arguments">Arguments</a></li>
     </ul>
 
   </div>
