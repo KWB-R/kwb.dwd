@@ -51,18 +51,18 @@ urls <- kwb.dwd::list_url(url, recursive = TRUE)
 
 It takes about six seconds to get the file list. All file paths and file names
 (as they were listed on 2019-06-01) are also contained in the data frame
-`opendata_files` that is available in the package. You can browse through this
+`dwd_files` that is available in the package. You can browse through this
 data frame to find the files that you are looking for:
 
 ```{r eval = TRUE}
 # Get data frame of all files
-dwd_files <- kwb.dwd::opendata_files
+dwd_files <- kwb.dwd::dwd_files
 
 # Filter for historical RADOLAN files
-radolan_files <- dwd_files[grep("radolan/historical", dwd_files$path), ]
+radolan_files <- dwd_files[grep("radolan/historical", dwd_files$url), ]
 
 # Shorten the path for better display
-radolan_files$path <- gsub(ftp_root, "<root>/", radolan_files$path)
+radolan_files$path <- gsub(ftp_root, "<root>/", radolan_files$url)
 
 # Show the first file paths
 head(kwb.utils::resetRowNames(radolan_files))

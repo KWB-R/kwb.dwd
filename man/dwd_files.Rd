@@ -4,7 +4,7 @@
 \name{dwd_files}
 \alias{dwd_files}
 \title{Files Available on DWD's FTP Server}
-\format{A data frame with 438548 observations of 8 variables:
+\format{A data frame with 438548 observations of 5 variables:
 \describe{
   \item{url}{URL to the file on the FTP server}
   \item{type}{either "file" or "directory"}
