@@ -1,11 +1,3 @@
-# assert_trailing_slash --------------------------------------------------------
-assert_trailing_slash <- function(x)
-{
-  has_no_slash <- ! grepl("/$", x)
-
-  `[<-`(x, has_no_slash, paste0(x[has_no_slash], "/"))
-}
-
 # back -------------------------------------------------------------------------
 back <- function(n)
 {
@@ -71,7 +63,7 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 # indicate_directories ---------------------------------------------------------
 indicate_directories <- function(x, is_directory)
 {
-  x[is_directory] <- assert_trailing_slash(x[is_directory])
+  x[is_directory] <- kwb.utils::assertFinalSlash(x[is_directory])
   x
 }
 

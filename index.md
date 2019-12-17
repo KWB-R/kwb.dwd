@@ -10,7 +10,7 @@ the access to the data provided online by the Deutscher Wetterdienst
 
 ## Installation
 
-```{r echo = TRUE, eval = FALSE}
+```r
 #install.packages("remotes", repos = "https://cloud.r-project.org")
 remotes::install_github("KWB-R/kwb.dwd")
 ```

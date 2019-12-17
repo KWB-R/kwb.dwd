@@ -8,7 +8,7 @@ if (FALSE)
 
   system.time({
     x <- kwb.dwd::list_url(base_url, recursive = TRUE)
-    result_urls <- paste0(kwb.dwd:::assert_trailing_slash(base_url), x)
+    result_urls <- paste0(kwb.utils::assertFinalSlash(base_url), x)
   })
 
   # user  system elapsed
