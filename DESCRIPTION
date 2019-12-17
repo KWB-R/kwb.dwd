@@ -31,7 +31,7 @@ Suggests:
 RoxygenNote: 6.1.1
 Imports: 
     fs (>= 1.2.6),
-    kwb.utils (>= 0.4.0),
+    kwb.utils (>= 0.5.0),
     lubridate (>= 1.7.4),
     magrittr (>= 1.5),
     raster (>= 2.8),

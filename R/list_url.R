@@ -25,7 +25,7 @@ list_url <- function(
   stopifnot(length(url) == 1)
 
   # Append slash if necessary
-  url <- assert_trailing_slash(url)
+  url <- kwb.utils::assertFinalSlash(url)
 
   # Get a response from the FTP server
   response <- try_to_get_url(url, curl = curl, ...)
