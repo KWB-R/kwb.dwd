@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,12 +41,11 @@
 
 <meta property="og:title" content="Get URLs to Available Radolan Files — get_radolan_urls" />
 <meta property="og:description" content="Get URLs to available radolan files on the DWD FTP server below this base
-address: ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany. The user can
-choose between daily records and hourly records that are located at different
-paths on the server. The paths to the files are not read from the FTP server
-but generated, given the knowledge of where the files should reside and how
-they are expected to be named." />
-<meta name="twitter:card" content="summary" />
+address: tp://opendata.dwd.de/climate_environment/CDC/grids_germany.
+The user can choose between daily records and hourly records that are located
+at different paths on the server. The paths to the files are not read from
+the FTP server but generated, given the knowledge of where the files should
+reside and how they are expected to be named." />
 
 
 <meta name="robots" content="noindex">
@@ -60,7 +63,7 @@ they are expected to be named." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +77,7 @@ they are expected to be named." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kwb.dwd</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
       </span>
     </div>
 
@@ -107,7 +110,7 @@ they are expected to be named." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/KWB-R/kwb.dwd">
+  <a href="https://github.com/KWB-R/kwb.dwd/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -132,16 +135,16 @@ they are expected to be named." />
 
     <div class="ref-description">
     <p>Get URLs to available radolan files on the DWD FTP server below this base
-address: <a href='ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany'>ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany</a>. The user can
-choose between daily records and hourly records that are located at different
-paths on the server. The paths to the files are not read from the FTP server
-but generated, given the knowledge of where the files should reside and how
-they are expected to be named.</p>
+address: <a href='tp://opendata.dwd.de/climate_environment/CDC/grids_germany'>tp://opendata.dwd.de/climate_environment/CDC/grids_germany</a>.
+The user can choose between daily records and hourly records that are located
+at different paths on the server. The paths to the files are not read from
+the FTP server but generated, given the knowledge of where the files should
+reside and how they are expected to be named.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_radolan_urls</span>(<span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2006-10"</span>, <span class='kw'>start_hourly</span> <span class='kw'>=</span> <span class='st'>"2005-06"</span>,
   <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%Y-%m"</span>, <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/rollback.html'>rollback</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(),
-  <span class='kw'>roll_to_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)), <span class='kw'>end_hourly</span> <span class='kw'>=</span> <span class='no'>end_daily</span>)</pre>
+  <span class='kw'>roll_to_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)), <span class='kw'>end_hourly</span> <span class='kw'>=</span> <span class='no'>end_daily</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +169,11 @@ current month.</p></td>
       <td><p>month string (yyyy-mm) of last hourly records. Defaults to
 <code>end_daily</code>.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>further arguments passed to <code>kwb.dwd:::get_radolan_url</code>,
+such as <code>ftp_root</code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -174,38 +182,34 @@ current month.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get all expected URLs</span>
-<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/kwb.dwd/man/get_radolan_urls.html'>get_radolan_urls</a></span>()
+<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'>get_radolan_urls</span>()
 
 <span class='co'># Show the first URLs of each category (daily, hourly)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200610.tar.gz"
-#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200611.tar.gz"
-#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2006/SF-200612.tar.gz"
-#&gt; [4] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200701.tar.gz"
-#&gt; [5] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200702.tar.gz"
-#&gt; [6] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2007/SF-200703.tar.gz"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>hourly_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200506.tar.gz"
-#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200507.tar.gz"
-#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200508.tar.gz"
-#&gt; [4] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200509.tar.gz"
-#&gt; [5] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200510.tar.gz"
-#&gt; [6] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200511.tar.gz"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
+#&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz"
+#&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz"
+#&gt; [4] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz"
+#&gt; [5] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz"
+#&gt; [6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>hourly_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200506.tar.gz"
+#&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200507.tar.gz"
+#&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200508.tar.gz"
+#&gt; [4] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200509.tar.gz"
+#&gt; [5] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200510.tar.gz"
+#&gt; [6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200511.tar.gz"</div><div class='input'>
 <span class='co'># Set the start and end months</span>
-<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/kwb.dwd/man/get_radolan_urls.html'>get_radolan_urls</a></span>(
+<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'>get_radolan_urls</span>(
   <span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2017-01"</span>, <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='st'>"2017-03"</span>
 )
 
-<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span></div><div class='output co'>#&gt; [1] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201701.tar.gz"
-#&gt; [2] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201702.tar.gz"
-#&gt; [3] "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/daily/radolan/historical/2017/SF201703.tar.gz"</div><div class='input'>
+<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span></div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201701.tar.gz"
+#&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201702.tar.gz"
+#&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201703.tar.gz"</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -216,7 +220,7 @@ current month.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
