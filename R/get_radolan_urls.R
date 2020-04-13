@@ -1,11 +1,11 @@
 #' Get URLs to Available Radolan Files
 #'
 #' Get URLs to available radolan files on the DWD FTP server below this base
-#' address: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany}. The user can
-#' choose between daily records and hourly records that are located at different
-#' paths on the server. The paths to the files are not read from the FTP server
-#' but generated, given the knowledge of where the files should reside and how
-#' they are expected to be named.
+#' address: \url{ftp://opendata.dwd.de/climate_environment/CDC/grids_germany}.
+#' The user can choose between daily records and hourly records that are located
+#' at different paths on the server. The paths to the files are not read from
+#' the FTP server but generated, given the knowledge of where the files should
+#' reside and how they are expected to be named.
 #'
 #' @param start_daily month string (yyyy-mm) of first daily record.
 #'   Default: "2006-10"
@@ -70,10 +70,7 @@ get_radolan_urls <- function(
 }
 
 # get_radolan_url --------------------------------------------------------------
-get_radolan_url <- function(
-  frequency, year_month,
-  ftp_root = "ftp://opendata.dwd.de/climate_environment/CDC"
-)
+get_radolan_url <- function(frequency, year_month, ftp_root = ftp_path_cdc())
 {
   # Define first available year and month and year when naming schemes changed
   starts <- c(hourly = "200506", daily = "200610")
@@ -111,9 +108,6 @@ get_radolan_url <- function(
   }
 
   subdir <- "bin/"
-
-  # Root path of the URL
-  #ftp_root <- "ftp://ftp-cdc.dwd.de/pub/CDC"
 
   # Define the URL path's format string for sprintf()
   format_string <- "%s/grids_germany/%s/radolan/historical/%s%s"

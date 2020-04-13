@@ -6,7 +6,7 @@
 \usage{
 get_radolan_urls(start_daily = "2006-10", start_hourly = "2005-06",
   end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(),
-  roll_to_first = TRUE)), end_hourly = end_daily)
+  roll_to_first = TRUE)), end_hourly = end_daily, ...)
 }
 \arguments{
 \item{start_daily}{month string (yyyy-mm) of first daily record.
@@ -20,17 +20,20 @@ current month.}
 
 \item{end_hourly}{month string (yyyy-mm) of last hourly records. Defaults to
 \code{end_daily}.}
+
+\item{\dots}{further arguments passed to \code{kwb.dwd:::get_radolan_url},
+such as \code{ftp_root}}
 }
 \value{
 list with "daily_historical_urls" and "hourly_historical_urls"
 }
 \description{
 Get URLs to available radolan files on the DWD FTP server below this base
-address: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany}. The user can
-choose between daily records and hourly records that are located at different
-paths on the server. The paths to the files are not read from the FTP server
-but generated, given the knowledge of where the files should reside and how
-they are expected to be named.
+address: \url{tp://opendata.dwd.de/climate_environment/CDC/grids_germany}.
+The user can choose between daily records and hourly records that are located
+at different paths on the server. The paths to the files are not read from
+the FTP server but generated, given the knowledge of where the files should
+reside and how they are expected to be named.
 }
 \examples{
 # Get all expected URLs
