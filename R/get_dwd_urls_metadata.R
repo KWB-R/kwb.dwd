@@ -83,7 +83,7 @@ dwd_url_climate_dir <- function(
   frequency = NULL, category = NULL, currentness = NULL
 )
 {
-  url <- file.path(ftp_path_cdc(), "observations_germany/climate")
+  url <- ftp_path_cdc("observations_germany/climate")
 
   if (is.null(frequency)) {
     return(url)
@@ -111,9 +111,9 @@ dwd_url_climate_dir <- function(
 }
 
 # ftp_path_cdc -----------------------------------------------------------------
-ftp_path_cdc <- function()
+ftp_path_cdc <- function(...)
 {
-  "ftp://opendata.dwd.de/climate_environment/CDC"
+  file.path("ftp://opendata.dwd.de/climate_environment/CDC", ...)
 }
 
 # dwd_filename_stations --------------------------------------------------------
