@@ -37,7 +37,7 @@ if (FALSE)
   str(evaporation_matrices[[1]])
 
   # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to 1, rest of cells = NA)
-    berlin_dwd_mask <- berlin_dwd_mask()
+    berlin_dwd_mask <- get_berlin_dwd_mask()
 
   # calculate monthly stats for Berlin
     berlin_evap_monthly <- evaporation_stats(evaporation_matrices = evaporation_matrices,
