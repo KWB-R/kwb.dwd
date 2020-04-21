@@ -110,10 +110,11 @@ evaporation_stats <- function(evaporation_matrices,
     #correct unit to mm
     berlin_values <- berlin_values / 10
 
-    pot_evap_stat$mean[i] <- mean(berlin_values, na.rm = TRUE)
-    pot_evap_stat$sd[i] <- sd(berlin_values, na.rm = TRUE)
-    pot_evap_stat$min[i] <- min(berlin_values, na.rm = TRUE)
-    pot_evap_stat$max[i] <- max(berlin_values, na.rm = TRUE)
+    get_stats <- function(fun) fun(berlin_values, na.rm = TRUE)
+    pot_evap_stat$mean[i] <- get_stats(mean)
+    pot_evap_stat$sd[i] <- get_stats(sd)
+    pot_evap_stat$min[i] <- get_stats(min)
+    pot_evap_stat$max[i] <- get_stats(max)
 
   }
 
