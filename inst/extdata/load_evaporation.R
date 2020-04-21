@@ -22,11 +22,14 @@ if (FALSE)
   # Read all files into a list of matrices
   evaporation_matrices <- lapply(urls, read_evaporation_matrix_from_url)
 
+  # Helper function to collect a specific attribute from all list elements
+  collect <- function(x) sapply(evaporation_matrices, kwb.utils::getAttribute, x)
+
   # Provide metadata: file name, year, month
   file_info <- data.frame(
-    file = relative_urls,
-    year = sapply(evaporation_matrices, kwb.utils::getAttribute, "year"),
-    month = sapply(evaporation_matrices, kwb.utils::getAttribute, "month")
+    file = relative_urls, 
+    year = collect("year"), 
+    month = collect("month")
   )
 
   head(file_info)
@@ -117,4 +120,3 @@ evaporation_stats <- function(evaporation_matrices,
   pot_evap_stat
 
 }
-
