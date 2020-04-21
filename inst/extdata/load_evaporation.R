@@ -76,7 +76,7 @@ read_evaporation_matrix_from_url <- function(url)
 }
 
 # get geographical "stamp" for Berlin area ---------------------------------
-berlin_dwd_mask <- function()
+get_berlin_dwd_mask <- function()
 {
   #DWD matrix filled with NA
   berlin_matrix <- matrix(NA, nrow = 866, ncol = 654)
