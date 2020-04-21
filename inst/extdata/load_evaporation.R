@@ -86,7 +86,7 @@ get_berlin_dwd_mask <- function()
 
   #set Berlin cells to 1
 
-  for (i in 1:length(berlin_coordinates$row)) {
+  for (i in seq_along(berlin_coordinates$row)) {
       berlin_matrix[berlin_coordinates$row[i], berlin_coordinates$col[i]] <- 1
   }
 
