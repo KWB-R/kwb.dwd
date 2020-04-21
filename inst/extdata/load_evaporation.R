@@ -102,7 +102,7 @@ evaporation_stats <- function(evaporation_matrices,
   pot_evap_stat <- file_info
 
 
-  for (i in 1:length(evaporation_matrices)) {
+  for (i in seq_along(evaporation_matrices)) {
 
     #keep only Berlin grid cells
     berlin_values <- evaporation_matrices[[i]] * geo_mask
