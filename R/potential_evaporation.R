@@ -52,16 +52,20 @@ get_berlin_dwd_mask <- function()
 # calculate_potential_evaporation_stats ----------------------------------------
 
 # Calculate stats of potential evaporation for geographical subset
-calculate_potential_evaporation_stats <- function(
-  evaporation_matrices, file_info, geo_mask
-)
+calculate_potential_evaporation_stats <- function(matrices, geo_mask)
 {
+  # Provide metadata from matrices' attributes: file name, year, month
+  file_info <- as.data.frame(lapply(
+    X = stats::setNames(nm = c("file", "year", "month")),
+    FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
+  ))
+
   pot_evap_stat <- file_info
 
-  for (i in seq_along(evaporation_matrices)) {
+  for (i in seq_along(matrices)) {
 
     #keep only Berlin grid cells
-    berlin_values <- evaporation_matrices[[i]] * geo_mask
+    berlin_values <- matrices[[i]] * geo_mask
 
     #correct unit to mm
     berlin_values <- berlin_values / 10

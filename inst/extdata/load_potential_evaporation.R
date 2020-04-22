@@ -22,14 +22,6 @@ if (FALSE)
   # Read all files into a list of matrices
   matrices <- lapply(urls, kwb.dwd:::read_potential_evaporation_from_url)
 
-  # Provide metadata from matrices' attributes: file name, year, month
-  file_info <- as.data.frame(lapply(
-    X = stats::setNames(nm = c("file", "year", "month")),
-    FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
-  ))
-
-  head(file_info)
-
   str(matrices[[1]])
 
   # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to 1, rest of cells = NA)
@@ -38,8 +30,7 @@ if (FALSE)
   # calculate monthly stats for Berlin
   # use "monthly_evapo_p" because the filename at DWD reads the same
   berlin_monthly_evapo_p <- kwb.dwd:::calculate_potential_evaporation_stats(
-    evaporation_matrices = matrices,
-    file_info = file_info,
+    matrices = matrices,
     geo_mask = berlin_dwd_mask
   )
 }
