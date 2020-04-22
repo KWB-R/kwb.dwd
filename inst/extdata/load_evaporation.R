@@ -20,7 +20,7 @@ if (FALSE)
   urls <- file.path(base_url, relative_urls)
 
   # Read all files into a list of matrices
-  evaporation_matrices <- lapply(urls, read_evaporation_matrix_from_url)
+  evaporation_matrices <- lapply(urls, kwb.dwd:::read_evaporation_matrix_from_url)
 
   # Helper function to collect a specific attribute from all list elements
   collect <- function(x) sapply(evaporation_matrices, kwb.utils::getAttribute, x)
@@ -37,11 +37,12 @@ if (FALSE)
   str(evaporation_matrices[[1]])
 
   # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to 1, rest of cells = NA)
-    berlin_dwd_mask <- get_berlin_dwd_mask()
+  berlin_dwd_mask <- kwb.dwd:::get_berlin_dwd_mask()
 
   # calculate monthly stats for Berlin
-    berlin_evap_monthly <- evaporation_stats(evaporation_matrices = evaporation_matrices,
-                                             file_info = file_info,
-                                             geo_mask = berlin_dwd_mask)
-
+  berlin_evap_monthly <- kwb.dwd:::evaporation_stats(
+    evaporation_matrices = evaporation_matrices,
+    file_info = file_info,
+    geo_mask = berlin_dwd_mask
+  )
 }
