@@ -1,5 +1,5 @@
-# read_evaporation_matrix_from_url ---------------------------------------------
-read_evaporation_matrix_from_url <- function(url)
+# read_potential_evaporation_from_url ------------------------------------------
+read_potential_evaporation_from_url <- function(url)
 {
   stopifnot(is.character(url), length(url) == 1L)
 
@@ -47,8 +47,12 @@ get_berlin_dwd_mask <- function()
   berlin_matrix
 }
 
-# calculate stats of potential evaporation for geographical subset -------------
-evaporation_stats <- function(evaporation_matrices, file_info, geo_mask)
+# calculate_potential_evaporation_stats ----------------------------------------
+
+# Calculate stats of potential evaporation for geographical subset
+calculate_potential_evaporation_stats <- function(
+  evaporation_matrices, file_info, geo_mask
+)
 {
   pot_evap_stat <- file_info
 

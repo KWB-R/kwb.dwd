@@ -20,7 +20,9 @@ if (FALSE)
   urls <- file.path(base_url, relative_urls)
 
   # Read all files into a list of matrices
-  evaporation_matrices <- lapply(urls, kwb.dwd:::read_evaporation_matrix_from_url)
+  evaporation_matrices <- lapply(
+    urls, kwb.dwd:::read_potential_evaporation_from_url
+  )
 
   # Helper function to collect a specific attribute from all list elements
   collect <- function(x) sapply(evaporation_matrices, kwb.utils::getAttribute, x)
@@ -40,7 +42,7 @@ if (FALSE)
   berlin_dwd_mask <- kwb.dwd:::get_berlin_dwd_mask()
 
   # calculate monthly stats for Berlin
-  berlin_evap_monthly <- kwb.dwd:::evaporation_stats(
+  berlin_evap_monthly <- kwb.dwd:::calculate_potential_evaporation_stats(
     evaporation_matrices = evaporation_matrices,
     file_info = file_info,
     geo_mask = berlin_dwd_mask
