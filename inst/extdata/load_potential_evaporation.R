@@ -27,7 +27,7 @@ if (FALSE)
 
   # Provide metadata: file name, year, month
   file_info <- data.frame(
-    file = relative_urls,
+    file = collect("file"),
     year = collect("year"),
     month = collect("month")
   )

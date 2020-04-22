@@ -23,7 +23,9 @@ read_potential_evaporation_from_url <- function(url)
     as.matrix(utils::read.table(text = text[-(1:6)])),
     header = text[1:6],
     year = extract_date_part(1L),
-    month = extract_date_part(2L)
+    month = extract_date_part(2L),
+    file = file_name,
+    origin = dirname(url)
   )
 }
 
