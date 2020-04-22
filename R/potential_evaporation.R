@@ -54,28 +54,22 @@ get_berlin_dwd_mask <- function()
 # Calculate stats of potential evaporation for geographical subset
 calculate_potential_evaporation_stats <- function(matrices, geo_mask)
 {
-  # Provide metadata from matrices' attributes: file name, year, month
-  file_info <- as.data.frame(lapply(
+  # Keep only Berlin grid cells and correct unit to mm
+  berlin_values <- lapply(matrices, function(m) m * geo_mask / 10)
+
+  # Start with metadata from matrices' attributes: file name, year, month
+  pot_evap_stat <- as.data.frame(lapply(
     X = stats::setNames(nm = c("file", "year", "month")),
     FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
   ))
 
-  pot_evap_stat <- file_info
+  # Function to apply a statistical function to all vectors in berlin_values
+  get_stats <- function(fun) sapply(berlin_values, fun, na.rm = TRUE)
 
-  for (i in seq_along(matrices)) {
-
-    #keep only Berlin grid cells
-    berlin_values <- matrices[[i]] * geo_mask
-
-    #correct unit to mm
-    berlin_values <- berlin_values / 10
-
-    get_stats <- function(fun) fun(berlin_values, na.rm = TRUE)
-    pot_evap_stat$mean[i] <- get_stats(mean)
-    pot_evap_stat$sd[i] <- get_stats(stats::sd)
-    pot_evap_stat$min[i] <- get_stats(min)
-    pot_evap_stat$max[i] <- get_stats(max)
-  }
+  pot_evap_stat$mean <- get_stats(mean)
+  pot_evap_stat$sd <- get_stats(stats::sd)
+  pot_evap_stat$min <- get_stats(min)
+  pot_evap_stat$max <- get_stats(max)
 
   pot_evap_stat
 }
