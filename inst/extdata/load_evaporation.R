@@ -1,7 +1,7 @@
 #
-# Load evaporation data from DWD server
+# Load potential evaporation data from DWD server
 #
-# Source the whole script first to load the function defined below
+# Source the whole script first to load the function defined below (if any)
 # Manually go through the commands within the MAIN section
 #
 
@@ -20,12 +20,10 @@ if (FALSE)
   urls <- file.path(base_url, relative_urls)
 
   # Read all files into a list of matrices
-  evaporation_matrices <- lapply(
-    urls, kwb.dwd:::read_potential_evaporation_from_url
-  )
+  matrices <- lapply(urls, kwb.dwd:::read_potential_evaporation_from_url)
 
   # Helper function to collect a specific attribute from all list elements
-  collect <- function(x) sapply(evaporation_matrices, kwb.utils::getAttribute, x)
+  collect <- function(x) sapply(matrices, kwb.utils::getAttribute, x)
 
   # Provide metadata: file name, year, month
   file_info <- data.frame(
@@ -36,14 +34,15 @@ if (FALSE)
 
   head(file_info)
 
-  str(evaporation_matrices[[1]])
+  str(matrices[[1]])
 
   # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to 1, rest of cells = NA)
   berlin_dwd_mask <- kwb.dwd:::get_berlin_dwd_mask()
 
   # calculate monthly stats for Berlin
-  berlin_evap_monthly <- kwb.dwd:::calculate_potential_evaporation_stats(
-    evaporation_matrices = evaporation_matrices,
+  # use "monthly_evapo_p" because the filename at DWD reads the same
+  berlin_monthly_evapo_p <- kwb.dwd:::calculate_potential_evaporation_stats(
+    evaporation_matrices = matrices,
     file_info = file_info,
     geo_mask = berlin_dwd_mask
   )
