@@ -22,15 +22,11 @@ if (FALSE)
   # Read all files into a list of matrices
   matrices <- lapply(urls, kwb.dwd:::read_potential_evaporation_from_url)
 
-  # Helper function to collect a specific attribute from all list elements
-  collect <- function(x) sapply(matrices, kwb.utils::getAttribute, x)
-
-  # Provide metadata: file name, year, month
-  file_info <- data.frame(
-    file = collect("file"),
-    year = collect("year"),
-    month = collect("month")
-  )
+  # Provide metadata from matrices' attributes: file name, year, month
+  file_info <- as.data.frame(lapply(
+    X = stats::setNames(nm = c("file", "year", "month")),
+    FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
+  ))
 
   head(file_info)
 
