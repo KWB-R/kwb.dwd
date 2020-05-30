@@ -83,8 +83,9 @@ list_url <- function(
 
   # Merge files at this level with files in subdirectories. Return the sorted
   # file list with attribute "failed" if any directory URL could not be accessed
-  structure(failed = attr(files_in_dirs, "failed"), sort_file_info(
-    x = merge_file_info(info, files, files_in_dirs, is_directory, full_info)
+  structure(failed = attr(files_in_dirs, "failed"), sort_or_order(
+    x = merge_file_info(info, files, files_in_dirs, is_directory, full_info),
+    by = "file"
   ))
 }
 
@@ -292,15 +293,3 @@ merge_file_info <- function(info, files, files_in_dirs, is_directory, full_info)
   }
 }
 
-# sort_file_info ---------------------------------------------------------------
-sort_file_info <- function(x)
-{
-  if (is.data.frame(x)) {
-
-    kwb.utils::resetRowNames(x[order(kwb.utils::selectColumns(x, "file")), ])
-
-  } else {
-
-    sort(x)
-  }
-}

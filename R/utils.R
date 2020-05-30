@@ -121,3 +121,16 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
 
   element
 }
+
+# sort_or_order ----------------------------------------------------------------
+sort_or_order <- function(x, by = NULL)
+{
+  if (is.data.frame(x)) {
+
+    kwb.utils::resetRowNames(x[order(kwb.utils::selectColumns(x, by)), ])
+
+  } else {
+
+    sort(x)
+  }
+}
