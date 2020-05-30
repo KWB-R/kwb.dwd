@@ -4,9 +4,14 @@
 \alias{get_radolan_urls}
 \title{Get URLs to Available Radolan Files}
 \usage{
-get_radolan_urls(start_daily = "2006-10", start_hourly = "2005-06",
-  end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(),
-  roll_to_first = TRUE)), end_hourly = end_daily, ...)
+get_radolan_urls(
+  start_daily = "2006-10",
+  start_hourly = "2005-06",
+  end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(), roll_to_first
+    = TRUE)),
+  end_hourly = end_daily,
+  ...
+)
 }
 \arguments{
 \item{start_daily}{month string (yyyy-mm) of first daily record.

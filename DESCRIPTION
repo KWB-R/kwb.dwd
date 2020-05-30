@@ -28,7 +28,7 @@ Suggests:
     covr (>= 3.2.1),
     knitr (>= 1.22),
     rmarkdown (>= 1.12)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Imports: 
     fs (>= 1.2.6),
     kwb.utils (>= 0.5.0),
