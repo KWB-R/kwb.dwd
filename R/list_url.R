@@ -216,7 +216,7 @@ info_to_file_info <- function(info, url = NULL)
     Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
   )
 
-  info$type <- ifelse(grepl("^d", info$permissions), "directory", "file")
+  info$type <- ifelse(row_represents_directory(info), "directory", "file")
 
   is_this_year <- grepl(":", info$time)
 
@@ -292,4 +292,3 @@ merge_file_info <- function(info, files, files_in_dirs, is_directory, full_info)
     c(files[! is_directory], files_in_dirs)
   }
 }
-
