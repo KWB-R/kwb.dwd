@@ -244,8 +244,11 @@ merge_url_lists <- function(url_lists, directories, full_info)
   #url_lists <- list(character(), character())
   stopifnot(is.list(url_lists))
 
+  # Prepare an empty result set
+  empty_result <- empty_file_info(full_info)
+
   if (length(url_lists) == 0) {
-    return(empty_file_info(full_info))
+    return(empty_result)
   }
 
   # Merge the file lists returned for each directory
@@ -254,17 +257,22 @@ merge_url_lists <- function(url_lists, directories, full_info)
     FUN = function(i) {
       #i <- 1
       urls <- url_lists[[i]]
+
+      add_parent <- function(x) paste0(directories[i], "/", x)
+
       if (full_info && nrow(urls)) {
-        urls$file <- paste0(directories[i], "/", urls$file)
-        urls
+
+        set_file(urls, add_parent(get_file(urls)))
+
       } else if (length(urls)) {
-        paste0(directories[i], "/", urls)
+
+        add_parent(urls)
       }
     }
   ))
 
   if (length(files) == 0) {
-    return(empty_file_info(full_info))
+    return(empty_result)
   }
 
   # Return the vector of files with an attribute "failed" holding the merged
