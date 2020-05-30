@@ -99,13 +99,10 @@ list_url <- function(
 
   # Return the sorted file list with attribute "failed" if any directory URL
   # could not be accessed
-  result <- if (full_info) {
-    kwb.utils::resetRowNames(all_files[order(all_files$file), ])
-  } else {
-    sort(all_files)
-  }
-
-  structure(result, failed = attr(files_in_dirs, "failed"))
+  structure(
+    sort_file_info(all_files, full_info),
+    failed = attr(files_in_dirs, "failed")
+  )
 }
 
 # assert_url -------------------------------------------------------------------
@@ -275,4 +272,17 @@ merge_url_lists <- function(url_lists, directories, full_info)
   }
 
   structure(result, failed = unlist(failed))
+}
+
+# sort_file_info ---------------------------------------------------------------
+sort_file_info <- function(all_files, full_info)
+{
+  if (full_info) {
+
+    kwb.utils::resetRowNames(all_files[order(all_files$file), ])
+
+  } else {
+
+    sort(all_files)
+  }
 }
