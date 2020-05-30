@@ -1,5 +1,5 @@
-# read_evaporation_matrix_from_url ---------------------------------------------
-read_evaporation_matrix_from_url <- function(url)
+# read_potential_evaporation_from_url ------------------------------------------
+read_potential_evaporation_from_url <- function(url)
 {
   stopifnot(is.character(url), length(url) == 1L)
 
@@ -23,7 +23,9 @@ read_evaporation_matrix_from_url <- function(url)
     as.matrix(utils::read.table(text = text[-(1:6)])),
     header = text[1:6],
     year = extract_date_part(1L),
-    month = extract_date_part(2L)
+    month = extract_date_part(2L),
+    file = file_name,
+    origin = dirname(url)
   )
 }
 
@@ -47,25 +49,27 @@ get_berlin_dwd_mask <- function()
   berlin_matrix
 }
 
-# calculate stats of potential evaporation for geographical subset -------------
-evaporation_stats <- function(evaporation_matrices, file_info, geo_mask)
+# calculate_potential_evaporation_stats ----------------------------------------
+
+# Calculate stats of potential evaporation for geographical subset
+calculate_potential_evaporation_stats <- function(matrices, geo_mask)
 {
-  pot_evap_stat <- file_info
+  # Keep only Berlin grid cells and correct unit to mm
+  berlin_values <- lapply(matrices, function(m) m * geo_mask / 10)
 
-  for (i in seq_along(evaporation_matrices)) {
+  # Start with metadata from matrices' attributes: file name, year, month
+  pot_evap_stat <- as.data.frame(lapply(
+    X = stats::setNames(nm = c("file", "year", "month")),
+    FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
+  ))
 
-    #keep only Berlin grid cells
-    berlin_values <- evaporation_matrices[[i]] * geo_mask
+  # Function to apply a statistical function to all vectors in berlin_values
+  get_stats <- function(fun) sapply(berlin_values, fun, na.rm = TRUE)
 
-    #correct unit to mm
-    berlin_values <- berlin_values / 10
-
-    get_stats <- function(fun) fun(berlin_values, na.rm = TRUE)
-    pot_evap_stat$mean[i] <- get_stats(mean)
-    pot_evap_stat$sd[i] <- get_stats(stats::sd)
-    pot_evap_stat$min[i] <- get_stats(min)
-    pot_evap_stat$max[i] <- get_stats(max)
-  }
+  pot_evap_stat$mean <- get_stats(mean)
+  pot_evap_stat$sd <- get_stats(stats::sd)
+  pot_evap_stat$min <- get_stats(min)
+  pot_evap_stat$max <- get_stats(max)
 
   pot_evap_stat
 }
