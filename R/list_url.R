@@ -268,19 +268,14 @@ merge_url_lists <- function(url_lists, directories, full_info)
     return(empty_file_info(full_info))
   }
 
-  # Merge the URLs of directories that could not be read
-  failed <- kwb.utils::excludeNULL(dbg = FALSE, lapply(
-    url_lists, attr, which = "failed"
-  ))
-
-  # Return the vector of files with an attribute "failed"
-  result <- if (full_info) {
-    do.call(rbind, files)
-  } else {
-    unlist(files)
-  }
-
-  structure(result, failed = unlist(failed))
+  # Return the vector of files with an attribute "failed" holding the merged
+  # URLs of directories that could not be read
+  structure(
+    bind_list_elements(files),
+    failed = unlist(kwb.utils::excludeNULL(dbg = FALSE, lapply(
+      url_lists, attr, which = "failed"
+    )))
+  )
 }
 
 # merge_file_info --------------------------------------------------------------
