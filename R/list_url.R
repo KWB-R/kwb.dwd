@@ -39,7 +39,7 @@ list_url <- function(
   }
 
   # Extract the file names
-  files <- kwb.utils::selectColumns(info, "file")
+  files <- get_file(info)
 
   # Which files represent directories?
   is_directory <- row_represents_directory(info)
@@ -49,7 +49,7 @@ list_url <- function(
   if (need_to_return(recursive, depth, max_depth, is_directory)) {
 
     # Indicate directories with trailing slash
-    info$file <- indicate_directories(files, is_directory)
+    info <- set_file(info, indicate_directories(files, is_directory))
 
     return(finish_file_info(info, full_info))
   }
@@ -87,6 +87,18 @@ list_url <- function(
     x = merge_file_info(info, files, files_in_dirs, is_directory, full_info),
     by = "file"
   ))
+}
+
+# get_file ---------------------------------------------------------------------
+get_file <- function(df)
+{
+  kwb.utils::selectColumns(df, "file")
+}
+
+# set_file ---------------------------------------------------------------------
+set_file <- function(df, file)
+{
+  kwb.utils::setColumns(df, file = file, dbg = FALSE)
 }
 
 # get_file_info_from_url -------------------------------------------------------
@@ -193,7 +205,7 @@ finish_file_info <- function(info, full_info)
 
   } else {
 
-    info$file
+    get_file(info)
   }
 }
 
