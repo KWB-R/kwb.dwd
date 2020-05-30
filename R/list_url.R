@@ -26,34 +26,17 @@ list_url <- function(
 )
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
-  stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
 
-  # Append slash if necessary
-  url <- kwb.utils::assertFinalSlash(url)
+  # Check URL and append slash if necessary
+  url <- assert_url(url)
 
-  # Get a response from the FTP server
-  response <- try_to_get_url(url, curl = curl, ...)
-  #response <- kwb.dwd:::try_to_get_url(url)
+  # List the files in the folder specified by URL
+  info <- get_file_info_from_url(url, curl, full_info, ...)
 
-  # Return empty character vector if the response is NULL or equal to an empty
-  # string. A response of NULL indicates that an error occurred when reading
-  # from the url. In this case, the attribute "failed" is set to the URL that
-  # failed to be accessed.
-  if (is.null(response) || grepl("^\\s*$", response)) {
-
-    return(structure(
-      if (full_info) data.frame() else character(),
-      failed = if (is.null(response)) url
-    ))
+  # Return if there is nothing to see
+  if (is_empty(info)) {
+    return(info)
   }
-
-  # Convert response string to data frame
-  info <- response_to_data_frame(response)
-
-  # if (full_info) {
-  #   return(info_to_file_info(info))
-  # }
 
   # Extract permission strings (to check for the directory flag "d")
   permissions <- kwb.utils::selectColumns(info, "permissions")
@@ -129,6 +112,46 @@ list_url <- function(
   }
 
   structure(result, failed = attr(files_in_dirs, "failed"))
+}
+
+# assert_url -------------------------------------------------------------------
+assert_url <- function(url)
+{
+  stopifnot(is.character(url))
+  stopifnot(length(url) == 1)
+
+  # Append slash if necessary
+  kwb.utils::assertFinalSlash(url)
+}
+
+# get_file_info_from_url -------------------------------------------------------
+get_file_info_from_url <- function(url, curl, full_info, ...)
+{
+  # Get a response from the FTP server
+  response <- try_to_get_url(url, curl = curl, ...)
+  #response <- kwb.dwd:::try_to_get_url(url)
+
+  # Return empty character vector if the response is NULL or equal to an empty
+  # string. A response of NULL indicates that an error occurred when reading
+  # from the url. In this case, the attribute "failed" is set to the URL that
+  # failed to be accessed.
+  if (is.null(response) || grepl("^\\s*$", response)) {
+
+    return(structure(
+      if (full_info) data.frame() else character(),
+      failed = if (is.null(response)) url,
+      empty = TRUE
+    ))
+  }
+
+  # Convert response string to data frame
+  response_to_data_frame(response)
+}
+
+# is_empty ---------------------------------------------------------------------
+is_empty <- function(x)
+{
+  isTRUE(attr(x, "empty"))
 }
 
 # response_to_data_frame -------------------------------------------------------
