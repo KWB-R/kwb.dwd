@@ -135,6 +135,39 @@ empty_file_info <- function(full_info)
   }
 }
 
+# response_to_data_frame -------------------------------------------------------
+response_to_data_frame <- function(response)
+{
+  # Split response at new line character into rows
+  rows <- strsplit(response, "\r?\n")[[1]]
+
+  # Widths of the info parts of the rows in number of characters
+  pattern <- "^((([^ ]+) +){8})"
+  info_list <- kwb.utils::subExpressionMatches(pattern, rows, select = 1)
+  info_widths <- nchar(unlist(lapply(info_list, "[[", 1)))
+
+  # Read the info block into a data frame
+  text <- unlist(lapply(seq_along(rows), function(i) {
+    substr(rows[i], 1, info_widths[i])
+  }))
+
+  info <- utils::read.table(text = text, stringsAsFactors = FALSE)
+
+  # Name the columns
+  names(info) <- c(
+    "permissions", "links", "user", "group", "size", "month", "day", "time"
+  )
+
+  # Append the file names (keeping possible spaces!)
+  info$file <- unlist(lapply(seq_along(rows), function(i) {
+    row <- rows[i]
+    substr(row, info_widths[i] + 1, nchar(row))
+  }))
+
+  # Return info data frame
+  info
+}
+
 # is_empty ---------------------------------------------------------------------
 is_empty <- function(x)
 {
@@ -172,39 +205,6 @@ finish_file_info <- function(info, full_info)
 
     info$file
   }
-}
-
-# response_to_data_frame -------------------------------------------------------
-response_to_data_frame <- function(response)
-{
-  # Split response at new line character into rows
-  rows <- strsplit(response, "\r?\n")[[1]]
-
-  # Widths of the info parts of the rows in number of characters
-  pattern <- "^((([^ ]+) +){8})"
-  info_list <- kwb.utils::subExpressionMatches(pattern, rows, select = 1)
-  info_widths <- nchar(unlist(lapply(info_list, "[[", 1)))
-
-  # Read the info block into a data frame
-  text <- unlist(lapply(seq_along(rows), function(i) {
-    substr(rows[i], 1, info_widths[i])
-  }))
-
-  info <- utils::read.table(text = text, stringsAsFactors = FALSE)
-
-  # Name the columns
-  names(info) <- c(
-    "permissions", "links", "user", "group", "size", "month", "day", "time"
-  )
-
-  # Append the file names (keeping possible spaces!)
-  info$file <- unlist(lapply(seq_along(rows), function(i) {
-    row <- rows[i]
-    substr(row, info_widths[i] + 1, nchar(row))
-  }))
-
-  # Return info data frame
-  info
 }
 
 # info_to_file_info ------------------------------------------------------------
