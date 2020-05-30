@@ -97,6 +97,15 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
+# month_numbers ----------------------------------------------------------------
+month_numbers <- function()
+{
+  list(
+    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
+    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
+  )
+}
+
 # month_sequence ---------------------------------------------------------------
 month_sequence <- function(start, end)
 {

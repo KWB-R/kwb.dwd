@@ -211,10 +211,7 @@ finish_file_info <- function(info, full_info)
 # info_to_file_info ------------------------------------------------------------
 info_to_file_info <- function(info, url = NULL)
 {
-  months <- list(
-    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
-    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
-  )
+  months <- month_numbers()
 
   info$type <- ifelse(row_represents_directory(info), "directory", "file")
 
