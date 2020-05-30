@@ -211,30 +211,38 @@ finish_file_info <- function(info, full_info)
 # info_to_file_info ------------------------------------------------------------
 info_to_file_info <- function(info, url = NULL)
 {
-  months <- month_numbers()
-
   info$type <- ifelse(row_represents_directory(info), "directory", "file")
 
-  is_this_year <- grepl(":", info$time)
+  times <- kwb.utils::selectColumns(info, "time")
 
-  info$year <- info$time
-  info$year[is_this_year] <- format(Sys.Date(), "%Y") # current year
+  not_this_year <- ! grepl(":", times)
 
-  info$time[! is_this_year] <- "00:00"
+  # Current year in case of missing year
+  info$year <- ifelse(not_this_year, times, format(Sys.Date(), "%Y"))
 
-  info$modification_time <- sprintf(
-    "%04d-%02d-%02d %s",
-    as.integer(info$year),
-    sapply(info$month, kwb.utils::selectElements, x = months),
-    as.integer(info$day),
-    info$time
-  )
+  info$time[not_this_year] <- "00:00"
+
+  info$modification_time <- columns_to_timestamp(info)
 
   info <- kwb.utils::removeColumns(info, c("year", "month", "day", "time"))
 
   kwb.utils::moveColumnsToFront(info, c(
     "file", "type", "size", "permissions", "modification_time", "user", "group"
   ))
+}
+
+# columns_to_timestamp ---------------------------------------------------------
+columns_to_timestamp <- function(df)
+{
+  get_column <- function(x) kwb.utils::selectColumns(df, x)
+
+  sprintf(
+    "%04d-%02d-%02d %s",
+    as.integer(get_column("year")),
+    sapply(get_column("month"), kwb.utils::selectElements, x = month_numbers()),
+    as.integer(get_column("day")),
+    get_column("time")
+  )
 }
 
 # merge_url_lists --------------------------------------------------------------
@@ -251,9 +259,9 @@ merge_url_lists <- function(url_lists, directories, full_info)
   }
 
   # Merge the file lists returned for each directory
-  files <- kwb.utils::excludeNULL(dbg = FALSE, lapply(
-    seq_along(url_lists),
-    FUN = function(i) {
+  files <- kwb.utils::excludeNULL(
+    dbg = FALSE,
+    lapply(seq_along(url_lists), FUN = function(i) {
       #i <- 1
       urls <- url_lists[[i]]
 
@@ -267,8 +275,8 @@ merge_url_lists <- function(url_lists, directories, full_info)
 
         add_parent(urls)
       }
-    }
-  ))
+    })
+  )
 
   if (length(files) == 0) {
     return(empty_result)
