@@ -38,14 +38,11 @@ list_url <- function(
     return(info)
   }
 
-  # Extract permission strings (to check for the directory flag "d")
-  permissions <- kwb.utils::selectColumns(info, "permissions")
-
   # Extract the file names
   files <- kwb.utils::selectColumns(info, "file")
 
   # Which files represent directories?
-  is_directory <- grepl("^d", permissions)
+  is_directory <- row_represents_directory(info)
 
   # Are we at maximum depth?
   at_maximum_depth <- (! is.na(max_depth) && depth == max_depth)
@@ -152,6 +149,16 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
 is_empty <- function(x)
 {
   isTRUE(attr(x, "empty"))
+}
+
+# row_represents_directory -----------------------------------------------------
+row_represents_directory <- function(info)
+{
+  # Extract permission strings (to check for the directory flag "d")
+  permissions <- kwb.utils::selectColumns(info, "permissions")
+
+  # Which files represent directories?
+  grepl("^d", permissions)
 }
 
 # response_to_data_frame -------------------------------------------------------
