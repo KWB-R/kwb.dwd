@@ -207,23 +207,28 @@ merge_url_lists <- function(url_lists, directories, full_info)
   }
 
   # Merge the file lists returned for each directory
-  files <- kwb.utils::excludeNULL(lapply(seq_along(url_lists), function(i) {
-    #i <- 1
-    urls <- url_lists[[i]]
-    if (full_info && nrow(urls)) {
-      urls$file <- paste0(directories[i], "/", urls$file)
-      urls
-    } else if (length(urls)) {
-      paste0(directories[i], "/", urls)
+  files <- kwb.utils::excludeNULL(dbg = FALSE, lapply(
+    seq_along(url_lists),
+    FUN = function(i) {
+      #i <- 1
+      urls <- url_lists[[i]]
+      if (full_info && nrow(urls)) {
+        urls$file <- paste0(directories[i], "/", urls$file)
+        urls
+      } else if (length(urls)) {
+        paste0(directories[i], "/", urls)
+      }
     }
-  }))
+  ))
 
   if (length(files) == 0) {
     return(if (full_info) data.frame() else character())
   }
 
   # Merge the URLs of directories that could not be read
-  failed <- kwb.utils::excludeNULL(lapply(url_lists, attr, which = "failed"))
+  failed <- kwb.utils::excludeNULL(dbg = FALSE, lapply(
+    url_lists, attr, which = "failed"
+  ))
 
   # Return the vector of files with an attribute "failed"
   result <- if (full_info) {
