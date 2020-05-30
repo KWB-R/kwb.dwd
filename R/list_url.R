@@ -44,12 +44,9 @@ list_url <- function(
   # Which files represent directories?
   is_directory <- row_represents_directory(info)
 
-  # Are we at maximum depth?
-  at_maximum_depth <- (! is.na(max_depth) && depth == max_depth)
-
   # Return the file list if no recursive listing is requested or if we are
   # already at maximum depth or if there are no directories
-  if (! recursive || at_maximum_depth || ! any(is_directory)) {
+  if (need_to_return(recursive, depth, max_depth, is_directory)) {
 
     # Indicate directories with trailing slash
     info$file <- indicate_directories(files, is_directory)
@@ -159,6 +156,16 @@ row_represents_directory <- function(info)
 
   # Which files represent directories?
   grepl("^d", permissions)
+}
+
+# need_to_return ---------------------------------------------------------------
+need_to_return <- function(recursive, depth, max_depth, is_directory)
+{
+  # Are we at maximum depth?
+  at_max_depth <- (! is.na(max_depth) && depth == max_depth)
+
+  # No recursion requested or maximum depth reached or there are no directories
+  ! recursive || at_max_depth || ! any(is_directory)
 }
 
 # response_to_data_frame -------------------------------------------------------
