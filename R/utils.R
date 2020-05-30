@@ -82,6 +82,12 @@ indicate_directories <- function(x, is_directory)
   x
 }
 
+# is_empty ---------------------------------------------------------------------
+is_empty <- function(x)
+{
+  (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
+}
+
 # list_files_in_zip_files ------------------------------------------------------
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {

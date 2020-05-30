@@ -110,17 +110,22 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
   # string. A response of NULL indicates that an error occurred when reading
   # from the url. In this case, the attribute "failed" is set to the URL that
   # failed to be accessed.
-  if (is.null(response) || grepl("^\\s*$", response)) {
+  if (is_empty_response(response)) {
 
     return(structure(
       empty_file_info(full_info),
-      failed = if (is.null(response)) url,
-      empty = TRUE
+      failed = if (is.null(response)) url
     ))
   }
 
   # Convert response string to data frame
   response_to_data_frame(response)
+}
+
+# is_empty_response ------------------------------------------------------------
+is_empty_response <- function(response)
+{
+  is.null(response) || grepl("^\\s*$", response)
 }
 
 # empty_file_info --------------------------------------------------------------
@@ -167,12 +172,6 @@ response_to_data_frame <- function(response)
 
   # Return info data frame
   info
-}
-
-# is_empty ---------------------------------------------------------------------
-is_empty <- function(x)
-{
-  isTRUE(attr(x, "empty"))
 }
 
 # row_represents_directory -----------------------------------------------------
