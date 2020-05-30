@@ -159,21 +159,20 @@ response_to_data_frame <- function(response)
     substr(rows[i], 1, info_widths[i])
   }))
 
-  info <- utils::read.table(text = text, stringsAsFactors = FALSE)
-
-  # Name the columns
-  names(info) <- c(
-    "permissions", "links", "user", "group", "size", "month", "day", "time"
+  # Convert the text into a data frame and name the columns
+  info <- stats::setNames(
+    utils::read.table(text = text, stringsAsFactors = FALSE), c(
+      "permissions", "links", "user", "group", "size", "month", "day", "time"
+    )
   )
 
-  # Append the file names (keeping possible spaces!)
-  info$file <- unlist(lapply(seq_along(rows), function(i) {
-    row <- rows[i]
-    substr(row, info_widths[i] + 1, nchar(row))
+  # Extract the file names (keeping possible spaces!)
+  files <- unlist(lapply(seq_along(rows), function(i) {
+    substring(rows[i], info_widths[i] + 1)
   }))
 
-  # Return info data frame
-  info
+  # Set the file names in the info data frame and return the info data frame
+  set_file(info, files)
 }
 
 # row_represents_directory -----------------------------------------------------
