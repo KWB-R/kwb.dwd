@@ -16,8 +16,13 @@
 #' @export
 #'
 list_url <- function(
-  url, recursive = ! is.na(max_depth), max_depth = NA, ..., depth = 0,
-  full_info = FALSE, curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
+  url = ftp_path_cdc(),
+  recursive = ! is.na(max_depth),
+  max_depth = NA,
+  ...,
+  depth = 0,
+  full_info = FALSE,
+  curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
 )
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
