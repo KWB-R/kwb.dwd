@@ -84,7 +84,7 @@ list_url <- function(
   # Merge files at this level with files in subdirectories. Return the sorted
   # file list with attribute "failed" if any directory URL could not be accessed
   structure(failed = attr(files_in_dirs, "failed"), sort_or_order(
-    x = merge_file_info(info, files, files_in_dirs, is_directory, full_info),
+    x = merge_file_info(info, files, files_in_dirs, is_directory),
     by = "file"
   ))
 }
@@ -286,9 +286,9 @@ merge_url_lists <- function(url_lists, directories, full_info)
 }
 
 # merge_file_info --------------------------------------------------------------
-merge_file_info <- function(info, files, files_in_dirs, is_directory, full_info)
+merge_file_info <- function(info, files, files_in_dirs, is_directory)
 {
-  if (full_info) {
+  if (is.data.frame(info)) {
 
     rbind(info_to_file_info(info[! is_directory, ]), files_in_dirs)
 
