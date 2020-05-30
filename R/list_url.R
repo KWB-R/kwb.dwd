@@ -89,16 +89,6 @@ list_url <- function(
   ))
 }
 
-# assert_url -------------------------------------------------------------------
-assert_url <- function(url)
-{
-  stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
-
-  # Append slash if necessary
-  kwb.utils::assertFinalSlash(url)
-}
-
 # get_file_info_from_url -------------------------------------------------------
 get_file_info_from_url <- function(url, curl, full_info, ...)
 {

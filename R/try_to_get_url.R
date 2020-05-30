@@ -4,8 +4,7 @@ try_to_get_url <- function(
   dbg = TRUE
 )
 {
-  stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
+  url <- assert_url(url)
 
   success <- FALSE
   trial <- 0

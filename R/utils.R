@@ -1,3 +1,20 @@
+# assert_url -------------------------------------------------------------------
+assert_url <- function(url, final_slash = TRUE)
+{
+  stopifnot(is.character(url))
+  stopifnot(length(url) == 1)
+
+  # Append slash if necessary
+  if (final_slash) {
+
+    kwb.utils::assertFinalSlash(url)
+
+  } else {
+
+    url
+  }
+}
+
 # back -------------------------------------------------------------------------
 back <- function(n)
 {
