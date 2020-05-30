@@ -5,7 +5,7 @@
 \title{List Files or Folders in a FTP Directory}
 \usage{
 list_url(
-  url,
+  url = ftp_path_cdc(),
   recursive = !is.na(max_depth),
   max_depth = NA,
   ...,
