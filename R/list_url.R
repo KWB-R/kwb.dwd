@@ -246,7 +246,7 @@ merge_url_lists <- function(url_lists, directories, full_info)
   stopifnot(is.list(url_lists))
 
   if (length(url_lists) == 0) {
-    return(if (full_info) data.frame() else character())
+    return(empty_file_info(full_info))
   }
 
   # Merge the file lists returned for each directory
@@ -265,7 +265,7 @@ merge_url_lists <- function(url_lists, directories, full_info)
   ))
 
   if (length(files) == 0) {
-    return(if (full_info) data.frame() else character())
+    return(empty_file_info(full_info))
   }
 
   # Merge the URLs of directories that could not be read
