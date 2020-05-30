@@ -51,11 +51,7 @@ list_url <- function(
     # Indicate directories with trailing slash
     info$file <- indicate_directories(files, is_directory)
 
-    return (if (full_info) {
-      info_to_file_info(info)
-    } else {
-      info$file
-    })
+    return(finish_file_info(info, full_info))
   }
 
   # If we arrive here, a recursive listing is requested
@@ -163,6 +159,19 @@ need_to_return <- function(recursive, depth, max_depth, is_directory)
 
   # No recursion requested or maximum depth reached or there are no directories
   ! recursive || at_max_depth || ! any(is_directory)
+}
+
+# finish_file_info -------------------------------------------------------------
+finish_file_info <- function(info, full_info)
+{
+  if (full_info) {
+
+    info_to_file_info(info)
+
+  } else {
+
+    info$file
+  }
 }
 
 # response_to_data_frame -------------------------------------------------------
