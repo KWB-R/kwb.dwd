@@ -112,7 +112,7 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
   if (is.null(response) || grepl("^\\s*$", response)) {
 
     return(structure(
-      if (full_info) data.frame() else character(),
+      empty_file_info(full_info),
       failed = if (is.null(response)) url,
       empty = TRUE
     ))
@@ -120,6 +120,19 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
 
   # Convert response string to data frame
   response_to_data_frame(response)
+}
+
+# empty_file_info --------------------------------------------------------------
+empty_file_info <- function(full_info)
+{
+  if (full_info) {
+
+    data.frame()
+
+  } else {
+
+    character()
+  }
 }
 
 # is_empty ---------------------------------------------------------------------
