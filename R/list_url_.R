@@ -36,10 +36,6 @@ list_url_ <- function(
   # already at maximum depth or if there are no directories. The function is
   # also returned from if info is empty (! any(is_directory) is TRUE).
   if (! recursive || at_max_depth(depth, max_depth) || ! any(is_directory)) {
-
-    # Indicate directories with trailing slash
-    info$file <- indicate_directories(get_info("file"), is_directory)
-
     return(info)
   }
 

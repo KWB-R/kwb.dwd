@@ -152,8 +152,8 @@ mutate_or_not <- function(x, prob = 0.1)
 {
   stopifnot(kwb.utils::inRange(prob, 0, 1))
 
-  # Mutate with a probability of 10 %
-  if (prob > 0 && sample(c(TRUE, FALSE), 1, prob = c(prob, 1 - prob))) {
+  # Mutate with a probability of "prob"
+  if (prob > 0 && sample(c(TRUE, FALSE), 1L, prob = c(prob, 1 - prob))) {
 
     # Add some nonsense
     paste0(x, "blabla")

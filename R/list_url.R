@@ -21,7 +21,7 @@ list_url <- function(
   ...
 )
 {
-  list_url_(
+  result <- list_url_(
     url = url,
     recursive = recursive,
     max_depth = max_depth,
@@ -30,4 +30,20 @@ list_url <- function(
     curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE),
     depth = 0
   )
+
+  if (full_info) {
+
+    result
+
+  } else {
+
+    # Accessor function
+    pull <- function(x) kwb.utils::selectColumns(result, x)
+
+    # Indicate directories with trailing slash
+    structure(
+      indicate_directories(pull("file"), pull("is_directory")),
+      failed = attr(result, "failed")
+    )
+  }
 }
