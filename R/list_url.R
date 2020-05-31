@@ -295,9 +295,10 @@ merge_url_lists <- function(url_lists, directories, full_info)
 # merge_file_info --------------------------------------------------------------
 merge_file_info <- function(info, files, files_in_dirs, is_directory)
 {
-  if (is.data.frame(info)) {
+  if (is.data.frame(files_in_dirs)) {
 
-    rbind(info_to_file_info(info[! is_directory, ]), files_in_dirs)
+    #info.bak <- info
+    rbind(info_to_file_info(info = info[! is_directory, ]), files_in_dirs)
 
   } else {
 
