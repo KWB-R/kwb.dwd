@@ -185,6 +185,12 @@ silently_exclude_null <- function(x)
   kwb.utils::excludeNULL(x, dbg = FALSE)
 }
 
+# space ------------------------------------------------------------------------
+space <- function(depth = 1L)
+{
+  repeated("  ", depth)
+}
+
 # split_into_lines -------------------------------------------------------------
 split_into_lines <- function(x)
 {

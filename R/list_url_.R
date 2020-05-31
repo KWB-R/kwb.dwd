@@ -13,6 +13,7 @@ list_url_ <- function(
     kwb.utils::assignPackageObjects("kwb.dwd")
     kwb.utils::assignArgumentDefaults(list_url)
     kwb.utils::assignArgumentDefaults(list_url_)
+    url <- kwb.dwd:::ftp_path_cdc("help/landing_pages")
     max_depth = 1;full_info=TRUE;set.seed(1)
   }
 
@@ -45,15 +46,10 @@ list_url_ <- function(
   # If we arrive here, a recursive listing is requested. Number of directories
   n_directories <- sum(is_directory)
 
-  # If there are directories (always if we arrive here!), list them by calling
-  # this function recursively
+  # There must be directories if we arrive here!
+  stopifnot(n_directories > 0L)
 
-  #files_in_dirs <- if (n_directories > 0L) {
-
-  # Helper function to show the progress
-  show_progress <- function(i) cat(sprintf(
-    "%s%d/%d: ", repeated("  ", depth), i, n_directories
-  ))
+  # List the directories by calling this function recursively
 
   # URLs representing directories
   directories <- get_info("file")[is_directory]
@@ -62,7 +58,8 @@ list_url_ <- function(
   url_lists <- lapply(seq_len(n_directories), function(i) {
 
     #i <- 1L
-    show_progress(i)
+    # Show the progress
+    cat(sprintf("%s%d/%d: ", space(depth), i, n_directories))
 
     # Recursive call of this function
     list_url_(
@@ -77,8 +74,6 @@ list_url_ <- function(
   })
 
   files_in_dirs <- merge_url_lists(url_lists, directories, full_info)
-
-  #} # else NULL implicitly
 
   # Merge files at this level with files in subdirectories. Return the sorted
   # file list with attribute "failed" if any directory URL could not be accessed
