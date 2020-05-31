@@ -136,7 +136,7 @@ empty_file_info <- function(full_info, failed = NULL)
 {
   result <- if (full_info) {
 
-    data.frame()
+    data.frame(file = character())
 
   } else {
 
