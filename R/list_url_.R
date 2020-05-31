@@ -43,18 +43,20 @@ list_url_ <- function(
     return(info)
   }
 
-  # If we arrive here, a recursive listing is requested. Number of directories
-  n_directories <- sum(is_directory)
-
-  # There must be directories if we arrive here!
-  stopifnot(n_directories > 0L)
-
-  # List the directories by calling this function recursively
+  ###
+  ### If we arrive here, a recursive listing is requested.
+  ###
 
   # URLs representing directories
   directories <- get_info("file")[is_directory]
 
-  # List all directories
+  # Number of directories
+  n_directories <- length(directories)
+
+  # There must be directories if we arrive here!
+  stopifnot(n_directories > 0L)
+
+  # List all directories by calling this function recursively
   url_lists <- lapply(seq_len(n_directories), function(i) {
 
     #i <- 1L
