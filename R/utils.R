@@ -105,6 +105,12 @@ is_empty <- function(x)
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
 }
 
+# left -------------------------------------------------------------------------
+left <- function(x, n)
+{
+  substr(x, 1L, n)
+}
+
 # list_files_in_zip_files ------------------------------------------------------
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
@@ -137,10 +143,25 @@ month_sequence <- function(start, end)
   seq(to_date(start), to_date(end), by = 'months')
 }
 
+# order_by ---------------------------------------------------------------------
+order_by <- function(x, by = NULL)
+{
+  kwb.utils::resetRowNames(
+    x[order(kwb.utils::selectColumns(x, by)), , drop = FALSE]
+  )
+}
+
 # repeated ---------------------------------------------------------------------
 repeated <- function(x, n)
 {
   paste(rep(x, n), collapse = "")
+}
+
+# right ------------------------------------------------------------------------
+right <- function(x, n)
+{
+  nc <- nchar(x)
+  substr(x, nc - n + 1L, nc)
 }
 
 # safe_element -----------------------------------------------------------------
@@ -154,15 +175,9 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
   element
 }
 
-# sort_or_order ----------------------------------------------------------------
-sort_or_order <- function(x, by = NULL)
+# split_into_lines -------------------------------------------------------------
+split_into_lines <- function(x)
 {
-  if (is.data.frame(x)) {
-
-    kwb.utils::resetRowNames(x[order(kwb.utils::selectColumns(x, by)), ])
-
-  } else {
-
-    sort(x)
-  }
+  stopifnot(is.character(x), length(x) == 1L)
+  strsplit(x, "\r?\n")[[1]]
 }
