@@ -26,12 +26,14 @@ list_url <- function(
 )
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
+  #kwb.utils::assignArgumentDefaults(list_url);recursive=TRUE;max_depth=2
 
   # Check URL and append slash if necessary
   url <- assert_url(url)
 
   # List the files in the folder specified by URL
   info <- get_file_info_from_url(url, curl, full_info, ...)
+  #info <- get_file_info_from_url(url, curl, full_info)
 
   # Return if there is nothing to see
   if (is_empty(info)) {
@@ -46,7 +48,7 @@ list_url <- function(
 
   # Return the file list if no recursive listing is requested or if we are
   # already at maximum depth or if there are no directories
-  if (need_to_return(recursive, depth, max_depth, is_directory)) {
+  if (! recursive || at_max_depth(depth, max_depth) || ! any(is_directory)) {
 
     # Indicate directories with trailing slash
     info <- set_file(info, indicate_directories(files, is_directory))
@@ -62,12 +64,14 @@ list_url <- function(
     # URLs representing directories
     directories <- files[is_directory]
 
-    # List all directories
+    # Number of directories
     n_directories <- length(directories)
+
+    # List all directories
     url_lists <- lapply(seq_len(n_directories), function(i) {
       cat(sprintf("%s%d/%d: ", repeated("  ", depth), i, n_directories))
       list_url(
-        paste0(url, directories[i]),
+        url = paste0(url, directories[i]),
         recursive = recursive,
         ...,
         depth = depth + 1,
@@ -185,14 +189,10 @@ row_represents_directory <- function(info)
   grepl("^d", permissions)
 }
 
-# need_to_return ---------------------------------------------------------------
-need_to_return <- function(recursive, depth, max_depth, is_directory)
+# at_max_depth -----------------------------------------------------------------
+at_max_depth <- function(depth, max_depth)
 {
-  # Are we at maximum depth?
-  at_max_depth <- (! is.na(max_depth) && depth == max_depth)
-
-  # No recursion requested or maximum depth reached or there are no directories
-  ! recursive || at_max_depth || ! any(is_directory)
+  (! is.na(max_depth) && depth == max_depth)
 }
 
 # finish_file_info -------------------------------------------------------------
