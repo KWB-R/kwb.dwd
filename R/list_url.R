@@ -36,21 +36,38 @@ list_url <- function(
 
 # @param depth for start depth when \code{recursive = TRUE}
 # @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
-list_url_ <- function(url, recursive, max_depth, full_info, ..., curl, depth)
+list_url_ <- function(
+  url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., curl, depth = 0
+)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
-  #kwb.utils::assignArgumentDefaults(list_url);recursive=TRUE;max_depth=2
+  #kwb.utils::assignArgumentDefaults(list_url_)
+  #recursive=TRUE;max_depth=1;url=ftp_path_cdc();full_info=TRUE
+  #random_failures=TRUE;set.seed(1)
+  random_failures <- FALSE
 
   # Check URL and append slash if necessary
   url <- assert_url(url)
 
-  # List the files in the folder specified by URL
-  info <- get_file_info_from_url(url, curl, full_info, ...)
-  #info <- get_file_info_from_url(url, curl, full_info)
+  # Shall a failure be simulated?
+  mutate <- random_failures && sample(c(TRUE, FALSE), 1, prob = c(0.1, 0.9))
 
-  # Return if there is nothing to see
+  # Provide URL so to for (eventually randomly modified)
+  url_to_go <- paste0(url, if (mutate) "blabla")
+
+  # Get a response from the FTP server
+  response <- try_to_get_url(url_to_go, curl = curl, ...)
+  #response <- try_to_get_url(url_to_go)
+
+  # Convert response string to data frame
+  info <- response_to_data_frame(response, full_info)
+
+  # Return if there are no data in info. A response of NULL indicates that an
+  # error occurred when reading from the URL. In this case, set the attribute
+  # "failed" to the URL that failed to be accessed.
   if (is_empty(info)) {
-    return(info)
+
+    return(structure(info, failed = if (is.null(response)) url))
   }
 
   # Extract the file names
@@ -121,36 +138,10 @@ set_file <- function(df, file)
   kwb.utils::setColumns(df, file = file, dbg = FALSE)
 }
 
-# get_file_info_from_url -------------------------------------------------------
-get_file_info_from_url <- function(url, curl, full_info, ...)
-{
-  # Get a response from the FTP server
-  response <- try_to_get_url(url, curl = curl, ...)
-  #response <- kwb.dwd:::try_to_get_url(url)
-
-  # Return empty character vector if the response is NULL or equal to an empty
-  # string. A response of NULL indicates that an error occurred when reading
-  # from the url. In this case, the attribute "failed" is set to the URL that
-  # failed to be accessed.
-  if (is_empty_response(response)) {
-
-    return(empty_file_info(full_info, failed = if (is.null(response)) url))
-  }
-
-  # Convert response string to data frame
-  response_to_data_frame(response)
-}
-
-# is_empty_response ------------------------------------------------------------
-is_empty_response <- function(response)
-{
-  is.null(response) || grepl("^\\s*$", response)
-}
-
 # empty_file_info --------------------------------------------------------------
-empty_file_info <- function(full_info, failed = NULL)
+empty_file_info <- function(full_info)
 {
-  result <- if (full_info) {
+  if (full_info) {
 
     data.frame(file = character())
 
@@ -158,13 +149,17 @@ empty_file_info <- function(full_info, failed = NULL)
 
     character()
   }
-
-  structure(result, failed = failed)
 }
 
 # response_to_data_frame -------------------------------------------------------
-response_to_data_frame <- function(response)
+response_to_data_frame <- function(response, full_info = FALSE)
 {
+  # Response is NULL or equal to an empty string?
+  if (is.null(response) || grepl("^\\s*$", response)) {
+
+    return(empty_file_info(full_info))
+  }
+
   # Split response at new line character into rows
   rows <- strsplit(response, "\r?\n")[[1]]
 
@@ -277,19 +272,21 @@ merge_url_lists <- function(url_lists, directories, full_info)
   files <- kwb.utils::excludeNULL(
     dbg = FALSE,
     lapply(seq_along(url_lists), FUN = function(i) {
-      #i <- 1
+      #i <- 3
       urls <- url_lists[[i]]
 
       add_parent <- function(x) paste0(directories[i], "/", x)
 
-      if (full_info && nrow(urls)) {
+      if (full_info && nrow(urls) > 0L) {
 
         set_file(urls, add_parent(get_file(urls)))
 
-      } else if (length(urls)) {
+      } else if (! full_info && length(urls)) {
 
         add_parent(urls)
-      }
+
+      } # else NULL implicitly
+
     })
   )
 
