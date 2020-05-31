@@ -11,9 +11,9 @@
 #'   \item{size}{file size in bytes}
 #'   \item{permissions}{string indicating file permissions}
 #'   \item{modification_time}{time of last modification of the file}
-#'   \item{user} further column provided by the FTP server
-#'   \item{group} further column provided by the FTP server
-#'   \item{links} further column provided by the FTP server
+#'   \item{user}{further column provided by the FTP server}
+#'   \item{group}{further column provided by the FTP server}
+#'   \item{links}{further column provided by the FTP server}
 #' }
 #' @source \url{ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt}
 "dwd_files"

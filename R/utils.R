@@ -1,3 +1,20 @@
+# assert_url -------------------------------------------------------------------
+assert_url <- function(url, final_slash = TRUE)
+{
+  stopifnot(is.character(url))
+  stopifnot(length(url) == 1)
+
+  # Append slash if necessary
+  if (final_slash) {
+
+    kwb.utils::assertFinalSlash(url)
+
+  } else {
+
+    url
+  }
+}
+
 # back -------------------------------------------------------------------------
 back <- function(n)
 {
@@ -63,8 +80,24 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 # indicate_directories ---------------------------------------------------------
 indicate_directories <- function(x, is_directory)
 {
+  if (length(x) == 0L) {
+    return(x)
+  }
+
   x[is_directory] <- kwb.utils::assertFinalSlash(x[is_directory])
   x
+}
+
+# is_empty ---------------------------------------------------------------------
+is_empty <- function(x)
+{
+  (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
+}
+
+# left -------------------------------------------------------------------------
+left <- function(x, n)
+{
+  substr(x, 1L, n)
 }
 
 # list_files_in_zip_files ------------------------------------------------------
@@ -82,6 +115,15 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
+# month_numbers ----------------------------------------------------------------
+month_numbers <- function()
+{
+  list(
+    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
+    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
+  )
+}
+
 # month_sequence ---------------------------------------------------------------
 month_sequence <- function(start, end)
 {
@@ -90,10 +132,42 @@ month_sequence <- function(start, end)
   seq(to_date(start), to_date(end), by = 'months')
 }
 
+# mutate_or_not ----------------------------------------------------------------
+mutate_or_not <- function(x, prob = 0.1)
+{
+  stopifnot(kwb.utils::inRange(prob, 0, 1))
+
+  # Mutate with a probability of "prob"
+  if (prob > 0 && sample(c(TRUE, FALSE), 1L, prob = c(prob, 1 - prob))) {
+
+    # Add some nonsense
+    paste0(x, "blabla")
+
+  } else {
+
+    x
+  }
+}
+
+# order_by ---------------------------------------------------------------------
+order_by <- function(x, by = NULL)
+{
+  kwb.utils::resetRowNames(
+    x[order(kwb.utils::selectColumns(x, by)), , drop = FALSE]
+  )
+}
+
 # repeated ---------------------------------------------------------------------
 repeated <- function(x, n)
 {
   paste(rep(x, n), collapse = "")
+}
+
+# right ------------------------------------------------------------------------
+right <- function(x, n)
+{
+  nc <- nchar(x)
+  substr(x, nc - n + 1L, nc)
 }
 
 # safe_element -----------------------------------------------------------------
@@ -105,4 +179,23 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
   ))
 
   element
+}
+
+# silently_exclude_null --------------------------------------------------------
+silently_exclude_null <- function(x)
+{
+  kwb.utils::excludeNULL(x, dbg = FALSE)
+}
+
+# space ------------------------------------------------------------------------
+space <- function(depth = 1L)
+{
+  repeated("  ", depth)
+}
+
+# split_into_lines -------------------------------------------------------------
+split_into_lines <- function(x)
+{
+  stopifnot(is.character(x), length(x) == 1L)
+  strsplit(x, "\r?\n")[[1]]
 }
