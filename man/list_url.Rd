@@ -8,10 +8,8 @@ list_url(
   url = ftp_path_cdc(),
   recursive = !is.na(max_depth),
   max_depth = NA,
-  ...,
-  depth = 0,
   full_info = FALSE,
-  curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
+  ...
 )
 }
 \arguments{
@@ -23,15 +21,11 @@ subdirectories (default: \code{FALSE})}
 \item{max_depth}{maximum folder depth to consider when
 \code{recursive = TRUE}}
 
-\item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
-\code{n_trials}, \code{timeout}, or \code{sleep_time}}
-
-\item{depth}{for start depth when \code{recursive = TRUE}}
-
 \item{full_info}{if \code{TRUE}, not only the path and filename are returned
 but also the file properties. The default is \code{FALSE}.}
 
-\item{curl}{RCurl handle passed to \code{kwb.dwd:::try_to_get_url}}
+\item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
+\code{n_trials}, \code{timeout}, or \code{sleep_time}}
 }
 \description{
 List Files or Folders in a FTP Directory

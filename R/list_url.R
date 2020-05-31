@@ -7,23 +7,36 @@
 #'   subdirectories (default: \code{FALSE})
 #' @param max_depth maximum folder depth to consider when
 #'   \code{recursive = TRUE}
-#' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
-#'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
-#' @param depth for start depth when \code{recursive = TRUE}
 #' @param full_info if \code{TRUE}, not only the path and filename are returned
 #'   but also the file properties. The default is \code{FALSE}.
-#' @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
+#' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
+#'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
 #' @export
 #'
 list_url <- function(
   url = ftp_path_cdc(),
   recursive = ! is.na(max_depth),
   max_depth = NA,
-  ...,
-  depth = 0,
   full_info = FALSE,
-  curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE)
+  ...
 )
+{
+  list_url_(
+    url = url,
+    recursive = recursive,
+    max_depth = max_depth,
+    full_info = full_info,
+    ...,
+    curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE),
+    depth = 0
+  )
+}
+
+# list_url ---------------------------------------------------------------------
+
+# @param depth for start depth when \code{recursive = TRUE}
+# @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
+list_url_ <- function(url, recursive, max_depth, full_info, ..., curl, depth)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
   #kwb.utils::assignArgumentDefaults(list_url);recursive=TRUE;max_depth=2
@@ -69,15 +82,18 @@ list_url <- function(
 
     # List all directories
     url_lists <- lapply(seq_len(n_directories), function(i) {
+
       cat(sprintf("%s%d/%d: ", repeated("  ", depth), i, n_directories))
-      list_url(
+
+      # Recursive call of this function
+      list_url_(
         url = paste0(url, directories[i]),
         recursive = recursive,
-        #...,
-        depth = depth + 1,
         max_depth = max_depth,
         full_info = full_info,
-        curl = curl
+        ...,
+        curl = curl,
+        depth = depth + 1
       )
     })
 
