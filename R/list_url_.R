@@ -9,16 +9,11 @@ list_url_ <- function(
   prob_mutate = 0
 )
 {
-  if (FALSE) {
-    kwb.utils::assignPackageObjects("kwb.dwd")
-    kwb.utils::assignArgumentDefaults(list_url)
-    kwb.utils::assignArgumentDefaults(list_url_)
-    url <- kwb.dwd:::ftp_path_cdc("help/landing_pages")
-    max_depth = 1;full_info=TRUE;set.seed(1)
-  }
-
-  # Check URL and append slash if necessary
-  url <- assert_url(url)
+  # kwb.utils::assignPackageObjects("kwb.dwd")
+  # kwb.utils::assignArgumentDefaults(list_url)
+  # kwb.utils::assignArgumentDefaults(list_url_)
+  # url <- kwb.dwd:::ftp_path_cdc("help/landing_pages")
+  # max_depth = 1;full_info=TRUE;set.seed(1)
 
   # Call the domain specific function list_contents(). The function is expected
   # to set the attribute "failed" to the given URL in case that the URL failed
@@ -39,10 +34,6 @@ list_url_ <- function(
     return(info)
   }
 
-  ###
-  ### If we arrive here, a recursive listing is requested.
-  ###
-
   # URLs representing directories
   directories <- get_info("file")[is_directory]
 
@@ -56,12 +47,13 @@ list_url_ <- function(
   url_lists <- lapply(seq_len(n_directories), function(i) {
 
     #i <- 1L
+
     # Show the progress
     cat(sprintf("%s%d/%d: ", space(depth), i, n_directories))
 
     # Recursive call of this function
     list_url_(
-      url = paste0(url, directories[i]),
+      url = paste0(kwb.utils::assertFinalSlash(url), directories[i]),
       recursive = recursive,
       max_depth = max_depth,
       full_info = full_info,

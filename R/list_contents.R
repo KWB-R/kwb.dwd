@@ -1,6 +1,9 @@
 # list_contents ----------------------------------------------------------------
 list_contents <- function(x, full_info, ...)
 {
+  # Check URL and append slash if necessary
+  x <- assert_url(x)
+
   # Get a response from the FTP server
   response <- try_to_get_url(x, ...)
   #response <- try_to_get_url(x)
