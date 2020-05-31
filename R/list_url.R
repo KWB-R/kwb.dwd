@@ -134,7 +134,10 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
   # failed to be accessed.
   if (is_empty_response(response)) {
 
-    return(empty_file_info(full_info, failed = if (is.null(response)) url))
+    return(structure(
+      empty_file_info(full_info),
+      failed = if (is.null(response)) url
+    ))
   }
 
   # Convert response string to data frame
@@ -148,9 +151,9 @@ is_empty_response <- function(response)
 }
 
 # empty_file_info --------------------------------------------------------------
-empty_file_info <- function(full_info, failed = NULL)
+empty_file_info <- function(full_info)
 {
-  result <- if (full_info) {
+  if (full_info) {
 
     data.frame(file = character())
 
@@ -158,8 +161,6 @@ empty_file_info <- function(full_info, failed = NULL)
 
     character()
   }
-
-  structure(result, failed = failed)
 }
 
 # response_to_data_frame -------------------------------------------------------
