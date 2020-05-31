@@ -86,7 +86,7 @@
       <h1 data-toc-skip>Download RADOLAN Data</h1>
                         <h4 class="author">Hauke Sonnenberg</h4>
             
-            <h4 class="date">2020-05-30</h4>
+            <h4 class="date">2020-05-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/KWB-R/kwb.dwd/blob/master/vignettes/radolan.Rmd"><code>vignettes/radolan.Rmd</code></a></small>
       <div class="hidden name"><code>radolan.Rmd</code></div>
@@ -131,51 +131,17 @@
 
 <span class="co"># Show the first file paths</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw pkg">kwb.utils</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html">resetRowNames</a></span>(<span class="no">radolan_files</span>))
-<span class="co">#&gt;                                                                                                              url</span>
-<span class="co">#&gt; 1 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz</span>
-<span class="co">#&gt; 2 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz</span>
-<span class="co">#&gt; 3 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz</span>
-<span class="co">#&gt; 4 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz</span>
-<span class="co">#&gt; 5 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz</span>
-<span class="co">#&gt; 6 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz</span>
-<span class="co">#&gt;   type      size permissions modification_time</span>
-<span class="co">#&gt; 1 file   7451505  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 2 file  53109545  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 3 file 138991915  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 4 file 228995524  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 5 file 174957194  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 6 file 186723651  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt;                                                                      path</span>
-<span class="co">#&gt; 1 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz</span>
-<span class="co">#&gt; 2 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz</span>
-<span class="co">#&gt; 3 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz</span>
-<span class="co">#&gt; 4 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz</span>
-<span class="co">#&gt; 5 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz</span>
-<span class="co">#&gt; 6 &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz</span>
+<span class="co">#&gt; [1] file              is_directory      size              permissions      </span>
+<span class="co">#&gt; [5] modification_time user              group             links            </span>
+<span class="co">#&gt; [9] path             </span>
+<span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span>
 
 <span class="co"># Show the last file paths</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="kw pkg">kwb.utils</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html">resetRowNames</a></span>(<span class="no">radolan_files</span>))
-<span class="co">#&gt;                                                                                                                                                          url</span>
-<span class="co">#&gt; 134                                            ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201711.tar.gz</span>
-<span class="co">#&gt; 135                                            ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201712.tar.gz</span>
-<span class="co">#&gt; 136 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/asc/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_asc_de.pdf</span>
-<span class="co">#&gt; 137  ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/asc/DESCRIPTION_gridsgermany_hourly_radolan_historical_asc_en.pdf</span>
-<span class="co">#&gt; 138 ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_bin_de.pdf</span>
-<span class="co">#&gt; 139  ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/DESCRIPTION_gridsgermany_hourly_radolan_historical_bin_en.pdf</span>
-<span class="co">#&gt;     type      size permissions modification_time</span>
-<span class="co">#&gt; 134 file 213342580  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 135 file 209225642  -rw-r--r--  2018-08-29 00:00</span>
-<span class="co">#&gt; 136 file     66297  -rw-r--r--  2019-06-19 12:55</span>
-<span class="co">#&gt; 137 file     65450  -rw-r--r--  2019-06-19 12:55</span>
-<span class="co">#&gt; 138 file     65599  -rw-r--r--  2019-06-19 12:55</span>
-<span class="co">#&gt; 139 file     62532  -rw-r--r--  2019-06-19 12:55</span>
-<span class="co">#&gt;                                                                                                                  path</span>
-<span class="co">#&gt; 134                                            &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2017/SF201711.tar.gz</span>
-<span class="co">#&gt; 135                                            &lt;root&gt;/grids_germany/daily/radolan/historical/bin/2017/SF201712.tar.gz</span>
-<span class="co">#&gt; 136 &lt;root&gt;/grids_germany/hourly/radolan/historical/asc/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_asc_de.pdf</span>
-<span class="co">#&gt; 137  &lt;root&gt;/grids_germany/hourly/radolan/historical/asc/DESCRIPTION_gridsgermany_hourly_radolan_historical_asc_en.pdf</span>
-<span class="co">#&gt; 138 &lt;root&gt;/grids_germany/hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_bin_de.pdf</span>
-<span class="co">#&gt; 139  &lt;root&gt;/grids_germany/hourly/radolan/historical/bin/DESCRIPTION_gridsgermany_hourly_radolan_historical_bin_en.pdf</span></pre></body></html></div>
+<span class="co">#&gt; [1] file              is_directory      size              permissions      </span>
+<span class="co">#&gt; [5] modification_time user              group             links            </span>
+<span class="co">#&gt; [9] path             </span>
+<span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></pre></body></html></div>
 </div>
 <div id="download-zipped-radolan-files-from-dwds-ftp-server" class="section level2">
 <h2 class="hasAnchor">

@@ -41,8 +41,8 @@
 
 <meta property="og:title" content="Files Available on DWD's FTP Server — dwd_files" />
 <meta property="og:description" content="Information on files that are available for download at
-ftp://opendata.dwd.de/climate_environment/CDC/. The information were
-last updated on 2019-06-22." />
+ftp://opendata.dwd.de/climate_environment/CDC/ [base_url]. The
+information were last updated on 2020-05-31." />
 
 
 <meta name="robots" content="noindex">
@@ -132,8 +132,8 @@ last updated on 2019-06-22." />
 
     <div class="ref-description">
     <p>Information on files that are available for download at
-<a href='ftp://opendata.dwd.de/climate_environment/CDC/'>ftp://opendata.dwd.de/climate_environment/CDC/</a>. The information were
-last updated on 2019-06-22.</p>
+<a href='ftp://opendata.dwd.de/climate_environment/CDC/'>ftp://opendata.dwd.de/climate_environment/CDC/</a> [base_url]. The
+information were last updated on 2020-05-31.</p>
     </div>
 
     <pre class="usage"><span class='no'>dwd_files</span></pre>
@@ -141,14 +141,18 @@ last updated on 2019-06-22.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 438548 observations of 5 variables:</p><dl'>
-  <dt>url</dt><dd><p>URL to the file on the FTP server</p></dd>
-  <dt>type</dt><dd><p>either "file" or "directory"</p></dd>
+    <p>A data frame with 781825 observations of 8 variables:</p><dl'>
+  <dt>file</dt><dd><p>path to the file below [base_url]</p></dd>
+  <dt>is_directory</dt><dd><p>TRUE for a directory, FALSE for a file</p></dd>
   <dt>size</dt><dd><p>file size in bytes</p></dd>
   <dt>permissions</dt><dd><p>string indicating file permissions</p></dd>
   <dt>modification_time</dt><dd><p>time of last modification of the file</p></dd>
+  <dt>user</dt><dd><p>further column provided by the FTP server</p></dd>
+  <dt>group</dt><dd><p>further column provided by the FTP server</p></dd>
+  <dt>links</dt><dd><p>further column provided by the FTP server</p></dd>
 
 </dl>
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p><a href='ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt'>ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt</a></p>

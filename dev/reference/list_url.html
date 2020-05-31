@@ -132,9 +132,13 @@
     <p>List Files or Folders in a FTP Directory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_url</span>(<span class='no'>url</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>max_depth</span>), <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>,
-  <span class='kw'>depth</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>full_info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>curl</span> <span class='kw'>=</span> <span class='kw pkg'>RCurl</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RCurl/man/getCurlHandle.html'>getCurlHandle</a></span>(<span class='kw'>ftp.use.epsv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>list_url</span>(
+  <span class='kw'>url</span> <span class='kw'>=</span> <span class='fu'>ftp_path_cdc</span>(),
+  <span class='kw'>recursive</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>max_depth</span>),
+  <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>full_info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,22 +158,14 @@ subdirectories (default: <code>FALSE</code>)</p></td>
 <code>recursive = TRUE</code></p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to <code>kwb.dwd:::try_to_get_url</code>, such as
-<code>n_trials</code>, <code>timeout</code>, or <code>sleep_time</code></p></td>
-    </tr>
-    <tr>
-      <th>depth</th>
-      <td><p>for start depth when <code>recursive = TRUE</code></p></td>
-    </tr>
-    <tr>
       <th>full_info</th>
       <td><p>if <code>TRUE</code>, not only the path and filename are returned
 but also the file properties. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>curl</th>
-      <td><p>RCurl handle passed to <code>kwb.dwd:::try_to_get_url</code></p></td>
+      <th>...</th>
+      <td><p>arguments passed to <code>kwb.dwd:::try_to_get_url</code>, such as
+<code>n_trials</code>, <code>timeout</code>, or <code>sleep_time</code></p></td>
     </tr>
     </table>
 
