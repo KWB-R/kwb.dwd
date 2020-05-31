@@ -1,6 +1,11 @@
 # list_contents ----------------------------------------------------------------
-list_contents <- function(x, full_info, ...)
+list_contents <- function(x = character(), full_info = FALSE, ...)
 {
+  # Return the empty
+  if (length(x) == 0L) {
+    return(empty_file_info(full_info))
+  }
+
   # Check URL and append slash if necessary
   x <- assert_url(x)
 
