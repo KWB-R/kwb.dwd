@@ -1,3 +1,4 @@
+# List all available files -----------------------------------------------------
 if (FALSE)
 {
   base_url <- kwb.dwd:::ftp_path_cdc()
@@ -15,6 +16,10 @@ if (FALSE)
   subdir_matrix <- kwb.file:::to_subdir_matrix(result_urls)
 
   View(subdir_matrix)
+
+  dwd_files <- x
+
+  usethis::use_data(dwd_files, overwrite = TRUE)
 }
 
 # Save all URLs in a text file -------------------------------------------------
