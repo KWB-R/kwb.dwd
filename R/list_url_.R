@@ -5,7 +5,7 @@
 # @param depth for start depth when \code{recursive = TRUE}
 list_url_ <- function(
   url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
-  prob_mutate = 0
+  prob_mutate = 0, fun_list_contents = list_contents
 )
 {
   # kwb.utils::assignPackageObjects("kwb.dwd")
@@ -17,8 +17,8 @@ list_url_ <- function(
   # Call the domain specific function list_contents(). The function is expected
   # to set the attribute "failed" to the given URL in case that the URL failed
   # to be accessed.
-  info <- list_contents(mutate_or_not(url, prob_mutate), full_info, ...)
-  #info <- list_contents(mutate_or_not(url, prob_mutate), full_info)
+  info <- fun_list_contents(mutate_or_not(url, prob_mutate), full_info, ...)
+  #info <- fun_list_contents(mutate_or_not(url, prob_mutate), full_info)
 
   # Helper function to get an info column
   get_info <- function(x) kwb.utils::selectColumns(info, x)
@@ -65,8 +65,11 @@ list_url_ <- function(
     )
   })
 
+  # We need a template just in case that no data could be retrieved
+  template <- fun_list_contents(full_info = full_info)
+
   # Merge data frames with info on files in subdirectories
-  subdir_info <- merge_file_infos(subdir_infos, full_info)
+  subdir_info <- merge_file_infos(subdir_infos, template)
 
   # Prepend info on files at this level
   result <- rbind(info[! is_directory, ], subdir_info)
@@ -85,7 +88,7 @@ at_max_depth <- function(depth, max_depth)
 }
 
 # merge_file_infos -------------------------------------------------------------
-merge_file_infos <- function(file_infos, full_info)
+merge_file_infos <- function(file_infos, template)
 {
   stopifnot(is.list(file_infos))
 
@@ -106,7 +109,7 @@ merge_file_infos <- function(file_infos, full_info)
 
   # If the result is NULL (no data frames to loop through) set the result to the
   # empty file info record
-  result <- kwb.utils::defaultIfNULL(result, empty_file_info(full_info))
+  result <- kwb.utils::defaultIfNULL(result, template)
 
   # Collect the information on URLs that could not be listed
   failed <- unlist(silently_exclude_null(lapply(file_infos, attr, "failed")))
