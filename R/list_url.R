@@ -192,7 +192,7 @@ row_represents_directory <- function(info)
 # at_max_depth -----------------------------------------------------------------
 at_max_depth <- function(depth, max_depth)
 {
-  (! is.na(max_depth) && depth == max_depth)
+  ! is.na(max_depth) && (depth == max_depth)
 }
 
 # finish_file_info -------------------------------------------------------------
