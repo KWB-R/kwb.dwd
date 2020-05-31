@@ -36,21 +36,38 @@ list_url <- function(
 
 # @param depth for start depth when \code{recursive = TRUE}
 # @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
-list_url_ <- function(url, recursive, max_depth, full_info, ..., curl, depth)
+list_url_ <- function(
+  url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., curl, depth = 0
+)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
-  #kwb.utils::assignArgumentDefaults(list_url);recursive=TRUE;max_depth=2
+  #kwb.utils::assignArgumentDefaults(list_url_)
+  #recursive=TRUE;max_depth=1;url=ftp_path_cdc();full_info=TRUE
+  #random_failures=TRUE;set.seed(1)
+  random_failures <- FALSE
 
   # Check URL and append slash if necessary
   url <- assert_url(url)
 
-  # List the files in the folder specified by URL
-  info <- get_file_info_from_url(url, curl, full_info, ...)
-  #info <- get_file_info_from_url(url, curl, full_info)
+  # Shall a failure be simulated?
+  mutate <- random_failures && sample(c(TRUE, FALSE), 1, prob = c(0.1, 0.9))
 
-  # Return if there is nothing to see
+  # Provide URL so to for (eventually randomly modified)
+  url_to_go <- paste0(url, if (mutate) "blabla")
+
+  # Get a response from the FTP server
+  response <- try_to_get_url(url_to_go, curl = curl, ...)
+  #response <- try_to_get_url(url_to_go)
+
+  # Convert response string to data frame
+  info <- response_to_data_frame(response, full_info)
+
+  # Return if there are no data in info. A response of NULL indicates that an
+  # error occurred when reading from the URL. In this case, set the attribute
+  # "failed" to the URL that failed to be accessed.
   if (is_empty(info)) {
-    return(info)
+
+    return(structure(info, failed = if (is.null(response)) url))
   }
 
   # Extract the file names
@@ -119,22 +136,6 @@ get_file <- function(df)
 set_file <- function(df, file)
 {
   kwb.utils::setColumns(df, file = file, dbg = FALSE)
-}
-
-# get_file_info_from_url -------------------------------------------------------
-get_file_info_from_url <- function(url, curl, full_info, ...)
-{
-  # Get a response from the FTP server
-  response <- try_to_get_url(url, curl = curl, ...)
-  #response <- kwb.dwd:::try_to_get_url(url)
-
-  # Convert response string to data frame
-  file_info_raw <- response_to_data_frame(response)
-
-  # A response of NULL indicates that an error occurred when reading from the
-  # url. In this case, the attribute "failed" is set to the URL that failed to
-  # be accessed.
-  structure(file_info_raw, failed = if (is.null(response)) url)
 }
 
 # empty_file_info --------------------------------------------------------------
