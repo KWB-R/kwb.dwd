@@ -95,6 +95,10 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 # indicate_directories ---------------------------------------------------------
 indicate_directories <- function(x, is_directory)
 {
+  if (length(x) == 0L) {
+    return(x)
+  }
+
   x[is_directory] <- kwb.utils::assertFinalSlash(x[is_directory])
   x
 }
