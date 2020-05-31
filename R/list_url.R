@@ -128,26 +128,13 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
   response <- try_to_get_url(url, curl = curl, ...)
   #response <- kwb.dwd:::try_to_get_url(url)
 
-  # Return empty character vector if the response is NULL or equal to an empty
-  # string. A response of NULL indicates that an error occurred when reading
-  # from the url. In this case, the attribute "failed" is set to the URL that
-  # failed to be accessed.
-  if (is_empty_response(response)) {
-
-    return(structure(
-      empty_file_info(full_info),
-      failed = if (is.null(response)) url
-    ))
-  }
-
   # Convert response string to data frame
-  response_to_data_frame(response)
-}
+  file_info_raw <- response_to_data_frame(response)
 
-# is_empty_response ------------------------------------------------------------
-is_empty_response <- function(response)
-{
-  is.null(response) || grepl("^\\s*$", response)
+  # A response of NULL indicates that an error occurred when reading from the
+  # url. In this case, the attribute "failed" is set to the URL that failed to
+  # be accessed.
+  structure(file_info_raw, failed = if (is.null(response)) url)
 }
 
 # empty_file_info --------------------------------------------------------------
@@ -164,8 +151,14 @@ empty_file_info <- function(full_info)
 }
 
 # response_to_data_frame -------------------------------------------------------
-response_to_data_frame <- function(response)
+response_to_data_frame <- function(response, full_info)
 {
+  # Response is NULL or equal to an empty string?
+  if (is.null(response) || grepl("^\\s*$", response)) {
+
+    return(empty_file_info(full_info))
+  }
+
   # Split response at new line character into rows
   rows <- strsplit(response, "\r?\n")[[1]]
 
