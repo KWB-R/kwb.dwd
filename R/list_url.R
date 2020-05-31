@@ -151,7 +151,7 @@ empty_file_info <- function(full_info)
 }
 
 # response_to_data_frame -------------------------------------------------------
-response_to_data_frame <- function(response, full_info)
+response_to_data_frame <- function(response, full_info = FALSE)
 {
   # Response is NULL or equal to an empty string?
   if (is.null(response) || grepl("^\\s*$", response)) {
