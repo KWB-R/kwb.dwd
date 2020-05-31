@@ -73,7 +73,7 @@ list_url <- function(
       list_url(
         url = paste0(url, directories[i]),
         recursive = recursive,
-        ...,
+        #...,
         depth = depth + 1,
         max_depth = max_depth,
         full_info = full_info,
@@ -118,10 +118,7 @@ get_file_info_from_url <- function(url, curl, full_info, ...)
   # failed to be accessed.
   if (is_empty_response(response)) {
 
-    return(structure(
-      empty_file_info(full_info),
-      failed = if (is.null(response)) url
-    ))
+    return(empty_file_info(full_info, failed = if (is.null(response)) url))
   }
 
   # Convert response string to data frame
@@ -135,9 +132,9 @@ is_empty_response <- function(response)
 }
 
 # empty_file_info --------------------------------------------------------------
-empty_file_info <- function(full_info)
+empty_file_info <- function(full_info, failed = NULL)
 {
-  if (full_info) {
+  result <- if (full_info) {
 
     data.frame()
 
@@ -145,6 +142,8 @@ empty_file_info <- function(full_info)
 
     character()
   }
+
+  structure(result, failed = failed)
 }
 
 # response_to_data_frame -------------------------------------------------------
