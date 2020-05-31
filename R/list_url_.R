@@ -26,10 +26,13 @@ list_url_ <- function(
   # Which files represent directories?
   is_directory <- get_info("is_directory")
 
+  # Are we already at maximum depth?
+  at_max_depth <- ! is.na(max_depth) && (depth == max_depth)
+
   # Return the file list if no recursive listing is requested or if we are
   # already at maximum depth or if there are no directories. The function is
   # also returned from if info is empty (! any(is_directory) is TRUE).
-  if (! recursive || at_max_depth(depth, max_depth) || ! any(is_directory)) {
+  if (! recursive || at_max_depth || ! any(is_directory)) {
     return(info)
   }
 
@@ -79,12 +82,6 @@ list_url_ <- function(
 
   # Return the sorted file information with newly composed attribute "failed"
   structure(order_by(result, "file"), failed = failed)
-}
-
-# at_max_depth -----------------------------------------------------------------
-at_max_depth <- function(depth, max_depth)
-{
-  ! is.na(max_depth) && (depth == max_depth)
 }
 
 # merge_file_infos -------------------------------------------------------------
