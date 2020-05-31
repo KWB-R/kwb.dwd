@@ -92,31 +92,6 @@ list_url_ <- function(
   ))
 }
 
-# get_file ---------------------------------------------------------------------
-get_file <- function(df)
-{
-  kwb.utils::selectColumns(df, "file")
-}
-
-# set_file ---------------------------------------------------------------------
-set_file <- function(df, file)
-{
-  kwb.utils::setColumns(df, file = file, dbg = FALSE)
-}
-
-# empty_file_info --------------------------------------------------------------
-empty_file_info <- function(full_info)
-{
-  if (full_info) {
-
-    data.frame(file = character())
-
-  } else {
-
-    character()
-  }
-}
-
 # response_to_data_frame -------------------------------------------------------
 response_to_data_frame <- function(response, full_info = FALSE)
 {
@@ -153,6 +128,31 @@ response_to_data_frame <- function(response, full_info = FALSE)
 
   # Set the file names in the info data frame and return the info data frame
   set_file(info, files)
+}
+
+# empty_file_info --------------------------------------------------------------
+empty_file_info <- function(full_info)
+{
+  if (full_info) {
+
+    data.frame(file = character())
+
+  } else {
+
+    character()
+  }
+}
+
+# set_file ---------------------------------------------------------------------
+set_file <- function(df, file)
+{
+  kwb.utils::setColumns(df, file = file, dbg = FALSE)
+}
+
+# get_file ---------------------------------------------------------------------
+get_file <- function(df)
+{
+  kwb.utils::selectColumns(df, "file")
 }
 
 # row_represents_directory -----------------------------------------------------
