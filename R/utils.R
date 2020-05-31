@@ -21,21 +21,6 @@ back <- function(n)
   repeated("\b", n)
 }
 
-# bind_list_elements -----------------------------------------------------------
-bind_list_elements <- function(x)
-{
-  stopifnot(is.list(x))
-
-  if (all(sapply(x, inherits, "data.frame"))) {
-
-    do.call(rbind, x)
-
-  } else {
-
-    unlist(x)
-  }
-}
-
 # cat0 -------------------------------------------------------------------------
 cat0 <- function(...)
 {

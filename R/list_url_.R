@@ -66,7 +66,7 @@ list_url_ <- function(
     )
   })
 
-  url_data <- merge_url_lists(url_lists, directories, full_info)
+  url_data <- merge_url_lists(url_lists, full_info)
 
   # Merge files at this level with files in subdirectories. Return the sorted
   # file list with attribute "failed" if any directory URL could not be accessed
@@ -83,43 +83,30 @@ at_max_depth <- function(depth, max_depth)
 }
 
 # merge_url_lists --------------------------------------------------------------
-merge_url_lists <- function(url_lists, directories, full_info)
+merge_url_lists <- function(url_lists, full_info)
 {
   stopifnot(is.list(url_lists))
 
-  # Prepare an empty result set
-  empty_result <- empty_file_info(full_info)
+  # Keep only non-empty data frames
+  dfs <- url_lists[sapply(url_lists, nrow) > 0L]
 
-  if (length(url_lists) == 0L) {
-    return(empty_result)
-  }
+  # Prepend the parent name to the filename for non-empty result data frames
+  result <- do.call(rbind, lapply(names(dfs), function(directory) {
+    parent <- kwb.utils::assertFinalSlash(directory)
+    df <- dfs[[directory]]
+    df$file <- paste0(parent, kwb.utils::selectColumns(df, "file"))
+    df
+  }))
+
+  # If the result is NULL (no data frames to loop through) set the result to the
+  # empty file info record
+  result <- kwb.utils::defaultIfNULL(result, empty_file_info(full_info))
+
+  # Collect the information on URLs that could not be listed
+  failed <- unlist(silently_exclude_null(lapply(url_lists, attr, "failed")))
 
   # Merge the file lists returned for each directory
-  files <- silently_exclude_null(
-    lapply(seq_along(url_lists), FUN = function(i) {
-      #i <- 1
-      urls <- url_lists[[i]]
-      if (nrow(urls) > 0L) {
-        kwb.utils::setColumns(dbg = FALSE, urls, file = paste0(
-          directories[i], "/", kwb.utils::selectColumns(urls, "file")
-        ))
-      } # else NULL implicitly
-    })
-  )
-
-  if (length(files) == 0) {
-    return(empty_result)
-  }
-
   # Return the vector of files with an attribute "failed" holding the merged
   # URLs of directories that could not be read
-  structure(bind_list_elements(files), failed = collect_failed(url_lists))
-}
-
-# collect_failed ---------------------------------------------------------------
-collect_failed <- function(x)
-{
-  stopifnot(is.list(x))
-
-  unlist(silently_exclude_null(lapply(x, attr, "failed")))
+  structure(result, failed = failed)
 }
