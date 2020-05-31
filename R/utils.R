@@ -175,6 +175,12 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
   element
 }
 
+# silently_exclude_null --------------------------------------------------------
+silently_exclude_null <- function(x)
+{
+  kwb.utils::excludeNULL(x, dbg = FALSE)
+}
+
 # split_into_lines -------------------------------------------------------------
 split_into_lines <- function(x)
 {
