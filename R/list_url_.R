@@ -43,8 +43,11 @@ list_url_ <- function(
   # There must be directories if we arrive here!
   stopifnot(n_directories > 0L)
 
+  # Indices to loop through
+  indices <- stats::setNames(seq_along(directories), directories)
+
   # List all directories by calling this function recursively
-  url_lists <- lapply(seq_len(n_directories), function(i) {
+  url_lists <- lapply(indices, function(i) {
 
     #i <- 1L
 
