@@ -6,7 +6,7 @@
 # @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
 list_url_ <- function(
   url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
-  prob_mutate = 0.1
+  prob_mutate = 0
 )
 {
   if (FALSE) {
