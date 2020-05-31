@@ -271,19 +271,21 @@ merge_url_lists <- function(url_lists, directories, full_info)
   files <- kwb.utils::excludeNULL(
     dbg = FALSE,
     lapply(seq_along(url_lists), FUN = function(i) {
-      #i <- 1
+      #i <- 3
       urls <- url_lists[[i]]
 
       add_parent <- function(x) paste0(directories[i], "/", x)
 
-      if (full_info && nrow(urls)) {
+      if (full_info && nrow(urls) > 0L) {
 
         set_file(urls, add_parent(get_file(urls)))
 
-      } else if (length(urls)) {
+      } else if (! full_info && length(urls)) {
 
         add_parent(urls)
-      }
+
+      } # else NULL implicitly
+
     })
   )
 
