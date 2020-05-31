@@ -147,6 +147,23 @@ month_sequence <- function(start, end)
   seq(to_date(start), to_date(end), by = 'months')
 }
 
+# mutate_or_not ----------------------------------------------------------------
+mutate_or_not <- function(x, prob = 0.1)
+{
+  stopifnot(kwb.utils::inRange(prob, 0, 1))
+
+  # Mutate with a probability of 10 %
+  if (prob > 0 && sample(c(TRUE, FALSE), 1, prob = c(prob, 1 - prob))) {
+
+    # Add some nonsense
+    paste0(x, "blabla")
+
+  } else {
+
+    x
+  }
+}
+
 # order_by ---------------------------------------------------------------------
 order_by <- function(x, by = NULL)
 {

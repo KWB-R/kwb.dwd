@@ -83,23 +83,6 @@ list_url_ <- function(
   )
 }
 
-# mutate_or_not ----------------------------------------------------------------
-mutate_or_not <- function(x, prob = 0.1)
-{
-  stopifnot(kwb.utils::inRange(prob, 0, 1))
-
-  # Mutate with a probability of 10 %
-  if (prob > 0 && sample(c(TRUE, FALSE), 1, prob = c(prob, 1 - prob))) {
-
-    # Add some nonsense
-    paste0(x, "blabla")
-
-  } else {
-
-    x
-  }
-}
-
 # at_max_depth -----------------------------------------------------------------
 at_max_depth <- function(depth, max_depth)
 {
