@@ -3,7 +3,6 @@
 # In contrast to list_url(), this function always returns a data frame, at least
 # with columns "file", "is_directory", if full_info = FALSE.
 # @param depth for start depth when \code{recursive = TRUE}
-# @param curl RCurl handle passed to \code{kwb.dwd:::try_to_get_url}
 list_url_ <- function(
   url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
   prob_mutate = 0
@@ -47,7 +46,7 @@ list_url_ <- function(
   indices <- stats::setNames(seq_along(directories), directories)
 
   # List all directories by calling this function recursively
-  url_lists <- lapply(indices, function(i) {
+  subdir_infos <- lapply(indices, function(i) {
 
     #i <- 1L
 
@@ -66,14 +65,17 @@ list_url_ <- function(
     )
   })
 
-  url_data <- merge_url_lists(url_lists, full_info)
+  # Merge data frames with info on files in subdirectories
+  subdir_info <- merge_file_infos(subdir_infos, full_info)
 
-  # Merge files at this level with files in subdirectories. Return the sorted
-  # file list with attribute "failed" if any directory URL could not be accessed
-  structure(
-    order_by(rbind(info = info[! is_directory, ], url_data), "file"),
-    failed = attr(url_data, "failed")
-  )
+  # Prepend info on files at this level
+  result <- rbind(info[! is_directory, ], subdir_info)
+
+  # Collect information on URLs that failed to be accessed
+  failed <- c(attr(info, "failed"), attr(subdir_info, "failed"))
+
+  # Return the sorted file information with newly composed attribute "failed"
+  structure(order_by(result, "file"), failed = failed)
 }
 
 # at_max_depth -----------------------------------------------------------------
@@ -82,28 +84,32 @@ at_max_depth <- function(depth, max_depth)
   ! is.na(max_depth) && (depth == max_depth)
 }
 
-# merge_url_lists --------------------------------------------------------------
-merge_url_lists <- function(url_lists, full_info)
+# merge_file_infos -------------------------------------------------------------
+merge_file_infos <- function(file_infos, full_info)
 {
-  stopifnot(is.list(url_lists))
+  stopifnot(is.list(file_infos))
 
   # Keep only non-empty data frames
-  dfs <- url_lists[sapply(url_lists, nrow) > 0L]
+  dfs <- file_infos[sapply(file_infos, nrow) > 0L]
 
-  # Prepend the parent name to the filename for non-empty result data frames
-  result <- do.call(rbind, lapply(names(dfs), function(directory) {
-    parent <- kwb.utils::assertFinalSlash(directory)
-    df <- dfs[[directory]]
-    df$file <- paste0(parent, kwb.utils::selectColumns(df, "file"))
-    df
-  }))
+  # Function to prepend a parent name "p" to column "file" in data frame "df"
+  prepend_parent <- function(df, p) {
+    parent <- kwb.utils::assertFinalSlash(p)
+    child <- kwb.utils::selectColumns(df, "file")
+    kwb.utils::setColumns(df, file = paste0(parent, child), dbg = FALSE)
+  }
+
+  # Prepend the parent names to the filenames for the remaining data frames
+  result <- do.call(rbind, mapply(
+    prepend_parent, dfs, names(dfs), SIMPLIFY = FALSE, USE.NAMES = FALSE
+  ))
 
   # If the result is NULL (no data frames to loop through) set the result to the
   # empty file info record
   result <- kwb.utils::defaultIfNULL(result, empty_file_info(full_info))
 
   # Collect the information on URLs that could not be listed
-  failed <- unlist(silently_exclude_null(lapply(url_lists, attr, "failed")))
+  failed <- unlist(silently_exclude_null(lapply(file_infos, attr, "failed")))
 
   # Merge the file lists returned for each directory
   # Return the vector of files with an attribute "failed" holding the merged
