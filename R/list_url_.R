@@ -5,7 +5,7 @@
 # @param depth for start depth when \code{recursive = TRUE}
 listToDepth <- function(
   path, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
-  prob_mutate = 0, FUN = list_contents
+  prob_mutate = 0, FUN = function(path, full_info, ...) { stop("Implement!") }
 )
 {
   # kwb.utils::assignPackageObjects("kwb.dwd")

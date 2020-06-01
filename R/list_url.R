@@ -22,13 +22,14 @@ list_url <- function(
 )
 {
   result <- listToDepth(
-    url = url,
+    path = url,
     recursive = recursive,
     max_depth = max_depth,
     full_info = full_info,
     ...,
     curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE),
-    depth = 0
+    depth = 0,
+    FUN = list_contents
   )
 
   if (full_info) {
