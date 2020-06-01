@@ -42,7 +42,7 @@ list_url <- function(
 
     # Indicate directories with trailing slash
     structure(
-      indicate_directories(pull("file"), pull("is_directory")),
+      indicate_directories(pull("file"), pull("isdir")),
       failed = attr(result, "failed")
     )
   }

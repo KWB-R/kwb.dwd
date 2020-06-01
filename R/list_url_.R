@@ -1,11 +1,11 @@
 # list_url_ --------------------------------------------------------------------
 
 # In contrast to list_url(), this function always returns a data frame, at least
-# with columns "file", "is_directory", if full_info = FALSE.
+# with columns "file", "isdir", if full_info = FALSE.
 # @param depth for start depth when \code{recursive = TRUE}
 list_url_ <- function(
   url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
-  prob_mutate = 0, fun_list_contents = list_contents
+  prob_mutate = 0, FUN = list_contents
 )
 {
   # kwb.utils::assignPackageObjects("kwb.dwd")
@@ -17,14 +17,14 @@ list_url_ <- function(
   # Call the domain specific function list_contents(). The function is expected
   # to set the attribute "failed" to the given URL in case that the URL failed
   # to be accessed.
-  info <- fun_list_contents(mutate_or_not(url, prob_mutate), full_info, ...)
-  #info <- fun_list_contents(mutate_or_not(url, prob_mutate), full_info)
+  info <- FUN(mutate_or_not(url, prob_mutate), full_info, ...)
+  #info <- FUN(mutate_or_not(url, prob_mutate), full_info)
 
   # Helper function to get an info column
   get_info <- function(x) kwb.utils::selectColumns(info, x)
 
   # Which files represent directories?
-  is_directory <- get_info("is_directory")
+  is_directory <- get_info("isdir")
 
   # Are we already at maximum depth?
   at_max_depth <- ! is.na(max_depth) && (depth == max_depth)
@@ -64,12 +64,13 @@ list_url_ <- function(
       full_info = full_info,
       ...,
       depth = depth + 1,
-      prob_mutate = prob_mutate
+      prob_mutate = prob_mutate,
+      FUN = FUN
     )
   })
 
   # We need a template just in case that no data could be retrieved
-  template <- fun_list_contents(full_info = full_info)
+  template <- FUN(full_info = full_info)
 
   # Merge data frames with info on files in subdirectories
   subdir_info <- merge_file_infos(subdir_infos, template)

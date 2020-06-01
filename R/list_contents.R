@@ -36,14 +36,12 @@ response_to_data_frame <- function(response, full_info = FALSE)
 
   get_info <- function(x) kwb.utils::selectColumns(info, x)
 
-  # Required column: is_directory
-  info$is_directory <- grepl("^d", get_info("permissions"))
+  # Required column: isdir
+  info$isdir <- grepl("^d", get_info("permissions"))
 
   if (! full_info) {
-    return(get_info(c("file", "is_directory")))
+    return(get_info(c("file", "isdir")))
   }
-
-  #info$type <- ifelse(info$is_directory, "directory", "file")
 
   # Replace columns "year_or_time", "month", "day" with "modification_time".
   # Put the most important columns first.
@@ -55,7 +53,7 @@ empty_file_info <- function(full_info = TRUE)
 {
   full_record <- kwb.utils::noFactorDataFrame(
     file = character(),
-    is_directory = logical(),
+    isdir = logical(),
     #type = character(),
     size = numeric(),
     permissions = character(),
