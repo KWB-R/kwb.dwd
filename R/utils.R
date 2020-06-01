@@ -94,12 +94,6 @@ is_empty <- function(x)
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
 }
 
-# left -------------------------------------------------------------------------
-left <- function(x, n)
-{
-  substr(x, 1L, n)
-}
-
 # list_files_in_zip_files ------------------------------------------------------
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
@@ -132,44 +126,6 @@ month_sequence <- function(start, end)
   seq(to_date(start), to_date(end), by = 'months')
 }
 
-# mutate_or_not ----------------------------------------------------------------
-mutate_or_not <- function(x, prob = 0.1)
-{
-  stopifnot(kwb.utils::inRange(prob, 0, 1))
-
-  # Mutate with a probability of "prob"
-  if (prob > 0 && sample(c(TRUE, FALSE), 1L, prob = c(prob, 1 - prob))) {
-
-    # Add some nonsense
-    paste0(x, "blabla")
-
-  } else {
-
-    x
-  }
-}
-
-# order_by ---------------------------------------------------------------------
-order_by <- function(x, by = NULL)
-{
-  kwb.utils::resetRowNames(
-    x[order(kwb.utils::selectColumns(x, by)), , drop = FALSE]
-  )
-}
-
-# repeated ---------------------------------------------------------------------
-repeated <- function(x, n)
-{
-  paste(rep(x, n), collapse = "")
-}
-
-# right ------------------------------------------------------------------------
-right <- function(x, n)
-{
-  nc <- nchar(x)
-  substr(x, nc - n + 1L, nc)
-}
-
 # safe_element -----------------------------------------------------------------
 safe_element <- function(element, elements, name = deparse(substitute(element)))
 {
@@ -179,18 +135,6 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
   ))
 
   element
-}
-
-# silently_exclude_null --------------------------------------------------------
-silently_exclude_null <- function(x)
-{
-  kwb.utils::excludeNULL(x, dbg = FALSE)
-}
-
-# space ------------------------------------------------------------------------
-space <- function(depth = 1L)
-{
-  repeated("  ", depth)
 }
 
 # split_into_lines -------------------------------------------------------------
