@@ -21,7 +21,7 @@ list_url <- function(
   ...
 )
 {
-  result <- listToDepth(
+  result <- kwb.utils:::listToDepth(
     path = url,
     recursive = recursive,
     max_depth = max_depth,

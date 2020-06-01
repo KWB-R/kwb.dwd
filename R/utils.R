@@ -15,12 +15,6 @@ assert_url <- function(url, final_slash = TRUE)
   }
 }
 
-# back -------------------------------------------------------------------------
-back <- function(n)
-{
-  repeated("\b", n)
-}
-
 # cat0 -------------------------------------------------------------------------
 cat0 <- function(...)
 {
@@ -30,12 +24,12 @@ cat0 <- function(...)
 # cat_progress -----------------------------------------------------------------
 cat_progress <- function(i, n, success = TRUE, chars = c(".", "x"))
 {
-  space_function <- function(n) repeated(" ", n)
+  space <- function(n) kwb.utils:::repeated(" ", n)
 
   if (i == 0) {
-    cat0("[", space_function(n), "]")
+    cat0("[", space(n), "]")
   } else {
-    cat0(back(n - i + 2), chars[success + 1], space_function(n - i), "]")
+    cat0(kwb.utils:::back(n - i + 2), chars[success + 1], space(n - i), "]")
   }
 }
 
