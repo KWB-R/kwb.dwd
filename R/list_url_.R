@@ -1,24 +1,24 @@
-# list_url_ --------------------------------------------------------------------
+# listToDepth ------------------------------------------------------------------
 
 # In contrast to list_url(), this function always returns a data frame, at least
 # with columns "file", "isdir", if full_info = FALSE.
 # @param depth for start depth when \code{recursive = TRUE}
-list_url_ <- function(
-  url, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
+listToDepth <- function(
+  path, recursive = TRUE, max_depth = 1, full_info = FALSE, ..., depth = 0,
   prob_mutate = 0, FUN = list_contents
 )
 {
   # kwb.utils::assignPackageObjects("kwb.dwd")
   # kwb.utils::assignArgumentDefaults(list_url)
-  # kwb.utils::assignArgumentDefaults(list_url_)
-  # url <- kwb.dwd:::ftp_path_cdc("help/landing_pages")
+  # kwb.utils::assignArgumentDefaults(listToDepth)
+  # path <- kwb.dwd:::ftp_path_cdc("help/landing_pages")
   # max_depth = 1;full_info=TRUE;set.seed(1)
 
   # Call the domain specific function list_contents(). The function is expected
-  # to set the attribute "failed" to the given URL in case that the URL failed
+  # to set the attribute "failed" to the given path in case that the path failed
   # to be accessed.
-  info <- FUN(mutate_or_not(url, prob_mutate), full_info, ...)
-  #info <- FUN(mutate_or_not(url, prob_mutate), full_info)
+  info <- FUN(mutate_or_not(path, prob_mutate), full_info, ...)
+  #info <- FUN(mutate_or_not(path, prob_mutate), full_info)
 
   # Helper function to get an info column
   get_info <- function(x) kwb.utils::selectColumns(info, x)
@@ -57,8 +57,8 @@ list_url_ <- function(
     cat(sprintf("%s%d/%d: ", space(depth), i, n_directories))
 
     # Recursive call of this function
-    list_url_(
-      url = paste0(kwb.utils::assertFinalSlash(url), directories[i]),
+    listToDepth(
+      path = paste0(kwb.utils::assertFinalSlash(path), directories[i]),
       recursive = recursive,
       max_depth = max_depth,
       full_info = full_info,

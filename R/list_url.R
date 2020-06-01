@@ -21,7 +21,7 @@ list_url <- function(
   ...
 )
 {
-  result <- list_url_(
+  result <- listToDepth(
     url = url,
     recursive = recursive,
     max_depth = max_depth,
