@@ -24,12 +24,13 @@ cat0 <- function(...)
 # cat_progress -----------------------------------------------------------------
 cat_progress <- function(i, n, success = TRUE, chars = c(".", "x"))
 {
-  space <- function(n) kwb.utils:::repeated(" ", n)
+  space <- function(n) kwb.utils::space(n, tabLength = 1L)
+  back <- kwb.utils::backspace
 
-  if (i == 0) {
+  if (i == 0L) {
     cat0("[", space(n), "]")
   } else {
-    cat0(kwb.utils:::back(n - i + 2), chars[success + 1], space(n - i), "]")
+    cat0(back(n - i + 2L), chars[success + 1L], space(n - i), "]")
   }
 }
 

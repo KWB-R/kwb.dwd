@@ -31,7 +31,7 @@ Suggests:
 RoxygenNote: 7.1.0
 Imports: 
     fs (>= 1.2.6),
-    kwb.utils (>= 0.5.0),
+    kwb.utils (>= 0.6.0),
     lubridate (>= 1.7.4),
     magrittr (>= 1.5),
     raster (>= 2.8),
@@ -41,5 +41,5 @@ Imports:
     bitops (>= 1.0.6),
     RCurl (>= 1.95.4.11)
 Remotes:
-    github::kwb-r/kwb.utils@feature-lister
+    github::kwb-r/kwb.utils@v0.6.0
 VignetteBuilder: knitr

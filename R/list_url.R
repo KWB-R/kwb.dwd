@@ -21,10 +21,9 @@ list_url <- function(
   ...
 )
 {
-  result <- kwb.utils:::listToDepth(
+  result <- kwb.utils::listToDepth(
     path = url,
-    recursive = recursive,
-    max_depth = max_depth,
+    max_depth = ifelse(isTRUE(recursive), max_depth, 0L),
     full_info = full_info,
     ...,
     curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE),
