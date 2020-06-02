@@ -56,7 +56,7 @@ get_radolan_urls <- function(
   get_year_month <- function(start, end) {
     yyyymm <- function(yyyy_mm) gsub("-", "", yyyy_mm)
     year_month_01 <- as.character(month_sequence(yyyymm(start), yyyymm(end)))
-    substr(gsub("-", "", year_month_01), 1, 6)
+    kwb.utils::left(gsub("-", "", year_month_01), 6L)
   }
 
   yyyymm_daily <- get_year_month(start_daily, end_daily)
@@ -92,7 +92,7 @@ get_radolan_url <- function(frequency, year_month, ftp_root = ftp_path_cdc())
   ))
 
   # Extract the year number
-  year <- as.integer(substr(year_month, 1, 4))
+  year <- as.integer(kwb.utils::left(year_month, 4L))
 
   # Use old or new version of file name?
   is_old <- year < switches[frequency]

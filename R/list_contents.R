@@ -95,7 +95,7 @@ response_to_data_frame_raw <- function(response)
 
   # Set the filenames (right parts of the rows) in the returned info data frame
   kwb.utils::setColumns(dbg = FALSE, info, file = mapply(
-    kwb.utils:::right, rows, nchar(rows) - nchar(text), USE.NAMES = FALSE
+    kwb.utils::right, rows, nchar(rows) - nchar(text), USE.NAMES = FALSE
   ))
 }
 
