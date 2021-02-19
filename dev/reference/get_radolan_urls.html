@@ -85,7 +85,7 @@ reside and how they are expected to be named." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +111,7 @@ reside and how they are expected to be named." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/KWB-R/kwb.dwd/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -142,14 +142,14 @@ the FTP server but generated, given the knowledge of where the files should
 reside and how they are expected to be named.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_radolan_urls</span>(
-  <span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2006-10"</span>,
-  <span class='kw'>start_hourly</span> <span class='kw'>=</span> <span class='st'>"2005-06"</span>,
-  <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"%Y-%m"</span>, <span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/rollback.html'>rollback</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>(), <span class='kw'>roll_to_first</span>
-    <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
-  <span class='kw'>end_hourly</span> <span class='kw'>=</span> <span class='no'>end_daily</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>get_radolan_urls</span><span class='op'>(</span>
+  start_daily <span class='op'>=</span> <span class='st'>"2006-10"</span>,
+  start_hourly <span class='op'>=</span> <span class='st'>"2005-06"</span>,
+  end_daily <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span>format <span class='op'>=</span> <span class='st'>"%Y-%m"</span>, <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/rollbackward.html'>rollback</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, roll_to_first
+    <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>,
+  end_hourly <span class='op'>=</span> <span class='va'>end_daily</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,26 +187,29 @@ such as <code>ftp_root</code></p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get all expected URLs</span>
-<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'>get_radolan_urls</span>()
+<span class='va'>urls</span> <span class='op'>&lt;-</span> <span class='fu'>kwb.dwd</span><span class='fu'>::</span><span class='fu'>get_radolan_urls</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Show the first URLs of each category (daily, hourly)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>urls</span><span class='op'>$</span><span class='va'>daily_historical_urls</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
 #&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz"
 #&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz"
 #&gt; [4] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz"
 #&gt; [5] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz"
-#&gt; [6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>urls</span>$<span class='no'>hourly_historical_urls</span>)</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200506.tar.gz"
+#&gt; [6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>urls</span><span class='op'>$</span><span class='va'>hourly_historical_urls</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200506.tar.gz"
 #&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200507.tar.gz"
 #&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200508.tar.gz"
 #&gt; [4] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200509.tar.gz"
 #&gt; [5] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200510.tar.gz"
 #&gt; [6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2005/RW-200511.tar.gz"</div><div class='input'>
 <span class='co'># Set the start and end months</span>
-<span class='no'>urls</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>kwb.dwd</span><span class='kw ns'>::</span><span class='fu'>get_radolan_urls</span>(
-  <span class='kw'>start_daily</span> <span class='kw'>=</span> <span class='st'>"2017-01"</span>, <span class='kw'>end_daily</span> <span class='kw'>=</span> <span class='st'>"2017-03"</span>
-)
+<span class='va'>urls</span> <span class='op'>&lt;-</span> <span class='fu'>kwb.dwd</span><span class='fu'>::</span><span class='fu'>get_radolan_urls</span><span class='op'>(</span>
+  start_daily <span class='op'>=</span> <span class='st'>"2017-01"</span>, end_daily <span class='op'>=</span> <span class='st'>"2017-03"</span>
+<span class='op'>)</span>
 
-<span class='no'>urls</span>$<span class='no'>daily_historical_urls</span></div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201701.tar.gz"
+<span class='va'>urls</span><span class='op'>$</span><span class='va'>daily_historical_urls</span>
+</div><div class='output co'>#&gt; [1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201701.tar.gz"
 #&gt; [2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201702.tar.gz"
 #&gt; [3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2017/SF201703.tar.gz"</div><div class='input'>
 </div></pre>
@@ -225,7 +228,7 @@ such as <code>ftp_root</code></p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

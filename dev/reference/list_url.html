@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/KWB-R/kwb.dwd/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,13 +132,13 @@
     <p>List Files or Folders in a FTP Directory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_url</span>(
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='fu'>ftp_path_cdc</span>(),
-  <span class='kw'>recursive</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>max_depth</span>),
-  <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>full_info</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>list_url</span><span class='op'>(</span>
+  url <span class='op'>=</span> <span class='fu'>ftp_path_cdc</span><span class='op'>(</span><span class='op'>)</span>,
+  recursive <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>max_depth</span><span class='op'>)</span>,
+  max_depth <span class='op'>=</span> <span class='cn'>NA</span>,
+  full_info <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,7 +185,7 @@ but also the file properties. The default is <code>FALSE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
