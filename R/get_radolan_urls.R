@@ -1,11 +1,11 @@
 #' Get URLs to Available Radolan Files
 #'
 #' Get URLs to available radolan files on the DWD FTP server below this base
-#' address: \url{ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany}. The user can
-#' choose between daily records and hourly records that are located at different
-#' paths on the server. The paths to the files are not read from the FTP server
-#' but generated, given the knowledge of where the files should reside and how
-#' they are expected to be named.
+#' address: \url{ftp://opendata.dwd.de/climate_environment/CDC/grids_germany}.
+#' The user can choose between daily records and hourly records that are located
+#' at different paths on the server. The paths to the files are not read from
+#' the FTP server but generated, given the knowledge of where the files should
+#' reside and how they are expected to be named.
 #'
 #' @param start_daily month string (yyyy-mm) of first daily record.
 #'   Default: "2006-10"
@@ -15,7 +15,8 @@
 #'   current month.
 #' @param end_hourly month string (yyyy-mm) of last hourly records. Defaults to
 #'   \code{end_daily}.
-#'
+#' @param \dots further arguments passed to \code{kwb.dwd:::get_radolan_url},
+#'   such as \code{ftp_root}
 #' @importFrom magrittr %>%
 #' @importFrom kwb.utils resolve
 #' @importFrom lubridate rollback
@@ -47,14 +48,15 @@ get_radolan_urls <- function(
   end_daily = format(
     format = "%Y-%m", lubridate::rollback(Sys.Date(), roll_to_first = TRUE)
   ),
-  end_hourly = end_daily
+  end_hourly = end_daily,
+  ...
 )
 {
   # helper function
   get_year_month <- function(start, end) {
     yyyymm <- function(yyyy_mm) gsub("-", "", yyyy_mm)
     year_month_01 <- as.character(month_sequence(yyyymm(start), yyyymm(end)))
-    substr(gsub("-", "", year_month_01), 1, 6)
+    kwb.utils::left(gsub("-", "", year_month_01), 6L)
   }
 
   yyyymm_daily <- get_year_month(start_daily, end_daily)
@@ -68,7 +70,7 @@ get_radolan_urls <- function(
 }
 
 # get_radolan_url --------------------------------------------------------------
-get_radolan_url <- function(frequency, year_month)
+get_radolan_url <- function(frequency, year_month, ftp_root = ftp_path_cdc())
 {
   # Define first available year and month and year when naming schemes changed
   starts <- c(hourly = "200506", daily = "200610")
@@ -90,7 +92,7 @@ get_radolan_url <- function(frequency, year_month)
   ))
 
   # Extract the year number
-  year <- as.integer(substr(year_month, 1, 4))
+  year <- as.integer(kwb.utils::left(year_month, 4L))
 
   # Use old or new version of file name?
   is_old <- year < switches[frequency]
@@ -98,17 +100,14 @@ get_radolan_url <- function(frequency, year_month)
   # Set subdirectory and filename prefix depending on frequency and is_old
   if (frequency == "hourly") {
 
-    subdir <- "bin/"
     prefix <- ifelse(is_old, "RW-", "RW")
 
   } else if (frequency == "daily") {
 
-    subdir <- ""
     prefix <- ifelse(is_old, "SF-", "SF")
   }
 
-  # Root path of the URL
-  ftp_root <- "ftp://ftp-cdc.dwd.de/pub/CDC"
+  subdir <- "bin/"
 
   # Define the URL path's format string for sprintf()
   format_string <- "%s/grids_germany/%s/radolan/historical/%s%s"

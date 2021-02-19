@@ -1,8 +1,7 @@
+# List all available files -----------------------------------------------------
 if (FALSE)
 {
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
-  base_url <- "ftp://opendata.dwd.de/climate_environment/CDC/"
+  base_url <- kwb.dwd:::ftp_path_cdc()
 
   kwb.utils::clearConsole()
 
@@ -17,6 +16,10 @@ if (FALSE)
   subdir_matrix <- kwb.file:::to_subdir_matrix(result_urls)
 
   View(subdir_matrix)
+
+  dwd_files <- x
+
+  usethis::use_data(dwd_files, overwrite = TRUE)
 }
 
 # Save all URLs in a text file -------------------------------------------------
@@ -32,7 +35,7 @@ if (FALSE)
 # ------------------------------------------------------------------------------
 if (FALSE)
 {
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany"
+  base_url <- kwb.dwd:::ftp_path_cdc("grids_germany")
 
   url_hourly <- paste0(base_url, "/hourly")
   url_monthly <- paste0(base_url, "/monthly")
