@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,16 +41,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -65,7 +61,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/KWB-R/kwb.dwd/">
+  <a href="https://github.com/KWB-R/kwb.dwd/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,33 +80,33 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Download RADOLAN Data</h1>
-                        <h4 class="author">Hauke Sonnenberg</h4>
+                        <h4 data-toc-skip class="author">Hauke Sonnenberg</h4>
             
-            <h4 class="date">2021-02-19</h4>
+            <h4 data-toc-skip class="date">2022-04-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/KWB-R/kwb.dwd/blob/master/vignettes/radolan.Rmd"><code>vignettes/radolan.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/KWB-R/kwb.dwd/blob/HEAD/vignettes/radolan.Rmd" class="external-link"><code>vignettes/radolan.Rmd</code></a></small>
       <div class="hidden name"><code>radolan.Rmd</code></div>
 
     </div>
 
     
     
-<div id="install-this-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install-this-package" class="anchor"></a>Install this package</h2>
+<div class="section level2">
+<h2 id="install-this-package">Install this package<a class="anchor" aria-label="anchor" href="#install-this-package"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># If required, install the remotes package from CRAN</span>
 <span class="co"># install.packages("remotes")</span>
 
 <span class="co"># Install kwb.dwd from GitHub</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd"</span><span class="op">)</span>
 
 <span class="co"># Install the current development version</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd@dev"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd@dev"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="list-files-available-on-dwds-ftp-server" class="section level2">
-<h2 class="hasAnchor">
-<a href="#list-files-available-on-dwds-ftp-server" class="anchor"></a>List files available on DWD’s FTP server</h2>
+<div class="section level2">
+<h2 id="list-files-available-on-dwds-ftp-server">List files available on DWD’s FTP server<a class="anchor" aria-label="anchor" href="#list-files-available-on-dwds-ftp-server"></a>
+</h2>
 <p>This package contains a function that lists the files that are available on an FTP server. It allows for recursive listing, i.e. listing the files in folders and subfolders. For example, to list all historical RADOLAN files, do:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define the URL to the historical RADOLAN files</span>
@@ -124,13 +120,13 @@
 <span class="va">dwd_files</span> <span class="op">&lt;-</span> <span class="fu">kwb.dwd</span><span class="fu">::</span><span class="va"><a href="../reference/dwd_files.html">dwd_files</a></span>
 
 <span class="co"># Filter for historical RADOLAN files</span>
-<span class="va">radolan_files</span> <span class="op">&lt;-</span> <span class="va">dwd_files</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"radolan/historical"</span>, <span class="va">dwd_files</span><span class="op">$</span><span class="va">file</span><span class="op">)</span>, <span class="op">]</span>
+<span class="va">radolan_files</span> <span class="op">&lt;-</span> <span class="va">dwd_files</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"radolan/historical"</span>, <span class="va">dwd_files</span><span class="op">$</span><span class="va">file</span><span class="op">)</span>, <span class="op">]</span>
 
 <span class="co"># Shorten the path for better display</span>
-<span class="va">radolan_files</span><span class="op">$</span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"^grids_germany/"</span>, <span class="st">""</span>, <span class="va">radolan_files</span><span class="op">$</span><span class="va">file</span><span class="op">)</span>
+<span class="va">radolan_files</span><span class="op">$</span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"^grids_germany/"</span>, <span class="st">""</span>, <span class="va">radolan_files</span><span class="op">$</span><span class="va">file</span><span class="op">)</span>
 
 <span class="co"># Show the first file paths</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html" class="external-link">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;                                                               file is_directory</span>
 <span class="co">#&gt; 1 grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz        FALSE</span>
 <span class="co">#&gt; 2 grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz        FALSE</span>
@@ -154,7 +150,7 @@
 <span class="co">#&gt; 6 daily/radolan/historical/bin/2007/SF-200703.tar.gz</span>
 
 <span class="co"># Show the last file paths</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html" class="external-link">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;                                                                                                           file</span>
 <span class="co">#&gt; 508                                           grids_germany/hourly/radolan/historical/bin/2019/RW201909.tar.gz</span>
 <span class="co">#&gt; 509                                           grids_germany/hourly/radolan/historical/bin/2019/RW201910.tar.gz</span>
@@ -177,15 +173,15 @@
 <span class="co">#&gt; 512 hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_bin_de.pdf</span>
 <span class="co">#&gt; 513  hourly/radolan/historical/bin/DESCRIPTION_gridsgermany_hourly_radolan_historical_bin_en.pdf</span></code></pre></div>
 </div>
-<div id="download-zipped-radolan-files-from-dwds-ftp-server" class="section level2">
-<h2 class="hasAnchor">
-<a href="#download-zipped-radolan-files-from-dwds-ftp-server" class="anchor"></a>Download zipped RADOLAN files from DWD’s FTP server</h2>
+<div class="section level2">
+<h2 id="download-zipped-radolan-files-from-dwds-ftp-server">Download zipped RADOLAN files from DWD’s FTP server<a class="anchor" aria-label="anchor" href="#download-zipped-radolan-files-from-dwds-ftp-server"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Set the target directory</span>
 <span class="va">export_dir</span> <span class="op">&lt;-</span> <span class="st">"~/Downloads/radolan"</span>
 
 <span class="co"># Create required directories</span>
-<span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/createDirectory.html">createDirectory</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"daily/historical"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/createDirectory.html" class="external-link">createDirectory</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"daily/historical"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Download corresponding RADOLAN files from DWD's FTP server</span>
 <span class="fu">kwb.dwd</span><span class="fu">::</span><span class="fu"><a href="../reference/download_radolan.html">download_radolan</a></span><span class="op">(</span>
@@ -208,31 +204,31 @@ downloaded 173.5 MB
 ok. (1.97s) 
 ok. (3.45s) </code></pre>
 </div>
-<div id="unzip-the-downloaded-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unzip-the-downloaded-files" class="anchor"></a>Unzip the downloaded files</h2>
+<div class="section level2">
+<h2 id="unzip-the-downloaded-files">Unzip the downloaded files<a class="anchor" aria-label="anchor" href="#unzip-the-downloaded-files"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the paths to the zipped files</span>
-<span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"\\.tar\\.gz"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"\\.tar\\.gz"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Unzip all files to the export directory</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">files</span>, <span class="va">untar</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/path.expand.html">path.expand</a></span><span class="op">(</span><span class="va">export_dir</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">files</span>, <span class="va">untar</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand</a></span><span class="op">(</span><span class="va">export_dir</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="read-the-binary-radolan-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read-the-binary-radolan-files" class="anchor"></a>Read the binary Radolan files</h2>
+<div class="section level2">
+<h2 id="read-the-binary-radolan-files">Read the binary Radolan files<a class="anchor" aria-label="anchor" href="#read-the-binary-radolan-files"></a>
+</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the paths to all binary Radolan files in the export directory</span>
-<span class="va">files_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"---bin$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">files_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="va">export_dir</span>, <span class="st">"---bin$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Read all Radolan files as raster objects</span>
-<span class="va">raster_objects</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">files_bin</span>, <span class="kw">function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/catAndRun.html">catAndRun</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Reading"</span>, <span class="va">file</span><span class="op">)</span>,
+<span class="va">raster_objects</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">files_bin</span>, <span class="kw">function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/catAndRun.html" class="external-link">catAndRun</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Reading"</span>, <span class="va">file</span><span class="op">)</span>,
   <span class="fu">kwb.dwd</span><span class="fu">::</span><span class="fu"><a href="../reference/read_binary_radolan_file.html">read_binary_radolan_file</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
 <span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Plot the contents of one file</span>
-<span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="va">raster_objects</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">raster_objects</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -247,11 +243,13 @@ ok. (3.45s) </code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Hauke Sonnenberg.</p>
+  <p></p>
+<p>Developed by Hauke Sonnenberg.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -259,6 +257,8 @@ ok. (3.45s) </code></pre>
 
   
 
+
+  
 
   </body>
 </html>
