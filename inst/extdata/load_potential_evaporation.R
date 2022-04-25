@@ -6,7 +6,7 @@
 #
 
 # MAIN -------------------------------------------------------------------------
-if (FALSE)
+load_potential_evaporation_berlin <- function()
 {
   # Base URL to potential evaporation files on DWD server
   base_url <- kwb.dwd:::ftp_path_cdc("grids_germany/monthly/evapo_p")
@@ -29,8 +29,17 @@ if (FALSE)
 
   # calculate monthly stats for Berlin
   # use "monthly_evapo_p" because the filename at DWD reads the same
-  berlin_monthly_evapo_p <- kwb.dwd:::calculate_potential_evaporation_stats(
+  result <- kwb.dwd:::calculate_potential_evaporation_stats(
     matrices = matrices,
     geo_mask = berlin_dwd_mask
   )
+
+  # Provide metadata: file name, year, month
+  file_info <- data.frame(
+    file = relative_urls,
+    year = sapply(matrices, kwb.utils::getAttribute, "year"),
+    month = sapply(matrices, kwb.utils::getAttribute, "month")
+  )
+
+  structure(result, file_info = file_info)
 }
