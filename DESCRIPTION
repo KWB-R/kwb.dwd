@@ -6,7 +6,7 @@ Authors@R:
              family = "Sonnenberg",
              role = c("aut", "cre"),
              email = "hauke.sonnenberg@kompetenz-wasser.de",
-             comment = structure("0000-0001-9134-2871", .Names = "ORCID"),
+             comment = structure("0000-0001-9134-2871", .Names = "ORCID")),
       person(given = "Michael",
              family = "Rustler",
              role = "ctb",
