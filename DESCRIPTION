@@ -6,24 +6,38 @@ Authors@R:
              family = "Sonnenberg",
              role = c("aut", "cre"),
              email = "hauke.sonnenberg@kompetenz-wasser.de",
-             comment = c(ORCID = "0000-0001-9134-2871")),
+             comment = structure("0000-0001-9134-2871", .Names = "ORCID"),
+      person(given = "Michael",
+             family = "Rustler",
+             role = "ctb",
+             email = "michael.rustler@kompetenz-wasser.de",
+             comment = structure("0000-0003-0647-7726", .Names = "ORCID")),
+      person(given = "Lukas",
+             family = "Guerdicke",
+             role = "ctb",
+             email = "lukas.guerdicke@kompetenz-wasser.de"),
       person(given = "Kompetenzzentrum Wasser Berlin gGmbH (KWB)",
              role = "cph"))
-Description: This package provides functions to simplify
-    the access to the data provided online by the Deutscher Wetterdienst
-    (DWD, https://www.dwd.de).  It currently contains a function
-    \code{get_radolan_urls} that returns the internet addresses (Unified
-    Resource Locators, URLs) to the zip files containing rain data from
-    the RADOLAN system in daily or hourly resolution (see
-    https://www.dwd.de/DE/leistungen/radolan/radolan.html). The function
-    \code{download_radolan} helps you to download these files. But take
-    care, you should rescrict the time period as each file contains the
-    data for all of Germany.
+Description: This package provides functions to simplify the access to the data 
+    provided online by the Deutscher Wetterdienst (DWD, https://www.dwd.de).
+    It currently contains a function \code{get_radolan_urls} that returns the
+    internet addresses (Unified Resource Locators, URLs) to the zip files 
+    containing rain data from the RADOLAN system in daily or hourly resolution
+    (see https://www.dwd.de/DE/leistungen/radolan/radolan.html). The function
+    \code{download_radolan} helps you to download these files. But take care,
+    you should rescrict the time period as each file contains the data for 
+    all of Germany.
 License: MIT + file LICENSE
 URL: https://github.com/KWB-R/kwb.dwd
 BugReports: https://github.com/KWB-R/kwb.dwd/issues
-Depends: 
-    R (>= 3.0)
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.0)
+Suggests: 
+    covr (>= 3.2.1),
+    knitr (>= 1.22),
+    rmarkdown (>= 1.12)
+RoxygenNote: 7.1.0
 Imports: 
     fs (>= 1.2.6),
     kwb.utils (>= 0.6.0),
@@ -35,14 +49,6 @@ Imports:
     sp (>= 1.3.1),
     bitops (>= 1.0.6),
     RCurl (>= 1.95.4.11)
-Suggests: 
-    covr (>= 3.2.1),
-    knitr (>= 1.22),
-    rmarkdown (>= 1.12)
-VignetteBuilder: 
-    knitr
 Remotes:
     github::kwb-r/kwb.utils@v0.6.0
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+VignetteBuilder: knitr
