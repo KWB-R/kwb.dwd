@@ -10,12 +10,14 @@ if (FALSE)
     result_urls <- paste0(kwb.utils::assertFinalSlash(base_url), x)
   })
 
-  # user  system elapsed
-  # 209.935   8.589 590.817
+  #   User      System verstrichen
+  # 184.55        4.79      785.71
 
   subdir_matrix <- kwb.file:::to_subdir_matrix(result_urls)
+  head(subdir_matrix)
 
-  View(subdir_matrix)
+  dim(subdir_matrix)
+  # [1] 700830     13
 
   dwd_files <- x
 
@@ -32,7 +34,7 @@ if (FALSE)
   writeLines(result_urls, file)
 }
 
-# ------------------------------------------------------------------------------
+# List all paths below grids_germany -------------------------------------------
 if (FALSE)
 {
   base_url <- kwb.dwd:::ftp_path_cdc("grids_germany")
