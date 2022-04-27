@@ -63,13 +63,10 @@ empty_file_info <- function(full_info = TRUE)
   )
 
   if (full_info) {
-
-    full_record
-
-  } else {
-
-    full_record[, 1:2]
+    return(full_record)
   }
+
+  full_record[, 1:2]
 }
 
 # response_to_data_frame_raw ---------------------------------------------------
