@@ -41,7 +41,7 @@ convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)
   stopifnot(file.exists(bin_file))
 
   # Read binary file into raster object
-  rb <- kwb.dwd::read_binary_radolan_file(bin_file)
+  rb <- read_binary_radolan_file(bin_file)
 
   # Determine target file name
   file <- file.path(target_dir, gsub("---bin$", "---rst", basename(bin_file)))
