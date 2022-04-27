@@ -90,10 +90,10 @@
 <span class="co"># install.packages("remotes")</span>
 
 <span class="co"># Install kwb.dwd from GitHub</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"KWB-R/kwb.dwd"</span><span class="op">)</span>
 
 <span class="co"># Install the current development version</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kwb-r/kwb.dwd@dev"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"KWB-R/kwb.dwd@dev"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="list-files-available-on-dwds-ftp-server">List files available on DWD’s FTP server<a class="anchor" aria-label="anchor" href="#list-files-available-on-dwds-ftp-server"></a>
@@ -105,7 +105,7 @@
 
 <span class="co"># List all historical RADOLAN files</span>
 <span class="va">urls</span> <span class="op">&lt;-</span> <span class="fu">kwb.dwd</span><span class="fu">::</span><span class="fu"><a href="../reference/list_url.html">list_url</a></span><span class="op">(</span><span class="va">url</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>It takes about six seconds to get the file list. All file paths and file names (as they were listed on 2020-05-31) are also contained in the data frame <code>dwd_files</code> that is available in the package. You can browse through this data frame to find the files that you are looking for:</p>
+<p>It takes about six seconds to get the file list. All file paths and file names (as they were listed on 2022-04-27) are also contained in the data frame <code>dwd_files</code> that is available in the package. You can browse through this data frame to find the files that you are looking for:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get data frame of all files</span>
 <span class="va">dwd_files</span> <span class="op">&lt;-</span> <span class="fu">kwb.dwd</span><span class="fu">::</span><span class="va"><a href="../reference/dwd_files.html">dwd_files</a></span>
@@ -118,20 +118,20 @@
 
 <span class="co"># Show the first file paths</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html" class="external-link">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;                                                               file is_directory</span>
-<span class="co">#&gt; 1 grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz        FALSE</span>
-<span class="co">#&gt; 2 grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz        FALSE</span>
-<span class="co">#&gt; 3 grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz        FALSE</span>
-<span class="co">#&gt; 4 grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz        FALSE</span>
-<span class="co">#&gt; 5 grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz        FALSE</span>
-<span class="co">#&gt; 6 grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz        FALSE</span>
+<span class="co">#&gt;                                                               file isdir</span>
+<span class="co">#&gt; 1 grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz FALSE</span>
+<span class="co">#&gt; 2 grids_germany/daily/radolan/historical/bin/2006/SF-200611.tar.gz FALSE</span>
+<span class="co">#&gt; 3 grids_germany/daily/radolan/historical/bin/2006/SF-200612.tar.gz FALSE</span>
+<span class="co">#&gt; 4 grids_germany/daily/radolan/historical/bin/2007/SF-200701.tar.gz FALSE</span>
+<span class="co">#&gt; 5 grids_germany/daily/radolan/historical/bin/2007/SF-200702.tar.gz FALSE</span>
+<span class="co">#&gt; 6 grids_germany/daily/radolan/historical/bin/2007/SF-200703.tar.gz FALSE</span>
 <span class="co">#&gt;        size permissions modification_time user group links</span>
-<span class="co">#&gt; 1   7451505  -rw-r--r--  2020-03-30 07:33 9261 15101     1</span>
-<span class="co">#&gt; 2  53109545  -rw-r--r--  2020-03-30 11:08 9261 15101     1</span>
-<span class="co">#&gt; 3 138991915  -rw-r--r--  2020-03-30 11:08 9261 15101     1</span>
-<span class="co">#&gt; 4 228995524  -rw-r--r--  2020-03-30 11:08 9261 15101     1</span>
-<span class="co">#&gt; 5 174957194  -rw-r--r--  2020-03-30 07:33 9261 15101     1</span>
-<span class="co">#&gt; 6 186723651  -rw-r--r--  2020-03-30 07:34 9261 15101     1</span>
+<span class="co">#&gt; 1   7451505  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
+<span class="co">#&gt; 2  53109545  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
+<span class="co">#&gt; 3 138991915  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
+<span class="co">#&gt; 4 228995524  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
+<span class="co">#&gt; 5 174957194  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
+<span class="co">#&gt; 6 186723651  -rw-r--r--  2020-03-30 00:00 9261 15101     1</span>
 <span class="co">#&gt;                                                 path</span>
 <span class="co">#&gt; 1 daily/radolan/historical/bin/2006/SF-200610.tar.gz</span>
 <span class="co">#&gt; 2 daily/radolan/historical/bin/2006/SF-200611.tar.gz</span>
@@ -143,26 +143,26 @@
 <span class="co"># Show the last file paths</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu">kwb.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kwb.utils/man/resetRowNames.html" class="external-link">resetRowNames</a></span><span class="op">(</span><span class="va">radolan_files</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;                                                                                                           file</span>
-<span class="co">#&gt; 508                                           grids_germany/hourly/radolan/historical/bin/2019/RW201909.tar.gz</span>
-<span class="co">#&gt; 509                                           grids_germany/hourly/radolan/historical/bin/2019/RW201910.tar.gz</span>
-<span class="co">#&gt; 510                                           grids_germany/hourly/radolan/historical/bin/2019/RW201911.tar.gz</span>
-<span class="co">#&gt; 511                                           grids_germany/hourly/radolan/historical/bin/2019/RW201912.tar.gz</span>
-<span class="co">#&gt; 512 grids_germany/hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_bin_de.pdf</span>
-<span class="co">#&gt; 513  grids_germany/hourly/radolan/historical/bin/DESCRIPTION_gridsgermany_hourly_radolan_historical_bin_en.pdf</span>
-<span class="co">#&gt;     is_directory     size permissions modification_time user group links</span>
-<span class="co">#&gt; 508        FALSE 38925469  -rw-r--r--  2020-03-30 11:09 9261 15101     1</span>
-<span class="co">#&gt; 509        FALSE 46400625  -rw-r--r--  2020-03-30 07:49 9261 15101     1</span>
-<span class="co">#&gt; 510        FALSE 37500639  -rw-r--r--  2020-03-30 07:49 9261 15101     1</span>
-<span class="co">#&gt; 511        FALSE 35642775  -rw-r--r--  2020-03-30 11:09 9261 15101     1</span>
-<span class="co">#&gt; 512        FALSE    65599  -rw-r--r--  2020-03-30 11:08 9261 15101     1</span>
-<span class="co">#&gt; 513        FALSE    62532  -rw-r--r--  2020-03-30 11:08 9261 15101     1</span>
+<span class="co">#&gt; 580                                           grids_germany/hourly/radolan/historical/bin/2021/RW202109.tar.gz</span>
+<span class="co">#&gt; 581                                           grids_germany/hourly/radolan/historical/bin/2021/RW202110.tar.gz</span>
+<span class="co">#&gt; 582                                           grids_germany/hourly/radolan/historical/bin/2021/RW202111.tar.gz</span>
+<span class="co">#&gt; 583                                           grids_germany/hourly/radolan/historical/bin/2021/RW202112.tar.gz</span>
+<span class="co">#&gt; 584 grids_germany/hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany-hourly-radolan-historical-bin_de.pdf</span>
+<span class="co">#&gt; 585  grids_germany/hourly/radolan/historical/bin/DESCRIPTION_gridsgermany-hourly-radolan-historical-bin_en.pdf</span>
+<span class="co">#&gt;     isdir     size permissions modification_time user group links</span>
+<span class="co">#&gt; 580 FALSE 22516914  -rw-r--r--  2022-03-17 13:59 9261 15101     1</span>
+<span class="co">#&gt; 581 FALSE 33268966  -rw-r--r--  2022-03-17 13:59 9261 15101     1</span>
+<span class="co">#&gt; 582 FALSE 29952317  -rw-r--r--  2022-03-17 13:59 9261 15101     1</span>
+<span class="co">#&gt; 583 FALSE 35160103  -rw-r--r--  2022-03-17 13:59 9261 15101     1</span>
+<span class="co">#&gt; 584 FALSE   134365  -rw-r--r--  2021-07-19 00:00 9261 15101     1</span>
+<span class="co">#&gt; 585 FALSE   129857  -rw-r--r--  2021-07-19 00:00 9261 15101     1</span>
 <span class="co">#&gt;                                                                                             path</span>
-<span class="co">#&gt; 508                                           hourly/radolan/historical/bin/2019/RW201909.tar.gz</span>
-<span class="co">#&gt; 509                                           hourly/radolan/historical/bin/2019/RW201910.tar.gz</span>
-<span class="co">#&gt; 510                                           hourly/radolan/historical/bin/2019/RW201911.tar.gz</span>
-<span class="co">#&gt; 511                                           hourly/radolan/historical/bin/2019/RW201912.tar.gz</span>
-<span class="co">#&gt; 512 hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany_hourly_radolan_historical_bin_de.pdf</span>
-<span class="co">#&gt; 513  hourly/radolan/historical/bin/DESCRIPTION_gridsgermany_hourly_radolan_historical_bin_en.pdf</span></code></pre></div>
+<span class="co">#&gt; 580                                           hourly/radolan/historical/bin/2021/RW202109.tar.gz</span>
+<span class="co">#&gt; 581                                           hourly/radolan/historical/bin/2021/RW202110.tar.gz</span>
+<span class="co">#&gt; 582                                           hourly/radolan/historical/bin/2021/RW202111.tar.gz</span>
+<span class="co">#&gt; 583                                           hourly/radolan/historical/bin/2021/RW202112.tar.gz</span>
+<span class="co">#&gt; 584 hourly/radolan/historical/bin/BESCHREIBUNG_gridsgermany-hourly-radolan-historical-bin_de.pdf</span>
+<span class="co">#&gt; 585  hourly/radolan/historical/bin/DESCRIPTION_gridsgermany-hourly-radolan-historical-bin_en.pdf</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="download-zipped-radolan-files-from-dwds-ftp-server">Download zipped RADOLAN files from DWD’s FTP server<a class="anchor" aria-label="anchor" href="#download-zipped-radolan-files-from-dwds-ftp-server"></a>
