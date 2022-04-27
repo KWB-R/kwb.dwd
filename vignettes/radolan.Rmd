@@ -26,10 +26,10 @@ knitr::opts_chunk$set(
 # install.packages("remotes")
 
 # Install kwb.dwd from GitHub
-remotes::install_github("kwb-r/kwb.dwd")
+remotes::install_github("KWB-R/kwb.dwd")
 
 # Install the current development version
-remotes::install_github("kwb-r/kwb.dwd@dev")
+remotes::install_github("KWB-R/kwb.dwd@dev")
 ```
 
 ## List files available on DWD's FTP server
@@ -47,7 +47,7 @@ urls <- kwb.dwd::list_url(url, recursive = TRUE)
 ```
 
 It takes about six seconds to get the file list. All file paths and file names
-(as they were listed on 2020-05-31) are also contained in the data frame
+(as they were listed on 2022-04-27) are also contained in the data frame
 `dwd_files` that is available in the package. You can browse through this
 data frame to find the files that you are looking for:
 
