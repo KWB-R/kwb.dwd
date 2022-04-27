@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/radolan.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/articles/radolan.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_bin_to_raster_file.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/convert_bin_to_raster_file.html</loc>
   </url>
   <url>
-    <loc>/reference/crop_radolan_radial.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/crop_radolan_radial.html</loc>
   </url>
   <url>
-    <loc>/reference/download_radolan.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/download_radolan.html</loc>
   </url>
   <url>
-    <loc>/reference/dwd_files.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/dwd_files.html</loc>
   </url>
   <url>
-    <loc>/reference/get_dwd_urls_metadata.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_dwd_urls_metadata.html</loc>
   </url>
   <url>
-    <loc>/reference/get_radolan_urls.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_urls.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/list_url.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/list_url.html</loc>
   </url>
   <url>
-    <loc>/reference/read_binary_radolan_file.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_binary_radolan_file.html</loc>
   </url>
   <url>
-    <loc>/reference/read_relevant_years_radolan.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_relevant_years_radolan.html</loc>
   </url>
 </urlset>
