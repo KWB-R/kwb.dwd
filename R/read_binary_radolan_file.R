@@ -5,10 +5,11 @@
 #' @param path path to binary Radolan file
 #' @param set_projection_and_extent if \code{TRUE} (default), the projection
 #'   and extent of the raster object are set to the Radolan specific values,
-#'   returned by \code{kwb.dwd:::get_radolan_projection_string()} and
-#'   \code{get_radolan_extension()}, respectively.
+#'   returned by \code{kwb.dwd::get_radolan_projection_string()} and
+#'   \code{kwb.dwd::get_radolan_extension()}, respectively.
 #' @export
-#'
+#' @importFrom sp CRS
+#' @importFrom raster extent
 read_binary_radolan_file <- function(path, set_projection_and_extent = TRUE)
 {
   # Read raw data values
@@ -28,7 +29,14 @@ read_binary_radolan_file <- function(path, set_projection_and_extent = TRUE)
   rb
 }
 
-# get_radolan_extension --------------------------------------------------------
+#' Get Radolan Extension
+#'
+#' @return default radolan extension
+#' @export
+#'
+#' @examples
+#' get_radolan_extension()
+#'
 get_radolan_extension <- function()
 {
   c(-523.4622, 376.5378, -4658.645, -3758.645)

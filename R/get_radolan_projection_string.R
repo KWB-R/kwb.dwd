@@ -1,4 +1,11 @@
-# Compose radolan projection string
+#' Compose radolan projection string
+#'
+#' @return default radolan projection string
+#' @export
+#'
+#' @examples
+#' get_radolan_projection_string()
+#'
 get_radolan_projection_string <- function()
 {
   to_projection_string(

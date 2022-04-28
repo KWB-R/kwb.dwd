@@ -12,6 +12,9 @@
 #' @importFrom utils download.file
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
 #' @export
+#' @importFrom fs dir_create
+#' @importFrom kwb.utils catAndRun
+#' @importFrom utils download.file
 #' @examples
 #' \dontrun{download_radolan(resolution = "daily")}
 download_radolan <- function(resolution = "daily", export_dir = "data", ...)

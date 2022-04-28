@@ -1,4 +1,12 @@
 # extract_radolan_zip_files ----------------------------------------------------
+#' Extract radolan zip files
+#'
+#' @param radolan_dir radolan directory
+#'
+#' @return unizipped in \code{radolan_dir} subfolder "bin"
+#' @export
+#' @importFrom kwb.utils catAndRun createDirectory
+#' @importFrom utils untar
 extract_radolan_zip_files <- function(radolan_dir)
 {
   # Get the paths to the zipped files

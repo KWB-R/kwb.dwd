@@ -1,4 +1,13 @@
 # read_potential_evaporation_from_url ------------------------------------------
+#' Read potential evaporation from URL
+#'
+#' @param url url
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils extractSubstring
+#' @importFrom utils read.table
 read_potential_evaporation_from_url <- function(url)
 {
   stopifnot(is.character(url), length(url) == 1L)
@@ -30,6 +39,13 @@ read_potential_evaporation_from_url <- function(url)
 }
 
 # get geographical "stamp" for Berlin area -------------------------------------
+#' Get geographical "stamp" for Berlin area
+#'
+#' @return ???
+#' @export
+#' @importFrom utils read.csv
+#' @examples
+#' get_berlin_dwd_mask()
 get_berlin_dwd_mask <- function()
 {
   #DWD matrix filled with NA
@@ -51,7 +67,15 @@ get_berlin_dwd_mask <- function()
 
 # calculate_potential_evaporation_stats ----------------------------------------
 
-# Calculate stats of potential evaporation for geographical subset
+#' Calculate stats of potential evaporation for geographical subset
+#'
+#' @param matrices matrices
+#' @param geo_mask geo_mask
+#'
+#' @return ???
+#' @export
+#' @importFrom kwb.utils getAttribute
+#' @importFrom stats sd
 calculate_potential_evaporation_stats <- function(matrices, geo_mask)
 {
   # Keep only Berlin grid cells and correct unit to mm

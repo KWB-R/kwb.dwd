@@ -7,7 +7,8 @@
 #'   "_Beschreibung_Stationen.txt" describing measurement stations.
 #'
 #' @export
-#'
+#' @importFrom stats setNames
+#' @importFrom kwb.utils pasteColumns
 get_dwd_urls_metadata <- function()
 {
   # Note: category "solar" is not considered
@@ -28,6 +29,15 @@ get_dwd_urls_metadata <- function()
 }
 
 # get_dwd_config_combinations --------------------------------------------------
+#' Get DWC config combinations
+#'
+#' @param frequencies default: c("daily", "hourly")
+#' @param currentnesses default: c("historical", "recent")
+#' @return data.frame with columns frequency category and currentness
+#' @keywords internal
+#' @noRd
+#' @noMd
+#' @importFrom  kwb.utils expandGrid
 get_dwd_config_combinations <- function(
   frequencies = c("daily", "hourly"), currentnesses = c("historical", "recent")
 )
