@@ -1,14 +1,15 @@
 # read_zipped_esri_ascii_grid --------------------------------------------------
 
-#' Read Zipped File in ESRI-ascii-grid-format at URL
+#' Read Zipped File(s) in ESRI-ascii-grid-format at URL
 #'
-#' @param url url
+#' @param url URL to file
+#' @param scale optional. Scaling factor by which to multiply each matrix value
 #' @return matrix with attributes containing metadata
 #' @keywords internal
 #' @noMd
 #' @noRd
 #' @importFrom utils read.table
-read_zipped_esri_ascii_grid <- function(url)
+read_zipped_esri_ascii_grid <- function(url, scale = NULL)
 {
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/evapo_p/grids_germany_monthly_evapo_p_202203.asc.gz"
 
@@ -20,6 +21,10 @@ read_zipped_esri_ascii_grid <- function(url)
 
   # Extract the actual data values into a matrix
   result <- as.matrix(utils::read.table(text = text[-header_indices]))
+
+  if (! is.null(scale)) {
+    result <- result * scale
+  }
 
   # Add header and further metadata as attributes
   do.call(structure, c(
