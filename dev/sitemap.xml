@@ -22,7 +22,13 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/news/index.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/calculate_potential_evaporation_stats.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/convert_bin_to_raster_file.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/coordinates_to_EPSG_4326.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/crop_radolan_radial.html</loc>
@@ -34,7 +40,19 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/dwd_files.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/extract_radolan_zip_files.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_berlin_dwd_mask.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_dwd_urls_metadata.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_extension.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_projection_string.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_urls.html</loc>
@@ -49,9 +67,18 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_potential_evaporation_berlin.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_precipitation_berlin.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/radolan_raw_to_raster.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_binary_radolan_file.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_relevant_years_radolan.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/write_raster_to_file.html</loc>
   </url>
 </urlset>
