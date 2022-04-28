@@ -10,23 +10,33 @@
 #' @importFrom utils read.table
 read_zipped_asc_file_at_url <- function(url)
 {
+  #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/evapo_p/grids_germany_monthly_evapo_p_202203.asc.gz"
+
   # Download .gz file from URL, extract the file and read the lines as text
   text <- read_lines_from_downloaded_gz(url)
 
   # The first six rows are header rows
   header_indices <- 1:6
 
-  # Extract the header
-  header <- text[header_indices]
-
   # Extract the actual data values into a matrix
-  values <- as.matrix(utils::read.table(text = text[-header_indices]))
-
-  # Main arguments to structure() call
-  args <- list(values, header = header)
+  result <- as.matrix(utils::read.table(text = text[-header_indices]))
 
   # Add header and further metadata as attributes
-  do.call(structure, c(args, extract_metadata_from_url(url)))
+  do.call(structure, c(
+    list(result),
+    extract_metadata_from_header(text[header_indices]),
+    extract_metadata_from_url(url)
+  ))
+}
+
+# extract_metadata_from_header -------------------------------------------------
+extract_metadata_from_header <- function(header_lines)
+{
+  cells <- strsplit(header_lines, "\\s+")
+
+  values <- as.numeric(sapply(cells, "[[", 2L))
+
+  stats::setNames(as.list(values), sapply(cells, "[[", 1L))
 }
 
 # read_lines_from_downloaded_gz ------------------------------------------------
