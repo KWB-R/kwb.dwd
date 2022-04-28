@@ -104,6 +104,20 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
+# list_zipped_asc_files --------------------------------------------------------
+
+#' Get URLs of Files with Extension .asc.gz Below Base URL
+#'
+#' @param base_url URL from which to start listing files recursively
+list_zipped_asc_files <- function(base_url)
+{
+  # List data files
+  relative_urls <- grep("\\.asc\\.gz$", list_url(base_url), value = TRUE)
+
+  # Provide full paths
+  file.path(base_url, relative_urls)
+}
+
 # month_numbers ----------------------------------------------------------------
 month_numbers <- function()
 {

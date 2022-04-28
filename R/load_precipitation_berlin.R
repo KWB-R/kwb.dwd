@@ -9,17 +9,12 @@
 #'   (minimum value), \code{max} (maximum value) of potential evaporation
 #'   calculated for Berlin, Germany
 #' @export
-
 load_precipitation_berlin <- function()
 {
-  # Base URL to precipitation files on DWD server
-  base_url <- ftp_path_cdc("grids_germany/monthly/precipitation")
-
-  # Get relative paths to all files in all sub folders
-  paths <- list_url(base_url, recursive = TRUE)
-
-  # Filter for .gz files, and create the full URLs
-  urls <- file.path(base_url, grep("\\.gz$", paths, value = TRUE))
+  # URLs to .asc.gz files with monthly precipitation data DWD server
+  urls <- list_zipped_asc_files(base_url = ftp_path_cdc(
+    "grids_germany/monthly/precipitation"
+  ))
 
   # Calculate monthly stats for Berlin
   calculate_potential_evaporation_stats(
