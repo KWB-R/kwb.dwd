@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_potential_evaporation_berlin.R
 \name{load_potential_evaporation_berlin}
 \alias{load_potential_evaporation_berlin}
-\title{Load potential evaporation data from DWD server}
+\title{Load monthly potential evaporation for Berlin from DWD}
 \usage{
 load_potential_evaporation_berlin()
 }
@@ -14,6 +14,6 @@ data frame with columns \code{file} (name of file downloaded from
   calculated for Berlin, Germany
 }
 \description{
-This function loads monthly potential evaporation values for Berlin, Germany,
+This function loads monthly potential evaporation for Berlin, Germany,
 from Deutscher Wetterdienst (DWD).
 }
