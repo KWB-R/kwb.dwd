@@ -16,7 +16,7 @@ read_potential_evaporation_from_url <- function(url)
 
   file <- file.path(tempdir(), file_name)
 
-  download.file(url, file)
+  download.file(url, file, method = "auto")
 
   con <- gzfile(file)
 
