@@ -10,9 +10,9 @@
 #' @importFrom utils read.table
 read_potential_evaporation_from_url <- function(url)
 {
-  file_name <- basename(url)
+  text <- read_lines_from_downloaded_gz(url)
 
-  text <- read_lines_from_gz_at_url(url)
+  file_name <- basename(url)
 
   year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", file_name, 1:2)
 
@@ -28,8 +28,8 @@ read_potential_evaporation_from_url <- function(url)
   )
 }
 
-# read_lines_from_gz_at_url ----------------------------------------------------
-read_lines_from_gz_at_url <- function(url)
+# read_lines_from_downloaded_gz ------------------------------------------------
+read_lines_from_downloaded_gz <- function(url)
 {
   stopifnot(is.character(url), length(url) == 1L)
 
