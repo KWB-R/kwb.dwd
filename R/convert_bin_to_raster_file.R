@@ -8,7 +8,7 @@
 #'   the first element of \code{bin_file} resides.
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' @export
-#'
+#' @importFrom kwb.utils createDirectory
 convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)
 {
   stopifnot(is.character(bin_file))
@@ -50,7 +50,16 @@ convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)
   write_raster_to_file(rb, file = file, dbg = dbg)
 }
 
-# write_raster_to_file ---------------------------------------------------------
+#' Write raster to file
+#'
+#' @param rb raster data
+#' @param file file path
+#' @param dbg debug (TRUE/FALSE)
+#'
+#' @return write raster to file
+#' @export
+#'
+#' @importFrom raster writeRaster
 write_raster_to_file <- function(rb, file, dbg = TRUE)
 {
   kwb.utils::catAndRun(

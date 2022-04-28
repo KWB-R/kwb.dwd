@@ -36,6 +36,16 @@ read_binary_radolan_file_raw_v1 <- function(path)
 }
 
 # read_binary_radolan_file_raw_v2 ----------------------------------------------
+
+#' Read binary Radolan file raw v2
+#'
+#' @param path path
+#'
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom bitops bitAnd
 read_binary_radolan_file_raw_v2 <- function(path)
 {
   # Read the header from the file

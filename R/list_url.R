@@ -12,7 +12,8 @@
 #' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
 #'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
 #' @export
-#'
+#' @importFrom kwb.utils listToDepth selectColumns
+#' @importFrom RCurl getCurlHandle
 list_url <- function(
   url = ftp_path_cdc(),
   recursive = ! is.na(max_depth),

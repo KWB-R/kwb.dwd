@@ -11,3 +11,4 @@
 ^\.Rproj\.user$
 ^.here$
 ^pkgdown$
+^.github$

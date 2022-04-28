@@ -18,7 +18,7 @@
 #' @param \dots further arguments passed to \code{kwb.dwd:::get_radolan_url},
 #'   such as \code{ftp_root}
 #' @importFrom magrittr %>%
-#' @importFrom kwb.utils resolve
+#' @importFrom kwb.utils left resolve stringList
 #' @importFrom lubridate rollback
 #' @importFrom stringr str_replace
 #' @importFrom fs dir_create
@@ -26,7 +26,6 @@
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
 #'
 #' @export
-#'
 #' @examples
 #' # Get all expected URLs
 #' urls <- kwb.dwd::get_radolan_urls()

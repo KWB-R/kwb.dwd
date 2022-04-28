@@ -11,7 +11,9 @@
 #'   \code{SAMPLE_DATE} and \code{rain_mean} is returned, otherwise the raster
 #'   object returned by \code{\link[raster]{crop}}
 #' @export
-#'
+#' @importFrom sf st_buffer st_transform
+#' @importFrom raster cellStats crop
+#' @importFrom lubridate ymd
 crop_radolan_radial <- function(
   radolan, longitude, latitude, radius = 10, as_data_frame = TRUE
 )
@@ -43,6 +45,16 @@ crop_radolan_radial <- function(
 }
 
 # coordinates_to_EPSG_4326 -----------------------------------------------------
+#' Coordinates to EPSG-4326
+#'
+#' @param latitude latitude
+#' @param longitude longitude
+#'
+#' @return data.frame with columns lon and lat with CRS 4326
+#' @export
+#' @importFrom sf st_as_sf
+#' @examples
+#' coordinates_to_EPSG_4326(latitude = 10, longitude = 50)
 coordinates_to_EPSG_4326 <- function(latitude, longitude)
 {
   sf::st_as_sf(

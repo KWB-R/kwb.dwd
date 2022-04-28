@@ -23,6 +23,16 @@ list_contents <- function(x = character(), full_info = FALSE, ...)
 }
 
 # response_to_data_frame -------------------------------------------------------
+#' Response to data.frame
+#'
+#' @param response response
+#' @param full_info full_info
+#'
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils selectColumns
 response_to_data_frame <- function(response, full_info = FALSE)
 {
   template <- empty_file_info(full_info)
@@ -49,6 +59,15 @@ response_to_data_frame <- function(response, full_info = FALSE)
 }
 
 # empty_file_info --------------------------------------------------------------
+#' Empty file info
+#'
+#' @param full_info full_info
+#'
+#' @return ???
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils noFactorDataFrame
 empty_file_info <- function(full_info = TRUE)
 {
   full_record <- kwb.utils::noFactorDataFrame(
@@ -70,6 +89,16 @@ empty_file_info <- function(full_info = TRUE)
 }
 
 # response_to_data_frame_raw ---------------------------------------------------
+#' Response to data.frame raw
+#'
+#' @param response response
+#'
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils extractSubstring setColumns right
+#' @importFrom utils read.table
 response_to_data_frame_raw <- function(response)
 {
   # Split response at new line character into single rows
@@ -97,6 +126,15 @@ response_to_data_frame_raw <- function(response)
 }
 
 # simplify_time_info -----------------------------------------------------------
+#' Simplify time info
+#'
+#' @param info info
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils removeColumns
+#'
 simplify_time_info <- function(info)
 {
   # Add column "modification_time"
@@ -107,6 +145,15 @@ simplify_time_info <- function(info)
 }
 
 # columns_to_timestamp ---------------------------------------------------------
+#' Columns to timestamp
+#'
+#' @param info info
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils selectColumns selectElements
+#'
 columns_to_timestamp <- function(info)
 {
   pull <- function(x) kwb.utils::selectColumns(info, x)
@@ -127,6 +174,15 @@ columns_to_timestamp <- function(info)
 }
 
 # main_columns_first -----------------------------------------------------------
+#' Main Columns first
+#'
+#' @param df data.frame
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom kwb.utils moveColumnsToFront
+#'
 main_columns_first <- function(df)
 {
   columns <- intersect(names(empty_file_info(full_info = TRUE)), names(df))

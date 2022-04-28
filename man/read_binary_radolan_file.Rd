@@ -11,8 +11,8 @@ read_binary_radolan_file(path, set_projection_and_extent = TRUE)
 
 \item{set_projection_and_extent}{if \code{TRUE} (default), the projection
 and extent of the raster object are set to the Radolan specific values,
-returned by \code{kwb.dwd:::get_radolan_projection_string()} and
-\code{get_radolan_extension()}, respectively.}
+returned by \code{kwb.dwd::get_radolan_projection_string()} and
+\code{kwb.dwd::get_radolan_extension()}, respectively.}
 }
 \description{
 Read Binary Radolan File

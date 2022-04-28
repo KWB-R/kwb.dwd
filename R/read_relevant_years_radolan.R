@@ -8,7 +8,9 @@
 #' @param path path to rst database (folder)
 #' @param years vector of year numbers for which to read Radolan data files
 #' @export
-#'
+#' @importFrom kwb.utils left
+#' @importFrom raster stack
+#' @importFrom stats setNames
 read_relevant_years_radolan <- function(path, years)
 {
   stopifnot(is.numeric(years))

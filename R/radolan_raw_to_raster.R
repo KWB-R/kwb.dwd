@@ -1,4 +1,12 @@
 # radolan_raw_to_raster --------------------------------------------------------
+#' Radolan raw to raster
+#'
+#' @param rbi rbi
+#' @param version version (default: 3)
+#'
+#' @return ???
+#' @export
+#' @importFrom raster flip raster
 radolan_raw_to_raster <- function(rbi, version = 3)
 {
   stopifnot(version %in% 1:3)
