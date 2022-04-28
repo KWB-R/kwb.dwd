@@ -104,12 +104,12 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
-# list_zipped_asc_files --------------------------------------------------------
+# list_zipped_esri_ascii_grids -------------------------------------------------
 
-#' Get URLs of Files with Extension .asc.gz Below Base URL
+#' Get URLs of Files in Zipped ESRI-ascii-grid Format
 #'
 #' @param base_url URL from which to start listing files recursively
-list_zipped_asc_files <- function(base_url)
+list_zipped_esri_ascii_grids <- function(base_url)
 {
   # List data files
   relative_urls <- grep("\\.asc\\.gz$", list_url(base_url), value = TRUE)

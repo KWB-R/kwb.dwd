@@ -12,7 +12,9 @@
 load_precipitation_berlin <- function()
 {
   # URLs to .asc.gz files with monthly precipitation data DWD server
-  urls <- list_zipped_asc_files(ftp_path_cdc("grids_germany/monthly/precipitation"))
+  urls <- list_zipped_esri_ascii_grids(ftp_path_cdc(
+    "grids_germany/monthly/precipitation"
+  ))
 
   # Calculate monthly stats for Berlin
   calculate_potential_evaporation_stats(

@@ -12,7 +12,9 @@
 load_potential_evaporation_berlin <- function()
 {
   # URLs to .asc.gz files with potential evaporation data on DWD server
-  urls <- list_zipped_asc_files(ftp_path_cdc("grids_germany/monthly/evapo_p"))
+  urls <- list_zipped_esri_ascii_grids(ftp_path_cdc(
+    "grids_germany/monthly/evapo_p"
+  ))
 
   # Calculate monthly stats for Berlin
   calculate_potential_evaporation_stats(
