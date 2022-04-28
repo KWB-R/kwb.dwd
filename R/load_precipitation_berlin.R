@@ -17,7 +17,7 @@ load_precipitation_berlin <- function()
   # Calculate monthly stats for Berlin
   calculate_potential_evaporation_stats(
     # Read all files into a list of matrices
-    matrices = lapply(urls, read_zipped_asc_file_at_url),
+    matrices = lapply(urls, read_zipped_esri_ascii_grid),
     # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to
     # 1, rest of cells = NA)
     geo_mask = get_berlin_dwd_mask()

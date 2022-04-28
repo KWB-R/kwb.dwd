@@ -1,6 +1,6 @@
-# read_zipped_asc_file_at_url --------------------------------------------------
+# read_zipped_esri_ascii_grid --------------------------------------------------
 
-#' Read Values from .asc.gz File at URL
+#' Read Zipped File in ESRI-ascii-grid-format at URL
 #'
 #' @param url url
 #' @return matrix with attributes containing metadata
@@ -8,7 +8,7 @@
 #' @noMd
 #' @noRd
 #' @importFrom utils read.table
-read_zipped_asc_file_at_url <- function(url)
+read_zipped_esri_ascii_grid <- function(url)
 {
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/evapo_p/grids_germany_monthly_evapo_p_202203.asc.gz"
 
