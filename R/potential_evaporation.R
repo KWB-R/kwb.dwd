@@ -10,19 +10,9 @@
 #' @importFrom utils read.table
 read_potential_evaporation_from_url <- function(url)
 {
-  stopifnot(is.character(url), length(url) == 1L)
-
   file_name <- basename(url)
 
-  file <- file.path(tempdir(), file_name)
-
-  download.file(url, file, method = "auto")
-
-  con <- gzfile(file)
-
-  on.exit(close(con))
-
-  text <- readLines(con)
+  text <- read_lines_from_gz_at_url(url)
 
   year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", file_name, 1:2)
 
@@ -36,6 +26,22 @@ read_potential_evaporation_from_url <- function(url)
     file = file_name,
     origin = dirname(url)
   )
+}
+
+# read_lines_from_gz_at_url ----------------------------------------------------
+read_lines_from_gz_at_url <- function(url)
+{
+  stopifnot(is.character(url), length(url) == 1L)
+
+  file <- file.path(tempdir(), basename(url))
+
+  download.file(url, file, method = "auto")
+
+  con <- gzfile(file)
+
+  on.exit(close(con))
+
+  readLines(con)
 }
 
 # get geographical "stamp" for Berlin area -------------------------------------
