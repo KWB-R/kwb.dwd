@@ -48,6 +48,12 @@ date_in_bathing_season <- function(x)
   months >= 5 & months < 10
 }
 
+# filter_zipped_esri_ascii_grids -----------------------------------------------
+filter_zipped_esri_ascii_grids <- function(x)
+{
+  grep("\\.asc\\.gz$", x, value = TRUE)
+}
+
 # get_date_time_from_bin_filename ----------------------------------------------
 get_date_time_from_bin_filename <- function(x)
 {
@@ -108,14 +114,14 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 
 #' Get URLs of Files in Zipped ESRI-ascii-grid Format
 #'
-#' @param base_url URL from which to start listing files recursively
-list_zipped_esri_ascii_grids <- function(base_url)
+#' @param base_url URL from which to start listing (recursively by default)
+list_zipped_esri_ascii_grids <- function(base_url, recursive = TRUE)
 {
   # List data files
-  relative_urls <- grep("\\.asc\\.gz$", list_url(base_url), value = TRUE)
+  relative_urls <- list_url(base_url, recursive = recursive)
 
-  # Provide full paths
-  file.path(base_url, relative_urls)
+  # Provide full paths to zipped files in ESRI-ascii-grid-format
+  file.path(base_url, filter_zipped_esri_ascii_grids(relative_urls))
 }
 
 # month_numbers ----------------------------------------------------------------
