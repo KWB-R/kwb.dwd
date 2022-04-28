@@ -10,22 +10,23 @@
 #' @importFrom utils read.table
 read_potential_evaporation_from_url <- function(url)
 {
+  # Download .gz file from URL, extract the file and read the lines as text
   text <- read_lines_from_downloaded_gz(url)
 
-  file_name <- basename(url)
+  # The first six rows are header rows
+  header_indices <- 1:6
 
-  year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", file_name, 1:2)
+  # Extract the header
+  header <- text[header_indices]
 
-  extract_date_part <- function(i) as.integer(year_month[[i]])
+  # Extract the actual data values into a matrix
+  values <- as.matrix(utils::read.table(text = text[-header_indices]))
 
-  structure(
-    as.matrix(utils::read.table(text = text[-(1:6)])),
-    header = text[1:6],
-    year = extract_date_part(1L),
-    month = extract_date_part(2L),
-    file = file_name,
-    origin = dirname(url)
-  )
+  # Main arguments to structure() call
+  args <- list(values, header = header)
+
+  # Add header and further metadata as attributes
+  do.call(structure, c(args, extract_metadata_from_url(url)))
 }
 
 # read_lines_from_downloaded_gz ------------------------------------------------
@@ -42,6 +43,23 @@ read_lines_from_downloaded_gz <- function(url)
   on.exit(close(con))
 
   readLines(con)
+}
+
+# extract_metadata_from_url ----------------------------------------------------
+extract_metadata_from_url <- function(url)
+{
+  name <- basename(url)
+
+  year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", name, 1:2)
+
+  extract_date_part <- function(i) as.integer(year_month[[i]])
+
+  list(
+    year = extract_date_part(1L),
+    month = extract_date_part(2L),
+    file = name,
+    origin = dirname(url)
+  )
 }
 
 # get geographical "stamp" for Berlin area -------------------------------------
