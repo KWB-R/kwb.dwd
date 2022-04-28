@@ -115,6 +115,7 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 #' Get URLs of Files in Zipped ESRI-ascii-grid Format
 #'
 #' @param base_url URL from which to start listing (recursively by default)
+#' @param recursive whether to list files recursively. Default: \code{TRUE}
 list_zipped_esri_ascii_grids <- function(base_url, recursive = TRUE)
 {
   # List data files

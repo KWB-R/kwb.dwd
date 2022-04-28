@@ -8,6 +8,8 @@ list_zipped_esri_ascii_grids(base_url, recursive = TRUE)
 }
 \arguments{
 \item{base_url}{URL from which to start listing (recursively by default)}
+
+\item{recursive}{whether to list files recursively. Default: \code{TRUE}}
 }
 \description{
 Get URLs of Files in Zipped ESRI-ascii-grid Format
