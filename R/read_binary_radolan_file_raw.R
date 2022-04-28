@@ -36,7 +36,8 @@ read_binary_radolan_file_raw_v1 <- function(path)
 }
 
 # read_binary_radolan_file_raw_v2 ----------------------------------------------
-#' Read bindry radoline file raw v2
+
+#' Read binary Radolan file raw v2
 #'
 #' @param path path
 #'

@@ -7,10 +7,12 @@
 extract_radolan_zip_files(radolan_dir)
 }
 \arguments{
-\item{radolan_dir}{radolan directory}
+\item{radolan_dir}{path to directory containing zipped Radolan files (ending
+in .tar.gz)}
 }
 \value{
-unizipped in \code{radolan_dir} subfolder "bin"
+Nothing. Side effect: Unzipped files in subfolder "bin" below
+  \code{radolan_dir}.
 }
 \description{
 Extract radolan zip files

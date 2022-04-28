@@ -29,7 +29,8 @@ get_dwd_urls_metadata <- function()
 }
 
 # get_dwd_config_combinations --------------------------------------------------
-#' Get DWC config combinations
+
+#' Get DWD config combinations
 #'
 #' @param frequencies default: c("daily", "hourly")
 #' @param currentnesses default: c("historical", "recent")
