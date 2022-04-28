@@ -12,16 +12,15 @@
 load_precipitation_berlin <- function()
 {
   # URLs to .asc.gz files with monthly precipitation data DWD server
-  urls <- list_zipped_esri_ascii_grids(ftp_path_cdc(
-    "grids_germany/monthly/precipitation"
-  ))
+  urls <- list_zipped_esri_ascii_grids(ftp_path_monthly_grids("precipitation"))
+
+  # Read all files into a list of matrices
+  matrices <- lapply(urls, read_zipped_esri_ascii_grid)
+
+  # Get Berlin matrix, same dimension as each of matrices (Berlin grid cells set
+  # to 1, rest of grid cells = NA)
+  geo_mask <- get_berlin_dwd_mask()
 
   # Calculate monthly stats for Berlin
-  calculate_potential_evaporation_stats(
-    # Read all files into a list of matrices
-    matrices = lapply(urls, read_zipped_esri_ascii_grid),
-    # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to
-    # 1, rest of cells = NA)
-    geo_mask = get_berlin_dwd_mask()
-  )
+  calculate_masked_grid_stats(matrices, geo_mask)
 }

@@ -127,6 +127,11 @@ ftp_path_cdc <- function(...)
   file.path("ftp://opendata.dwd.de/climate_environment/CDC", ...)
 }
 
+ftp_path_monthly_grids <- function(...)
+{
+  ftp_path_cdc("grids_germany/monthly", ...)
+}
+
 # dwd_filename_stations --------------------------------------------------------
 dwd_filename_stations <- function(category, frequency)
 {
