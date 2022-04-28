@@ -1,14 +1,14 @@
-# read_potential_evaporation_from_url ------------------------------------------
-#' Read potential evaporation from URL
+# read_zipped_asc_file_at_url --------------------------------------------------
+
+#' Read Values from .asc.gz File at URL
 #'
 #' @param url url
-#' @return ???
+#' @return matrix with attributes containing metadata
 #' @keywords internal
 #' @noMd
 #' @noRd
-#' @importFrom kwb.utils extractSubstring
 #' @importFrom utils read.table
-read_potential_evaporation_from_url <- function(url)
+read_zipped_asc_file_at_url <- function(url)
 {
   # Download .gz file from URL, extract the file and read the lines as text
   text <- read_lines_from_downloaded_gz(url)
@@ -46,17 +46,16 @@ read_lines_from_downloaded_gz <- function(url)
 }
 
 # extract_metadata_from_url ----------------------------------------------------
+#' @importFrom kwb.utils extractSubstring
 extract_metadata_from_url <- function(url)
 {
   name <- basename(url)
 
   year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", name, 1:2)
 
-  extract_date_part <- function(i) as.integer(year_month[[i]])
-
   list(
-    year = extract_date_part(1L),
-    month = extract_date_part(2L),
+    year = as.integer(year_month[[1L]]),
+    month = as.integer(year_month[[2L]]),
     file = name,
     origin = dirname(url)
   )

@@ -12,14 +12,12 @@
 load_precipitation_berlin <- function()
 {
   # URLs to .asc.gz files with monthly precipitation data DWD server
-  urls <- list_zipped_asc_files(base_url = ftp_path_cdc(
-    "grids_germany/monthly/precipitation"
-  ))
+  urls <- list_zipped_asc_files(ftp_path_cdc("grids_germany/monthly/precipitation"))
 
   # Calculate monthly stats for Berlin
   calculate_potential_evaporation_stats(
     # Read all files into a list of matrices
-    matrices = lapply(urls, read_potential_evaporation_from_url),
+    matrices = lapply(urls, read_zipped_asc_file_at_url),
     # Get Berlin matrix, same size as DWD evpo matrix (Berlin grid cells set to
     # 1, rest of cells = NA)
     geo_mask = get_berlin_dwd_mask()
