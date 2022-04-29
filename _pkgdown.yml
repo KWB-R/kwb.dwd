@@ -8,8 +8,7 @@ authors:
     href: https://kompetenz-wasser.de/en/ueber-uns/team/lukas-guericke
   Kompetenzzentrum Wasser Berlin gGmbH (KWB):
     href: http://www.kompetenz-wasser.de
-    html: <img src='https://publications.kompetenz-wasser.de/img/KWB-Logo.svg alt='KWB'
-      width='72' />
+    html: <img src='https://publications.kompetenz-wasser.de/img/KWB-Logo.svg' alt='KWB' width='72' />
 template:
   bootstrap: 5
   bootswatch: cerulean
