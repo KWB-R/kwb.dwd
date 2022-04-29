@@ -4,7 +4,12 @@
 \alias{load_precipitation_berlin}
 \title{Load monthly precipitation for Berlin from DWD}
 \usage{
-load_precipitation_berlin(...)
+load_precipitation_berlin(from = NULL, to = NULL)
+}
+\arguments{
+\item{from}{optional. First month to be considered, as yyyymm string}
+
+\item{to}{optional. Last month to be considered, as yyyymm string}
 }
 \value{
 data frame with columns \code{file} (name of file downloaded from
