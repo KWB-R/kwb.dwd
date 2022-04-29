@@ -22,7 +22,7 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/calculate_potential_evaporation_stats.html</loc>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/calculate_masked_grid_stats.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/convert_bin_to_raster_file.html</loc>
@@ -62,6 +62,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/list_url.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/list_zipped_esri_ascii_grids.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_potential_evaporation_berlin.html</loc>
