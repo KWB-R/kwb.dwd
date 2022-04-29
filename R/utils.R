@@ -48,6 +48,25 @@ date_in_bathing_season <- function(x)
   months >= 5 & months < 10
 }
 
+# extract_yyyymm ---------------------------------------------------------------
+extract_yyyymm <- function(x)
+{
+  gsub("^.*(\\d{6}).*$", "\\1", basename(x))
+}
+
+# filter_zipped_esri_ascii_grids -----------------------------------------------
+filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
+{
+  urls <- grep("\\.asc\\.gz$", urls, value = TRUE)
+
+  from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
+  to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
+
+  pattern <- paste(month_sequence_simple(from, to), collapse = "|")
+
+  urls[grep(pattern, urls)]
+}
+
 # get_date_time_from_bin_filename ----------------------------------------------
 get_date_time_from_bin_filename <- function(x)
 {
@@ -104,6 +123,25 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
+# list_zipped_esri_ascii_grids -------------------------------------------------
+
+#' Get URLs of Files in Zipped ESRI-ascii-grid Format
+#'
+#' @param base_url URL from which to start listing (recursively by default)
+#' @param from optional. First month to be considered, as "yyyymm" string
+#' @param to optional. Last month to be considered, as "yyyymm" string
+#' @param recursive whether to list files recursively. Default: \code{TRUE}
+list_zipped_esri_ascii_grids <- function(
+  base_url, from = NULL, to = NULL, recursive = TRUE
+)
+{
+  # List data files
+  relative_urls <- list_url(base_url, recursive = recursive)
+
+  # Provide full paths to zipped files in ESRI-ascii-grid-format
+  file.path(base_url, filter_zipped_esri_ascii_grids(relative_urls, from, to))
+}
+
 # month_numbers ----------------------------------------------------------------
 month_numbers <- function()
 {
@@ -119,6 +157,14 @@ month_sequence <- function(start, end)
   to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
 
   seq(to_date(start), to_date(end), by = 'months')
+}
+
+# month_sequence_simple --------------------------------------------------------
+month_sequence_simple <- function(from, to)
+{
+  as_date <- function(x) as.Date(paste0(x, "01"), format = "%Y%m%d")
+
+  unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
 }
 
 # safe_element -----------------------------------------------------------------
