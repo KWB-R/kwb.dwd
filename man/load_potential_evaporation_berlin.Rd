@@ -4,7 +4,7 @@
 \alias{load_potential_evaporation_berlin}
 \title{Load monthly potential evaporation for Berlin from DWD}
 \usage{
-load_potential_evaporation_berlin()
+load_potential_evaporation_berlin(...)
 }
 \value{
 data frame with columns \code{file} (name of file downloaded from

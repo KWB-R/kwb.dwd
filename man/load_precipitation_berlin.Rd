@@ -4,7 +4,7 @@
 \alias{load_precipitation_berlin}
 \title{Load monthly precipitation for Berlin from DWD}
 \usage{
-load_precipitation_berlin()
+load_precipitation_berlin(...)
 }
 \value{
 data frame with columns \code{file} (name of file downloaded from

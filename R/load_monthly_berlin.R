@@ -9,9 +9,9 @@
 #'   (minimum value), \code{max} (maximum value) of potential evaporation
 #'   calculated for Berlin, Germany
 #' @export
-load_potential_evaporation_berlin <- function()
+load_potential_evaporation_berlin <- function(...)
 {
-  load_monthly_variable_berlin(variable = "evapo_p", scale = 0.1)
+  load_monthly_variable_berlin(variable = "evapo_p", scale = 0.1, ...)
 }
 
 #' Load monthly precipitation for Berlin from DWD
@@ -25,19 +25,23 @@ load_potential_evaporation_berlin <- function()
 #'   (minimum value), \code{max} (maximum value) of precipitation
 #'   calculated for Berlin, Germany
 #' @export
-load_precipitation_berlin <- function()
+load_precipitation_berlin <- function(...)
 {
-  load_monthly_variable_berlin(variable = "precipitation")
+  load_monthly_variable_berlin(variable = "precipitation", ...)
 }
 
 # load_monthly_variable_berlin -------------------------------------------------
-load_monthly_variable_berlin <- function(variable, scale = NULL)
+load_monthly_variable_berlin <- function(
+  variable, scale = NULL, from = NULL, to = NULL
+)
 {
   # Currently, two variable are supported
   match.arg(variable, c("precipitation", "evapo_p"))
 
   # URLs to .asc.gz files with monthly precipitation data DWD server
-  urls <- list_zipped_esri_ascii_grids(ftp_path_monthly_grids(variable))
+  urls <- list_zipped_esri_ascii_grids(
+    ftp_path_monthly_grids(variable), from, to
+  )
 
   # Read all files into a list of matrices
   matrices <- lapply(urls, read_zipped_esri_ascii_grid, scale = scale)
