@@ -34,6 +34,9 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/crop_radolan_radial.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/download_gz_file_and_unzip.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/download_radolan.html</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/extract_radolan_zip_files.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/find_description_files.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_berlin_dwd_mask.html</loc>
@@ -73,6 +79,9 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_precipitation_berlin.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/open_description.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/radolan_raw_to_raster.html</loc>
   </url>
   <url>
@@ -80,6 +89,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_relevant_years_radolan.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_zipped_esri_ascii_grid_from_url.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/write_raster_to_file.html</loc>
