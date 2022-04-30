@@ -9,6 +9,7 @@ list_url(
   recursive = !is.na(max_depth),
   max_depth = NA,
   full_info = FALSE,
+  full_names = FALSE,
   ...
 )
 }
@@ -23,6 +24,9 @@ subdirectories (default: \code{FALSE})}
 
 \item{full_info}{if \code{TRUE}, not only the path and filename are returned
 but also the file properties. The default is \code{FALSE}.}
+
+\item{full_names}{if \code{TRUE}, the full URLs are returned, otherwise (the
+default) only the paths relative to \code{url}.}
 
 \item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
 \code{n_trials}, \code{timeout}, or \code{sleep_time}}

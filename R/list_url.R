@@ -9,6 +9,8 @@
 #'   \code{recursive = TRUE}
 #' @param full_info if \code{TRUE}, not only the path and filename are returned
 #'   but also the file properties. The default is \code{FALSE}.
+#' @param full_names if \code{TRUE}, the full URLs are returned, otherwise (the
+#'   default) only the paths relative to \code{url}.
 #' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
 #'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
 #' @export
@@ -19,6 +21,7 @@ list_url <- function(
   recursive = ! is.na(max_depth),
   max_depth = NA,
   full_info = FALSE,
+  full_names = FALSE,
   ...
 )
 {
@@ -33,18 +36,17 @@ list_url <- function(
   )
 
   if (full_info) {
-
-    result
-
-  } else {
-
-    # Accessor function
-    pull <- function(x) kwb.utils::selectColumns(result, x)
-
-    # Indicate directories with trailing slash
-    structure(
-      indicate_directories(pull("file"), pull("isdir")),
-      failed = attr(result, "failed")
-    )
+    return(result)
   }
+
+  paths <- kwb.utils::selectColumns(result, "file")
+
+  if (full_names) {
+    paths <- file.path(url, paths)
+  }
+
+  # Indicate directories with trailing slash
+  structure(failed = attr(result, "failed"), indicate_directories(
+    paths, kwb.utils::selectColumns(result, "isdir")
+  ))
 }
