@@ -42,20 +42,13 @@ open_description <- function(url)
 #' For a Given URL, Try to Find Description Files
 #'
 #' @param url URL to a data file at ftp server by Deutscher Wetterdienst
-#' @param full.names logical. If \code{TRUE} the full URLs are returned,
+#' @param full_names logical. If \code{TRUE} the full URLs are returned,
 #'   otherwise only the file names. The default is \code{FALSE}.
 #' @return vector of character with file names of or full URLs to all files with
 #'   extensions ".txt" or ".pdf" that are in the same folder as the file that
 #'   \code{url} points to
-find_description_files <- function(url, full.names = FALSE)
+find_description_files <- function(url, full_names = FALSE)
 {
-  base_dir <- dirname(url)
-  all_files <- kwb.dwd::list_url(base_dir)
-  files <- grep("\\.(pdf|txt)$", all_files, ignore.case = TRUE, value = TRUE)
-
-  if (! full.names) {
-    return(files)
-  }
-
-  file.path(base_dir, files)
+  urls <- kwb.dwd::list_url(dirname(url), full_names = full_names)
+  grep("\\.(pdf|txt)$", urls, ignore.case = TRUE, value = TRUE)
 }

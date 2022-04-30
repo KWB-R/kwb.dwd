@@ -4,12 +4,12 @@
 \alias{find_description_files}
 \title{For a Given URL, Try to Find Description Files}
 \usage{
-find_description_files(url, full.names = FALSE)
+find_description_files(url, full_names = FALSE)
 }
 \arguments{
 \item{url}{URL to a data file at ftp server by Deutscher Wetterdienst}
 
-\item{full.names}{logical. If \code{TRUE} the full URLs are returned,
+\item{full_names}{logical. If \code{TRUE} the full URLs are returned,
 otherwise only the file names. The default is \code{FALSE}.}
 }
 \value{

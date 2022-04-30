@@ -11,8 +11,7 @@ url_lists <- kwb.dwd::get_radolan_urls()
 # Read the corresponding file lists from the ftp server
 listed_urls <- lapply(url_lists, function(url_list) {
   base_url <- unique(dirname(dirname(url_list)))
-  files <- kwb.dwd::list_url(base_url, recursive = TRUE)
-  paste0(base_url, "/", files)
+  kwb.dwd::list_url(base_url, recursive = TRUE, full_names = TRUE)
 })
 
 # Missing files
