@@ -1,8 +1,8 @@
 # Current developments
 
-* Add download_gz_file_and_unzip()
 * Add open_description()
 * Add read_asc_gz_file()
+* Add unzip_asc_gz_file()
 * Add argument "full_names" to list_url()
 
 # kwb.dwd 0.1.1 (2019-12-17)
