@@ -21,6 +21,8 @@ if (FALSE)
 # Read polygons of German cities -----------------------------------------------
 if (FALSE)
 {
+  # Download from here and unzip
+  # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
   path <- "~/../Downloads/G/gadm40_DEU_shp"
   files <- list_shape_files(path)
 
