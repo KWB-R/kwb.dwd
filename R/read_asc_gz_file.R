@@ -8,18 +8,21 @@
 #' @export
 read_asc_gz_file <- function(file, url = NULL)
 {
-  grid_file <- if (is.null(url)) {
-
-    unzip_gz_file(kwb.utils::safePath(file))
-
+  target_dir <- if (is.null(url)) {
+    dirname(file)
   } else {
-
     re <- kwb.utils::removeExtension
-    download_dir <- kwb.utils::tempSubdirectory(re(re(basename(url))))
-    download_gz_file_and_unzip(url, download_dir)
+    kwb.utils::tempSubdirectory(re(re(basename(url))))
   }
 
-  #dir(download_dir)
+  # Call the unzip function setting either "url" or "file" argument
+  grid_file <- kwb.utils::callWith(
+    FUN = unzip_asc_gz_file,
+    if (is.null(url)) list(file = file) else list(url = url),
+    target_dir = target_dir
+  )
+
+  #dir(target_dir)
 
   # Provide a copy of the projection file in the download folder
   provide_projection_file(grid_file)
