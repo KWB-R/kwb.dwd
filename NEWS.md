@@ -2,7 +2,7 @@
 
 * Add download_gz_file_and_unzip()
 * Add open_description()
-* Add read_zipped_esri_ascii_grid_from_url()
+* Add read_asc_gz_file()
 * Add argument "full_names" to list_url()
 
 # kwb.dwd 0.1.1 (2019-12-17)
