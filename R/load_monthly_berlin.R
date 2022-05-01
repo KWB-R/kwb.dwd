@@ -8,8 +8,8 @@
 #' @return data frame with columns \code{file} (name of file downloaded from
 #'   DWD), \code{year} (year number as integer), \code{month number as integer},
 #'   \code{mean} (mean value), \code{sd} (standard deviation), \code{min}
-#'   (minimum value), \code{max} (maximum value) of potential evaporation
-#'   calculated for Berlin, Germany
+#'   (minimum value), \code{max} (maximum value), \code{n_values} (number of
+#'   considered values) of potential evaporation calculated for Berlin, Germany
 #' @export
 load_potential_evaporation_berlin <- function(from = NULL, to = NULL)
 {

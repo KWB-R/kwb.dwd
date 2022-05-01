@@ -14,10 +14,7 @@
 calculate_masked_grid_stats <- function(matrices, geo_mask)
 {
   # Start with metadata from matrices' attributes: file name, year, month
-  result <- as.data.frame(lapply(
-    X = stats::setNames(nm = c("file", "year", "month")),
-    FUN = function(x) sapply(matrices, kwb.utils::getAttribute, x)
-  ))
+  result <- get_file_metadata_from_attributes(matrices)
 
   # Keep only grid cells within "mask"
   masked_values <- lapply(matrices, function(m) m * geo_mask)
@@ -29,6 +26,16 @@ calculate_masked_grid_stats <- function(matrices, geo_mask)
   result$sd <- get_stats(stats::sd)
   result$min <- get_stats(min)
   result$max <- get_stats(max)
+  result$n_values <- sapply(masked_values, function(x) sum(! is.na(x)))
 
   result
+}
+
+# get_file_metadata_from_attributes --------------------------------------------
+get_file_metadata_from_attributes <- function(x)
+{
+  as.data.frame(lapply(
+    stats::setNames(nm = c("file", "year", "month")),
+    function(name) sapply(x, kwb.utils::getAttribute, name)
+  ))
 }
