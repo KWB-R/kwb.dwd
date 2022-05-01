@@ -35,6 +35,7 @@ read_zipped_esri_ascii_grid <- function(url, scale = NULL)
 }
 
 # extract_metadata_from_header -------------------------------------------------
+#' @importFrom stats setNames
 extract_metadata_from_header <- function(header_lines)
 {
   cells <- strsplit(header_lines, "\\s+")
@@ -45,6 +46,7 @@ extract_metadata_from_header <- function(header_lines)
 }
 
 # read_lines_from_gz_file ------------------------------------------------------
+#' @importFrom kwb.utils safePath
 read_lines_from_gz_file <- function(
   file, url = NULL, encoding = getOption("encoding")
 )

@@ -6,6 +6,8 @@
 #' @param url optional. URL to zipped file in ESRI-ascii-grid format (.asc.gz)
 #' @return object of class "RasterLayer"
 #' @export
+#' @importFrom kwb.utils callWith removeExtension tempSubdirectory
+#' @importFrom raster raster
 read_asc_gz_file <- function(file, url = NULL)
 {
   target_dir <- if (is.null(url)) {
@@ -53,6 +55,7 @@ url_projection <- function()
 }
 
 # replace_file_extension -------------------------------------------------------
+#' @importFrom kwb.utils removeExtension
 replace_file_extension <- function(file, extension)
 {
   paste0(kwb.utils::removeExtension(file), extension)

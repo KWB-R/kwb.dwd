@@ -8,6 +8,8 @@
 #'
 #' @param url URL to DWD data file on ftp server
 #' @export
+#' @importFrom kwb.utils clearConsole
+#' @importFrom utils browseURL select.list
 open_description <- function(url)
 {
   files <- find_description_files(url, full_names = TRUE)
@@ -23,7 +25,7 @@ open_description <- function(url)
 
     kwb.utils::clearConsole()
 
-    file <- select.list(
+    file <- utils::select.list(
       basename(files),
       title = "Which file should I open? (0 = Cancel)"
     )
@@ -34,7 +36,7 @@ open_description <- function(url)
   }
 
   cat("Trying to open", file, "in the web browser ...")
-  browseURL(gsub("^ftp:", "http:", files[file == basename(files)]))
+  utils::browseURL(gsub("^ftp:", "http:", files[file == basename(files)]))
 }
 
 # find_description_files -------------------------------------------------------
@@ -49,6 +51,6 @@ open_description <- function(url)
 #'   \code{url} points to
 find_description_files <- function(url, full_names = FALSE)
 {
-  urls <- kwb.dwd::list_url(dirname(url), full_names = full_names)
+  urls <- list_url(dirname(url), full_names = full_names)
   grep("\\.(pdf|txt)$", urls, ignore.case = TRUE, value = TRUE)
 }

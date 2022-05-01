@@ -9,6 +9,7 @@
 #'   unzip the file
 #' @return path to the unzipped file
 #' @export
+#' @importFrom kwb.utils removeExtension
 unzip_asc_gz_file <- function(file, url = NULL, target_dir = tempdir())
 {
   # Prepare arguments to read_lines_from_gz_file (either file or url)
