@@ -1,4 +1,12 @@
+# assert_ending_gz -------------------------------------------------------------
+assert_ending_gz <- function(x)
+{
+  stopifnot(all(grepl("\\.gz$", x)))
+  invisible(x)
+}
+
 # assert_url -------------------------------------------------------------------
+#' @importFrom kwb.utils assertFinalSlash
 assert_url <- function(url, final_slash = TRUE)
 {
   stopifnot(is.character(url))
@@ -22,6 +30,7 @@ cat0 <- function(...)
 }
 
 # cat_progress -----------------------------------------------------------------
+#' @importFrom kwb.utils backspace space
 cat_progress <- function(i, n, success = TRUE, chars = c(".", "x"))
 {
   space <- function(n) kwb.utils::space(n, tabLength = 1L)
@@ -41,6 +50,7 @@ clean_stop <- function(...)
 }
 
 # date_in_bathing_season -------------------------------------------------------
+#' @importFrom lubridate month
 date_in_bathing_season <- function(x)
 {
   months <- lubridate::month(x)
@@ -55,6 +65,7 @@ extract_yyyymm <- function(x)
 }
 
 # filter_zipped_esri_ascii_grids -----------------------------------------------
+#' @importFrom kwb.utils defaultIfNULL
 filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
 {
   urls <- grep("\\.asc\\.gz$", urls, value = TRUE)
@@ -68,6 +79,8 @@ filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
 }
 
 # get_date_time_from_bin_filename ----------------------------------------------
+#' @importFrom kwb.utils stringList
+#' @importFrom utils head
 get_date_time_from_bin_filename <- function(x)
 {
   format <- "raa01-sf_10000-%y%m%d%H%M-dwd---bin"
@@ -92,6 +105,7 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 }
 
 # indicate_directories ---------------------------------------------------------
+#' @importFrom kwb.utils assertFinalSlash
 indicate_directories <- function(x, is_directory)
 {
   if (length(x) == 0L) {
@@ -109,6 +123,8 @@ is_empty <- function(x)
 }
 
 # list_files_in_zip_files ------------------------------------------------------
+#' @importFrom kwb.utils catAndRun noFactorDataFrame
+#' @importFrom utils untar
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
   do.call(rbind, lapply(zip_files, function(x) {
@@ -152,6 +168,7 @@ month_numbers <- function()
 }
 
 # month_sequence ---------------------------------------------------------------
+#' @importFrom lubridate ymd
 month_sequence <- function(start, end)
 {
   to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
@@ -168,6 +185,7 @@ month_sequence_simple <- function(from, to)
 }
 
 # safe_element -----------------------------------------------------------------
+#' @importFrom kwb.utils stringList
 safe_element <- function(element, elements, name = deparse(substitute(element)))
 {
   if (! element %in% elements) clean_stop(sprintf(
