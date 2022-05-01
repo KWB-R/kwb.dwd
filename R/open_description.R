@@ -10,7 +10,7 @@
 #' @export
 open_description <- function(url)
 {
-  files <- find_description_files(url, full.names = TRUE)
+  files <- find_description_files(url, full_names = TRUE)
 
   n_files <- length(files)
 
