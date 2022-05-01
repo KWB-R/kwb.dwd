@@ -1,3 +1,10 @@
+# assert_ending_gz -------------------------------------------------------------
+assert_ending_gz <- function(x)
+{
+  stopifnot(all(grepl("\\.gz$", x)))
+  invisible(x)
+}
+
 # assert_url -------------------------------------------------------------------
 assert_url <- function(url, final_slash = TRUE)
 {
