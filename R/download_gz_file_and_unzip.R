@@ -11,7 +11,7 @@ download_gz_file_and_unzip <- function(url, download_dir = tempdir())
   stopifnot(grepl("\\.gz$", url))
 
   # Download .gz file from URL, extract the file and read the lines as text
-  text <- read_lines_from_downloaded_gz(url)
+  text <- read_lines_from_gz_file(url = url)
 
   file <- file.path(download_dir, kwb.utils::removeExtension(basename(url)))
 

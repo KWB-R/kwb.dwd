@@ -14,7 +14,7 @@ read_zipped_esri_ascii_grid <- function(url, scale = NULL)
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/evapo_p/grids_germany_monthly_evapo_p_202203.asc.gz"
 
   # Download .gz file from URL, extract the file and read the lines as text
-  text <- read_lines_from_downloaded_gz(url)
+  text <- read_lines_from_gz_file(url = url)
 
   # The first six rows are header rows
   header_indices <- 1:6
@@ -44,19 +44,19 @@ extract_metadata_from_header <- function(header_lines)
   stats::setNames(as.list(values), sapply(cells, "[[", 1L))
 }
 
-# read_lines_from_downloaded_gz ------------------------------------------------
-read_lines_from_downloaded_gz <- function(url)
+# read_lines_from_gz_file ------------------------------------------------------
+read_lines_from_gz_file <- function(
+  file, url = NULL, encoding = getOption("encoding")
+)
 {
-  stopifnot(is.character(url), length(url) == 1L)
+  if (! is.null(url)) {
+    stopifnot(is.character(url), length(url) == 1L)
+    file <- file.path(tempdir(), basename(url))
+    download.file(url, file, method = "auto")
+  }
 
-  file <- file.path(tempdir(), basename(url))
-
-  download.file(url, file, method = "auto")
-
-  con <- gzfile(file)
-
+  con <- gzfile(file, encoding = encoding)
   on.exit(close(con))
-
   readLines(con)
 }
 
