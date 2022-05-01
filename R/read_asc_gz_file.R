@@ -53,10 +53,3 @@ url_projection <- function()
 {
   "https://opendata.dwd.de/climate_environment/CDC/help/gk3.prj"
 }
-
-# replace_file_extension -------------------------------------------------------
-#' @importFrom kwb.utils removeExtension
-replace_file_extension <- function(file, extension)
-{
-  paste0(kwb.utils::removeExtension(file), extension)
-}
