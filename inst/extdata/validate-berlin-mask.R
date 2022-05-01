@@ -2,54 +2,88 @@
 #remotes::install_github("KWB-R/kwb.dwd@dev")
 #remotes::install_github("hsonne/findblobs")
 
-# Read a RasterLayer from DWD --------------------------------------------------
+# Open description file (how to interpret the data?) ---------------------------
 if (FALSE)
 {
-  evap_p <- kwb.dwd::load_potential_evaporation_berlin("202201", "202201")
+  base_url <- kwb.dwd:::ftp_path_monthly_grids("evapo_p")
+  urls <- kwb.dwd::list_url(base_url, full_names = TRUE)
+  (url <- grep("_202201", urls, value = TRUE))
 
-  url_evap_p <- kwb.dwd:::ftp_path_monthly_grids("evapo_p")
-  url <- file.path(url_evap_p, evap_p$file[1L])
-
-  #kwb.dwd::open_description(url)
-
-  # Read file into RasterLayer object
-  grid_germany <- kwb.dwd::read_asc_gz_file(url = url)
-
-  raster::plot(grid_germany)
+  kwb.dwd::open_description(url)
 }
 
-# Read polygons of German cities -----------------------------------------------
+# Compare two versions of reading data for Berlin ------------------------------
 if (FALSE)
 {
-  # Download from here and unzip
-  # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
-  path <- "~/../Downloads/G/gadm40_DEU_shp"
-  files <- list_shape_files(path)
+  from <- "202106"
+  to <- "202108"
 
-  transform <- function(x) sp::spTransform(x, grid_germany@crs)
+  # Version 1: use Andreas Matzinger's Berlin mask matrix
+  result_1 <- kwb.dwd::load_potential_evaporation_berlin(from, to)
 
-  shp_germany <- transform(read_shape_file(files[1L]))
-  shp_regions <- transform(read_shape_file(files[4L]))
+  # Version 2: use shape files of German districts to mask Berlin (or any other
+  # German city). TODO: Performance needs to be improved (by locally storing
+  # transformed shapes)
+  result_2 <- kwb.dwd::load_potential_evaporation_berlin_2(from, to)
+
+  # Compare the results of the two versions
+  result_1
+  result_2
+}
+
+# Read polygons of German cities and apply their masks to Germany --------------
+if (FALSE)
+{
+  # We need a target projection, take it from an example grid of Germany
+  grid_example <- kwb.dwd:::get_example_grid_germany()
+  shapes <- kwb.dwd:::get_transformed_shapes_of_germany(grid_example@crs)
+
+  # Create a configuration interactively
+  files <- kwb.dwd:::list_shape_files(kwb.dwd:::check_shapes_germany())[-1L]
+  selection <- kwb.dwd:::select_shapes(shapes, files)
+  writeLines(kwb.utils::objectToText(selection))
+
+  config_berlin_1 <- list(index = 1L, variable = "NAME_1", pattern = "Berlin")
+  config_berlin_2 <- list(index = 2L, variable = "NAME_2", pattern = "Berlin")
+  config_berlin_3 <- list(index = 3L, variable = "NAME_3", pattern = "Berlin")
+  config_berlin_4 <- list(index = 4L, variable = "NAME_4", pattern = "Berlin")
+
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_1))
+  s@data$NAME_1
+
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_2))
+  s@data$NAME_2
+
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_3))
+  s@data$NAME_3
+
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_4))
+  s@data$NAME_4
+
+  shp_germany <- shapes[[1L]]
+  shp_regions <- shapes[[4L]]
+
+  raster::plot(shp_germany)
+  raster::plot(shp_regions)
 
   extract <- function(pattern) {
-    crop_and_mask_region(grid_germany, shp_regions, pattern = pattern)
+    crop_and_mask_region(grid_example, shp_regions, pattern = pattern)
   }
 
-  berlin <- extract("Berlin")
-  cologne <- extract("K\xf6ln")
-  braunschweig <- extract("Braunschweig")
-  munich <- extract("M\xfcnchen$")
+  raster::plot(berlin <- extract("Berlin"))
+  raster::plot(cologne <- extract("K\xf6ln"))
+  raster::plot(braunschweig <- extract("Braunschweig"))
+  raster::plot(munich <- extract("M\xfcnchen$")) # white hole???
+}
 
-  raster::plot(berlin)
-  raster::plot(cologne)
-  raster::plot(braunschweig)
-  raster::plot(munich)
-
-  # What is the difference between the Berlin "mask" of Andreas and the
-  # mask resulting from raster::mask()?
+# Validat Andreas Matzinger's Berlin mask --------------------------------------
+if (FALSE)
+{
+  # What is the difference between the Berlin "mask" of Andreas and the mask
+  # resulting from raster::mask()?
 
   # Generate matrix similar to kwb.dwd::get_berlin_dwd_mask()
-  mask_from_shape <- get_region_mask_matrix(grid_germany, shp_regions, "Berlin")
+  mask_from_shape <- get_region_mask_matrix(grid_example, shp_regions, "Berlin")
   mask_andreas <- kwb.dwd::get_berlin_dwd_mask()
 
   dim(mask_from_shape)
@@ -69,35 +103,6 @@ if (FALSE)
 
   findblobs::plot_integer_matrix(m2)
   View(m2)
-
-  str(berlin)
-  evap_p
-
-  x <- berlin@data@values/10
-  mean(x, na.rm = TRUE)
-  min(x, na.rm = TRUE)
-  max(x, na.rm = TRUE)
-  sd(x, na.rm = TRUE)
-
-  dim(m)
-  dim(mask_berlin)
-  i <- ! is.na(m)
-  mask_berlin[i] <- mask_berlin[i] + 1L
-  j <- ! is.na(m) & is.na(mask_berlin)
-  mask_berlin[j] <- -1
-  table(mask_berlin)
-
-  findblobs::plot_integer_matrix(mask_berlin)
-  View(mask_berlin)
-
-  mask_berlin <- kwb.dwd:::get_berlin_dwd_mask()
-  str(mask_berlin)
-
-  head(which(!is.na(m), arr.ind = TRUE))
-  head(which(!is.na(mask_berlin), arr.ind = TRUE))
-
-  sum(!is.na(mask_berlin))
-  sum(!is.na(berlin@data@values))
 }
 
 # Read shape file using terra package ------------------------------------------
@@ -107,23 +112,6 @@ if (FALSE)
   v <- terra::vect(files[3L])
 
   terra::plot(v)
-}
-
-# list_shape_files -------------------------------------------------------------
-list_shape_files <- function(path)
-{
-  dir(path, "shp$", full.names = TRUE)
-}
-
-# read_shape_file --------------------------------------------------------------
-read_shape_file <- function(file)
-{
-  rgdal::readOGR(
-    dsn = file,
-    stringsAsFactors = FALSE,
-    encoding = "UTF-8",
-    use_iconv = TRUE
-  )
 }
 
 # crop_and_mask_region ---------------------------------------------------------
@@ -158,4 +146,5 @@ overlay_masks <- function(m1, m2)
 
   m
 }
+
 
