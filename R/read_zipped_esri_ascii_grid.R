@@ -50,9 +50,16 @@ read_lines_from_gz_file <- function(
 )
 {
   if (! is.null(url)) {
-    stopifnot(is.character(url), length(url) == 1L)
+
+    assert_url(url, final_slash = FALSE)
+    assert_ending_gz(url)
     file <- file.path(tempdir(), basename(url))
     download.file(url, file, method = "auto")
+
+  } else {
+
+    assert_ending_gz(file)
+    kwb.utils::safePath(file)
   }
 
   con <- gzfile(file, encoding = encoding)
