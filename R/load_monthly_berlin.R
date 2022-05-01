@@ -48,7 +48,7 @@ load_monthly_variable_berlin <- function(
   )
 
   # Read all files into a list of matrices
-  matrices <- lapply(urls, read_zipped_esri_ascii_grid, scale = scale)
+  matrices <- lapply(urls, read_asc_gz_file_into_matrix, scale = scale)
 
   # Calculate monthly stats for Berlin
   calculate_masked_grid_stats(matrices, geo_mask = get_berlin_dwd_mask())
