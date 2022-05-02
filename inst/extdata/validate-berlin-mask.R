@@ -81,6 +81,7 @@ if (FALSE)
 {
   # What is the difference between the Berlin "mask" of Andreas and the mask
   # resulting from raster::mask()?
+  grid_example <- kwb.dwd::get_example_grid_germany()
 
   # Generate matrix similar to kwb.dwd::get_berlin_dwd_mask()
   mask_from_shape <- get_region_mask_matrix(grid_example, shp_regions, "Berlin")
