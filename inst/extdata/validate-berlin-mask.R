@@ -1,5 +1,5 @@
 #install.packages("terra")
-#remotes::install_github("KWB-R/kwb.dwd@dev")
+#remotes::install_github("KWB-R/kwb.dwd@validate-berlin-mask")
 #remotes::install_github("hsonne/findblobs")
 
 # Open description file (how to interpret the data?) ---------------------------
@@ -15,8 +15,8 @@ if (FALSE)
 # Compare two versions of reading data for Berlin ------------------------------
 if (FALSE)
 {
-  from <- "202106"
-  to <- "202108"
+  from <- "199106"
+  to <- "202107"
 
   # Version 1: use Andreas Matzinger's Berlin mask matrix
   result_1 <- kwb.dwd::load_potential_evaporation_berlin(from, to)
@@ -31,6 +31,26 @@ if (FALSE)
   result_2
 }
 
+# Calculate mean absolute percentage error (MAPE) and plot comparison
+if (FALSE)
+{
+  # Get columns of the 2 versions
+  x1 <- result_1$mean
+  x2 <- result_2$mean
+
+  # Get length of vector
+  n <- dim(result_1)[1]
+
+  # Create matrix containing the 2 columns
+  x12_barplot <- matrix(c(x1, x2), byrow=TRUE, nrow=2)
+  plot(x1, x2)
+  abline(0, 1)
+
+  # Calculate MAPE
+  mape <- 100/n * sum((x2-x1)/x2)
+  cat(mape, '%')
+}
+
 # Read polygons of German cities and apply their masks to Germany --------------
 if (FALSE)
 {
@@ -43,10 +63,10 @@ if (FALSE)
   selection <- kwb.dwd:::select_shapes(shapes, files)
   writeLines(kwb.utils::objectToText(selection))
 
-  config_berlin_1 <- list(index = 1L, variable = "NAME_1", pattern = "Berlin")
-  config_berlin_2 <- list(index = 2L, variable = "NAME_2", pattern = "Berlin")
-  config_berlin_3 <- list(index = 3L, variable = "NAME_3", pattern = "Berlin")
-  config_berlin_4 <- list(index = 4L, variable = "NAME_4", pattern = "Berlin")
+  config_berlin_1 <- list(index = 1L, variable = "NAME_1", pattern = "Nordrhein")
+  config_berlin_2 <- list(index = 2L, variable = "NAME_2", pattern = "Köln")
+  config_berlin_3 <- list(index = 3L, variable = "NAME_3", pattern = "Köln")
+  config_berlin_4 <- list(index = 4L, variable = "NAME_4", pattern = "^Köln$")
 
   raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_1))
   s@data$NAME_1
