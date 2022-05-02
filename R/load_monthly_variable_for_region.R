@@ -3,7 +3,7 @@ load_monthly_variable_for_region <- function(
   variable, region, scale = NULL, from = NULL, to = NULL, version = 1L
 )
 {
-  # Currently, two variable are supported
+  # Currently, two variables are supported
   match.arg(variable, c("precipitation", "evapo_p"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
@@ -21,7 +21,7 @@ load_monthly_variable_for_region <- function(
     geo_mask <- get_berlin_dwd_mask()
 
     # Calculate monthly stats for Berlin
-    calculate_masked_grid_stats(matrices, geo_mask = geo_mask)
+    return (calculate_masked_grid_stats(matrices, geo_mask = geo_mask))
   }
 
   if (version == 2L) {
@@ -32,7 +32,7 @@ load_monthly_variable_for_region <- function(
     # Get shape of region in same projection as grid
     shape <- get_shape_of_german_region(region)
 
-    cbind(
+    return (cbind(
       extract_metadata_from_urls(urls, c("file", "year", "month")),
       do.call(rbind, lapply(grids, function(grid) {
         raster_stats(
@@ -40,8 +40,10 @@ load_monthly_variable_for_region <- function(
           scale = scale
         )
       }))
-    )
+    ))
   }
+
+  stop("version must be 1 or 2")
 }
 
 # get_berlin_dwd_mask ----------------------------------------------------------
