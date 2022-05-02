@@ -7,7 +7,7 @@ check_shapes_germany <- function()
 
   zip_name <- basename(url)
   shape_name <- kwb.utils::removeExtension(zip_name)
-  shape_dir <- file.path(Sys.getenv("TEMP"), "R_kwb.dwd", shape_name)
+  shape_dir <- temp_dir(shape_name)
 
   if (! dir.exists(shape_dir)) {
     destfile <- file.path(tempdir(), zip_name)

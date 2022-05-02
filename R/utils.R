@@ -209,3 +209,9 @@ split_into_lines <- function(x)
   stopifnot(is.character(x), length(x) == 1L)
   strsplit(x, "\r?\n")[[1]]
 }
+
+# temp_dir ---------------------------------------------------------------------
+temp_dir <- function(...)
+{
+  kwb.utils::createDirectory(file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...))
+}
