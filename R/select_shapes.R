@@ -1,7 +1,7 @@
 # select_shapes ----------------------------------------------------------------
-select_shapes <- function(shapes, files)
+select_shapes <- function(shapes)
 {
-  index <- select_shape(stats::setNames(shapes, basename(files)))
+  index <- select_shape(stats::setNames(shapes, basename(names(shapes))))
 
   shape <- shapes[[index]]
 
@@ -10,11 +10,16 @@ select_shapes <- function(shapes, files)
 
   pattern <- readline("pattern: ")
 
-  list(
+  result <- list(
     index = index,
     variable = variable,
     pattern = pattern
   )
+
+  cat("Code to create this configuration:\n")
+  cat("config <-", kwb.utils::objectToText(result))
+
+  result
 }
 
 # select_shape -----------------------------------------------------------------
@@ -22,7 +27,7 @@ select_shape <- function(shapes)
 {
   choices <- names(shapes)
 
-  selection <- utils::select.list(choices, title = "Select shape file")
+  selection <- utils::select.list(choices, title = "Select layer")
 
   which(selection == choices)
 }
@@ -45,7 +50,7 @@ select_variable <- function(shape)
     sprintf("%s (%s)", name, paste(x, collapse = ", "))
   })
 
-  selection <- utils::select.list(choices, title = "Select Variable")
+  selection <- utils::select.list(choices, title = "Select variable")
 
   names(selection)
 }

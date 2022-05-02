@@ -24,43 +24,70 @@ load_potential_evaporation_berlin_2 <- function(from, to)
   # Read all files into a list of RasterLayer objects
   grids <- lapply(urls, read_asc_gz_file, file = NULL)
 
-  # Use the projection of the first grid (identical for all grids)
-  shapes <- get_transformed_shapes_of_germany(projection = grids[[1L]]@crs)
+  # Get shape of Berlin in same projection as grid
+  shape <- get_shape_of_german_region("berlin")
 
-  # Create a configuration interactively
-  #files <- list_shape_files(check_shapes_germany())[-1L]
-  #selection <- select_shapes(shapes, files)
-  #writeLines(kwb.utils::objectToText(selection))
-
-  config_berlin <- list(index = 1L, variable = "NAME_1", pattern = "Berlin")
-
-  shape_berlin <- filter_shapes(shapes, config = config_berlin)
-
-  do.call(rbind, lapply(seq_along(grids), function(i) {
-    url <- urls[i]
-    metadata <- extract_metadata_from_url(url)
-    metadata <- kwb.utils::selectElements(metadata, c("file", "year", "month"))
-    metadata_df <- kwb.utils::asNoFactorDataFrame(metadata)
-    r <- raster::crop(raster::mask(grids[[i]], shape_berlin), shape_berlin)
-    #raster::plot(r)
-    cbind(metadata_df, raster_stats(r, scale = 0.1))
-  }))
+  cbind(
+    extract_metadata_from_urls(urls, c("file", "year", "month")),
+    do.call(rbind, lapply(grids, function(grid) {
+      raster_stats(raster::crop(raster::mask(grid, shape), shape), scale = 0.1)
+    }))
+  )
 }
 
-# get_transformed_shapes_of_germany --------------------------------------------
-get_transformed_shapes_of_germany <- function(projection)
+# get_shape_of_german_region ---------------------------------------------------
+get_shape_of_german_region <- function(name)
 {
+  configure <- function(index, variable, pattern) list(
+    index = index,
+    variable = variable,
+    pattern = pattern
+  )
+
+  configs <- list(
+    berlin = configure(1L, "NAME_1", "Berlin"),
+    cologne = configure(2L, "NAME_2", "K\xF6ln")
+  )
+
+  config <- kwb.utils::selectElements(configs, name)
+
+  filter_shapes(get_shapes_of_germany(), config = config)
+}
+
+# get_shapes_of_germany --------------------------------------------------------
+get_shapes_of_germany <- function(recreate = FALSE)
+{
+  # Set cache directory in subfolder within Windows TEMP folder
+  cache_dir <- temp_dir("cache")
+
+  # Path to file in cache in which shapes may have been stored before
+  rdata_file <- file.path(cache_dir, "shapes_germany.RData")
+
+  # If the shapes have already been stored before, load and return them
+  if (file.exists(rdata_file) && ! recreate) {
+    return(kwb.utils::loadObject(rdata_file, "shapes_germany"))
+  }
+
   # Get path to directory containing shape files. If required, the shape files
   # are downloaded, unzipped and stored locally. They are downloaded from:
   # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
-  path <- check_shapes_germany()
-  files <- list_shape_files(path)[-1L]
+  files <- list_shape_files(check_shapes_germany())[-1L]
 
-  # Read shapes at different levels of detail and ransform the shapes according
-  # to the given projection
-  lapply(files, function(file) {
-    sp::spTransform(read_shape_file(file), CRSobj = projection)
-  })
+  # Read shapes at different levels of detail and transform the shapes according
+  # to the same projection that is assigned to the grid
+  shapes_germany <- lapply(stats::setNames(nm = files), read_shape_file)
+
+  # Load an example Raster of Germany, just to ask for its projection
+  example_grid <- get_example_grid_germany()
+
+  # Transform all shapes according to the projection of the example grid
+  shapes_germany <- lapply(shapes_germany, sp::spTransform, example_grid@crs)
+
+  # Save the shapes so that next time they can be loaded directly
+  save(shapes_germany, file = rdata_file)
+
+  # Return the shapes
+  shapes_germany
 }
 
 # list_shape_files -------------------------------------------------------------
@@ -87,6 +114,7 @@ filter_shapes <- function(shapes, config)
   s <- shapes[[config$index]]
   s[grep(config$pattern, s[[config$variable]]), ]
 }
+
 
 # raster_stats -----------------------------------------------------------------
 raster_stats <- function(r, scale = NULL)

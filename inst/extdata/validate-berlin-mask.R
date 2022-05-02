@@ -19,12 +19,12 @@ if (FALSE)
   to <- "202107"
 
   # Version 1: use Andreas Matzinger's Berlin mask matrix
-  result_1 <- kwb.dwd::load_potential_evaporation_berlin(from, to)
+  system.time(result_1 <- kwb.dwd::load_potential_evaporation_berlin(from, to))
 
   # Version 2: use shape files of German districts to mask Berlin (or any other
   # German city). TODO: Performance needs to be improved (by locally storing
   # transformed shapes)
-  result_2 <- kwb.dwd::load_potential_evaporation_berlin_2(from, to)
+  system.time(result_2 <- kwb.dwd::load_potential_evaporation_berlin_2(from, to))
 
   # Compare the results of the two versions
   result_1
@@ -55,36 +55,39 @@ if (FALSE)
 if (FALSE)
 {
   # We need a target projection, take it from an example grid of Germany
-  grid_example <- kwb.dwd:::get_example_grid_germany()
-  shapes <- kwb.dwd:::get_transformed_shapes_of_germany(grid_example@crs)
+  shapes <- kwb.dwd:::get_shapes_of_germany(recreate = TRUE)
 
   # Create a configuration interactively
-  files <- kwb.dwd:::list_shape_files(kwb.dwd:::check_shapes_germany())[-1L]
-  selection <- kwb.dwd:::select_shapes(shapes, files)
-  writeLines(kwb.utils::objectToText(selection))
+  selection <- kwb.dwd:::select_shapes(shapes)
 
-  config_berlin_1 <- list(index = 1L, variable = "NAME_1", pattern = "Nordrhein")
-  config_berlin_2 <- list(index = 2L, variable = "NAME_2", pattern = "Köln")
-  config_berlin_3 <- list(index = 3L, variable = "NAME_3", pattern = "Köln")
-  config_berlin_4 <- list(index = 4L, variable = "NAME_4", pattern = "^Köln$")
+  config_1 <- list(index = 1L, variable = "NAME_1", pattern = "Nordrhein")
+  config_2 <- list(index = 2L, variable = "NAME_2", pattern = "Köln")
+  config_3 <- list(index = 3L, variable = "NAME_3", pattern = "Köln")
+  config_4 <- list(index = 4L, variable = "NAME_4", pattern = "^Köln$")
 
-  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_1))
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config_1))
   s@data$NAME_1
 
-  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_2))
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config_2))
   s@data$NAME_2
 
-  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_3))
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config_3))
   s@data$NAME_3
 
-  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config = config_berlin_4))
+  raster::plot(s <- kwb.dwd:::filter_shapes(shapes, config_4))
   s@data$NAME_4
+
+  # Two configurations are stored in the package:
+  raster::plot(shape_berlin <- get_shape_of_german_region("berlin"))
+  raster::plot(shape_cologne <- get_shape_of_german_region("cologne"))
 
   shp_germany <- shapes[[1L]]
   shp_regions <- shapes[[4L]]
 
   raster::plot(shp_germany)
   raster::plot(shp_regions)
+
+  grid_example <- kwb.dwd:::get_example_grid_germany()
 
   extract <- function(pattern) {
     crop_and_mask_region(grid_example, shp_regions, pattern = pattern)

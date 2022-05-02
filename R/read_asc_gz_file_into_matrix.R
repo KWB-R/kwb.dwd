@@ -30,7 +30,7 @@ read_asc_gz_file_into_matrix <- function(url, scale = NULL)
   do.call(structure, c(
     list(result),
     extract_metadata_from_header(text[header_indices]),
-    extract_metadata_from_url(url)
+    extract_metadata_from_urls(url)
   ))
 }
 
@@ -69,18 +69,24 @@ read_lines_from_gz_file <- function(
   readLines(con)
 }
 
-# extract_metadata_from_url ----------------------------------------------------
+# extract_metadata_from_urls ---------------------------------------------------
 #' @importFrom kwb.utils extractSubstring
-extract_metadata_from_url <- function(url)
+extract_metadata_from_urls <- function(urls, columns = NULL)
 {
-  name <- basename(url)
+  base_names <- basename(urls)
 
-  year_month <- kwb.utils::extractSubstring("(\\d{4})(\\d{2})", name, 1:2)
-
-  list(
-    year = as.integer(year_month[[1L]]),
-    month = as.integer(year_month[[2L]]),
-    file = name,
-    origin = dirname(url)
+  result <- kwb.utils::extractSubstring(
+    "(\\d{4})(\\d{2})", base_names, c(year = 1L, month = 2L)
   )
+
+  result$year <- as.integer(result$year)
+  result$month <- as.integer(result$month)
+  result$file <- base_names
+  result$origin <- dirname(urls)
+
+  if (is.null(columns)) {
+    return(result)
+  }
+
+  kwb.utils::selectColumns(result, columns)
 }
