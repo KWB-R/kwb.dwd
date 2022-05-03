@@ -1,10 +1,11 @@
 # check_or_download_shapes_germany ---------------------------------------------
 
-#' Check Local Availability or Download Shape Files for Germany
+#' Check Local Availability or Download Shape Files
 #'
 #' This function checks if shape files for Germany are available in the folder
 #' `\%TEMP\%/R_kwb.dwd/gadm40_DEU_shp`. If not, the shape files are downloaded
-#' from <"https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip">
+#' from \url{https://gadm.org} (URL to zip-file:
+#' \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip})
 #' and unpacked into that folder.
 #'
 #' @return path to folder containing shape files
