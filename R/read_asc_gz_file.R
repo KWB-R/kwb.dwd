@@ -45,7 +45,7 @@ provide_projection_file <- function(file)
     return()
   }
 
-  prj_file <- file.path(system.file("extdata", package = "kwb.dwd"), "gk3.prj")
+  prj_file <- default_projection_file()
 
   if (! file.exists(prj_file)) {
     url <- url_projection()
@@ -70,4 +70,10 @@ provide_projection_file <- function(file)
 url_projection <- function()
 {
   "https://opendata.dwd.de/climate_environment/CDC/help/gk3.prj"
+}
+
+# default_projection_file ------------------------------------------------------
+default_projection_file <- function()
+{
+  file.path(system.file("extdata", package = "kwb.dwd"), "gk3.prj")
 }
