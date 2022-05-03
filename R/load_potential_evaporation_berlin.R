@@ -14,7 +14,7 @@
 load_potential_evaporation_berlin <- function(from = NULL, to = NULL)
 {
   load_monthly_variable_for_region(
-    "evapo_p", "berlin", scale = 0.1, from, to
+    variable = "evapo_p", region = "berlin", scale = 0.1, from, to
   )
 }
 
@@ -56,6 +56,6 @@ load_precipitation_berlin <- function(from = NULL, to = NULL)
 load_potential_evaporation_berlin_2 <- function(from, to)
 {
   load_monthly_variable_for_region(
-    "evapo_p", "berlin", scale, from, to, version = 2L
+    "evapo_p", "berlin", scale = 0.1, from, to, version = 2L
   )
 }

@@ -12,7 +12,7 @@ load_monthly_variable_for_region <- function(
 
   if (version == 1L) {
 
-    match.arg(variable, "berlin")
+    match.arg(region, "berlin")
 
     # Read all files into a list of matrices
     matrices <- lapply(urls, read_asc_gz_file_into_matrix, scale = scale)
