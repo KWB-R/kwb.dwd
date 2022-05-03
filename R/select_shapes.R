@@ -1,17 +1,30 @@
 # select_shapes ----------------------------------------------------------------
+
+#' Interactively Configure Selection of SpatialPolygons
+#'
+#' @param shapes list of SpatialPolygonsDataFrame objects, as e.g. returned by
+#'   \code{\link{get_shapes_of_germany}}
+#' @return list with elements \code{index} (index of SpatialPolygonsDataFrame in
+#'   \code{shapes} list), \code{variable} (column in selected
+#'   SpatialPolygonsDataFrame), \code{pattern} pattern (e.g. the name of a city)
+#'   to be matched against the values in the selected column of the
+#'   selected SpatialPolygonsDataFrame. This list simply describes how to select
+#'   a SpatialPolygon from a list of SpatialPolygonsDataFrames
 select_shapes <- function(shapes)
 {
-  index <- select_shape(stats::setNames(shapes, basename(names(shapes))))
+  # Let the user select a SpatialPolygonsDataFrame (by name of .shp file)
+  shape_names <- basename(names(shapes))
+  selection <- utils::select.list(shape_names, title = "Select layer")
+  shape_index <- which(selection == shape_names)
 
-  shape <- shapes[[index]]
+  # Let the user select a column from the selected SpatialPolygonsDataFrame
+  variable <- select_variable(shapes[[shape_index]])
 
-  variable <- select_variable(shape)
-  shape_variable <- shape[, variable]
-
+  # Let the user enter a pattern to be matched against the values in the column
   pattern <- readline("pattern: ")
 
   result <- list(
-    index = index,
+    index = shape_index,
     variable = variable,
     pattern = pattern
   )
@@ -22,17 +35,12 @@ select_shapes <- function(shapes)
   result
 }
 
-# select_shape -----------------------------------------------------------------
-select_shape <- function(shapes)
-{
-  choices <- names(shapes)
-
-  selection <- utils::select.list(choices, title = "Select layer")
-
-  which(selection == choices)
-}
-
 # select_variable --------------------------------------------------------------
+
+#' Let User Select a Column from a SpatialPolygonsDataFrame
+#'
+#' @param shape object of class SpatialPolygonsDataFrame
+#' @return name of selected column
 select_variable <- function(shape)
 {
   first_values <- kwb.utils::excludeNULL(
