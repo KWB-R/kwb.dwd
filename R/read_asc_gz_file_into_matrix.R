@@ -51,12 +51,15 @@ read_lines_from_gz_file <- function(
   file, url = NULL, encoding = getOption("encoding")
 )
 {
+  # If URL is given, download file from URL to temporary directory
   if (! is.null(url)) {
 
     assert_url(url, final_slash = FALSE)
     assert_ending_gz(url)
-    file <- file.path(tempdir(), basename(url))
-    download.file(url, file, method = "auto")
+
+    file <- file.path(temp_dir(), basename(url))
+
+    download_if_not_there(url, file)
 
   } else {
 
@@ -67,4 +70,16 @@ read_lines_from_gz_file <- function(
   con <- gzfile(file, encoding = encoding)
   on.exit(close(con))
   readLines(con)
+}
+
+# download_if_not_there --------------------------------------------------------
+download_if_not_there <- function(url, file = file.path(tempdir(), basename(url)))
+{
+  if (file.exists(file)) {
+    cat("File already available:", file, "\n")
+  } else {
+    download.file(url, file, method = "auto")
+  }
+
+  file
 }
