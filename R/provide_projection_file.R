@@ -1,5 +1,5 @@
 # provide_projection_file ------------------------------------------------------
-provide_projection_file <- function(file)
+provide_projection_file <- function(file, dbg = FALSE)
 {
   destfile <- file.path(
     dirname(file),
@@ -7,7 +7,9 @@ provide_projection_file <- function(file)
   )
 
   if (file.exists(destfile)) {
-    message("There is already a projection file: ", destfile)
+    kwb.utils::catIf(
+      dbg, "There is already a projection file: ", destfile, "\n"
+    )
     return()
   }
 
