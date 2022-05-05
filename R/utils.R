@@ -68,8 +68,12 @@ extract_yyyymm <- function(x)
 #' @importFrom kwb.utils defaultIfNULL
 filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
 {
-  urls <- grep("\\.asc\\.gz$", urls, value = TRUE)
+  filter_by_month_range(grep("\\.asc\\.gz$", urls, value = TRUE), from, to)
+}
 
+# filter_by_month_range --------------------------------------------------------
+filter_by_month_range <- function(urls, from = NULL, to = NULL)
+{
   from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
   to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
 
@@ -213,5 +217,6 @@ split_into_lines <- function(x)
 # temp_dir ---------------------------------------------------------------------
 temp_dir <- function(...)
 {
-  kwb.utils::createDirectory(file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...))
+  path <- file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...)
+  kwb.utils::createDirectory(path, dbg = FALSE)
 }
