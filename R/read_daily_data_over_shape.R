@@ -6,18 +6,19 @@
 #' must be given
 #'
 #' @param file path to shape file .shp
-#' @param variable currently one of "precip", "evapo_p"
+#' @param variable currently only "evapo_p" is supported
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
 #' @return data frame
 #' @export
 read_daily_data_over_shape <- function(file, variable, from, to)
 {
+  variable <- match.arg(variable, c("evapo_p"))
+
   # Define scaling factors per variable. Depending on the variable, the values
   # in the data files need to be multiplied with a scaling factor
   scales <- list(
-    "evapo_p" = 0.1,
-    "precip" = NULL
+    "evapo_p" = 0.1
   )
 
   # Select the appropriate scaling factor

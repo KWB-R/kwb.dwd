@@ -9,7 +9,7 @@ read_daily_data_over_shape(file, variable, from, to)
 \arguments{
 \item{file}{path to shape file .shp}
 
-\item{variable}{currently one of "precip", "evapo_p"}
+\item{variable}{currently only "evapo_p" is supported}
 
 \item{from}{first month as "yyyymm" string}
 
