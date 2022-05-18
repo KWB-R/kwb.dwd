@@ -3,8 +3,8 @@ load_monthly_variable_for_region <- function(
   variable, region, scale = NULL, from = NULL, to = NULL, version = 1L
 )
 {
-  # Currently, two variables are supported
-  match.arg(variable, c("precipitation", "evapo_p"))
+  # Currently, three variables are supported
+  match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
   base_url <- ftp_path_monthly_grids(variable)
