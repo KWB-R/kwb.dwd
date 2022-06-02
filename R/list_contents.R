@@ -102,7 +102,7 @@ empty_file_info <- function(full_info = TRUE)
 response_to_data_frame_raw <- function(response)
 {
   # Split response at new line character into single rows
-  rows <- split_into_lines(response)
+  rows <- kwb.utils::splitIntoLines(response)
 
   # Example row
   # "-rw-r--r--    1 9261     15101        9132 Mar 27 15:05"

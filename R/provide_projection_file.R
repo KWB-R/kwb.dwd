@@ -3,7 +3,7 @@ provide_projection_file <- function(file, dbg = FALSE)
 {
   destfile <- file.path(
     dirname(file),
-    replace_file_extension(basename(file), ".prj")
+    kwb.utils::replaceFileExtension(basename(file), ".prj")
   )
 
   if (file.exists(destfile)) {

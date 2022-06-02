@@ -188,13 +188,6 @@ month_sequence_simple <- function(from, to)
   unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
 }
 
-# replace_file_extension -------------------------------------------------------
-#' @importFrom kwb.utils removeExtension
-replace_file_extension <- function(file, extension)
-{
-  paste0(kwb.utils::removeExtension(file), extension)
-}
-
 # safe_element -----------------------------------------------------------------
 #' @importFrom kwb.utils stringList
 safe_element <- function(element, elements, name = deparse(substitute(element)))
@@ -205,13 +198,6 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
   ))
 
   element
-}
-
-# split_into_lines -------------------------------------------------------------
-split_into_lines <- function(x)
-{
-  stopifnot(is.character(x), length(x) == 1L)
-  strsplit(x, "\r?\n")[[1]]
 }
 
 # temp_dir ---------------------------------------------------------------------
