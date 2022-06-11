@@ -35,13 +35,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
-
+          
       - uses: r-lib/actions/setup-pandoc@master
-
+      
+      - name: Install spatial dependencies
+        if: runner.os != 'Windows'
+        run: |
+          brew install gdal proj
+          
       - name: Query dependencies
         run: |
           install.packages('remotes')
