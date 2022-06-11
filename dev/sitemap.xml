@@ -25,6 +25,9 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/calculate_masked_grid_stats.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/check_or_download_shapes_germany.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/convert_bin_to_raster_file.html</loc>
   </url>
   <url>
@@ -52,6 +55,9 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_dwd_urls_metadata.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_example_grid_germany.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_extension.html</loc>
   </url>
   <url>
@@ -59,6 +65,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_radolan_urls.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/get_shapes_of_germany.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/index.html</loc>
@@ -71,6 +80,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_potential_evaporation_berlin.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_potential_evaporation_berlin_2.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/load_precipitation_berlin.html</loc>
@@ -88,7 +100,16 @@
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_binary_radolan_file.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_daily_data_over_shape.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/read_relevant_years_radolan.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/select_shapes.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/select_variable.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/dev/reference/unzip_asc_gz_file.html</loc>
