@@ -10,7 +10,7 @@
 #' @export
 get_shapes_of_germany <- function(recreate = FALSE)
 {
-  # Set cache directory in subfolder within Windows TEMP folder
+  # Set cache directory in sub folder within Windows TEMP folder
   cache_dir <- temp_dir("cache")
 
   # Path to file in cache in which shapes may have been stored before

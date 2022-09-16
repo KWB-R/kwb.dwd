@@ -16,10 +16,8 @@ check_or_download_shapes_germany <- function()
 {
   url <- "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip"
 
-  file_name <- basename(url)
-
   # Path to sub folder below %TEMP% containing shape files for Germany
-  shape_dir <- file.path(temp_dir(), kwb.utils::removeExtension(file_name))
+  shape_dir <- temp_dir(template. = url, create. = FALSE)
 
   if (dir.exists(shape_dir)) {
     return(shape_dir)

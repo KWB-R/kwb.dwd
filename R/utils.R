@@ -243,10 +243,35 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
 }
 
 # temp_dir ---------------------------------------------------------------------
-temp_dir <- function(...)
+temp_dir <- function(..., template. = NULL, create. = TRUE, dbg. = FALSE)
 {
-  path <- file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...)
-  kwb.utils::createDirectory(path, dbg = FALSE)
+  dot_args <- list(...)
+
+  stop_on_dot_args <- function() {
+    if (!is_empty(dot_args)) {
+      clean_stop(
+        "Further arguments to temp_dir() not allowed if 'template.' is given."
+      )
+    }
+  }
+
+  # If no template (path) is given, use the arguments in ... as sub directory
+  # names. Otherwise, use the base file name of the template without the file
+  # name extension as sub directory name
+  args <- if (is.null(template.)) {
+    dot_args
+  } else {
+    stop_on_dot_args()
+    list(kwb.utils::removeExtension(basename(template.)))
+  }
+
+  path <- do.call(file.path, c(list(Sys.getenv("TEMP"), "R_kwb.dwd"), args))
+
+  if (create.) {
+    kwb.utils::createDirectory(path, dbg = dbg.)
+  }
+
+  path
 }
 
 # url_subdirs_containing_files_with_extension ----------------------------------

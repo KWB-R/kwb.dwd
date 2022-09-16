@@ -41,15 +41,14 @@ list_daily_grids_germany_tgz <- function(variable, from = NULL, to = NULL)
 download_and_extract <- function(url)
 {
   # Create a dedicated temporary folder
-  target_dir <- temp_dir(kwb.utils::removeExtension(basename(url)))
+  target_dir <- temp_dir(template. = url)
 
   # Download the file into the dedicated folder
-  tgz_file <- file.path(target_dir, basename(url))
-  tgz_file <- download_if_not_there(url, tgz_file)
+  file <- download_if_not_there(url, file.path(target_dir, basename(url)))
 
   # Extract the file into the same folder
-  archive::archive_extract(tgz_file, dir = target_dir)
+  archive::archive_extract(file, dir = target_dir)
 
   # List the extracted files
-  grid_files <- dir(target_dir, "\\.asc", full.names = TRUE)
+  dir(target_dir, "\\.asc", full.names = TRUE)
 }

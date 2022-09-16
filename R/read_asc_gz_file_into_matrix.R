@@ -57,9 +57,7 @@ read_lines_from_gz_file <- function(
     assert_url(url, final_slash = FALSE)
     assert_ending_gz(url)
 
-    file <- file.path(temp_dir(), basename(url))
-
-    download_if_not_there(url, file)
+    file <- download_if_not_there(url, file.path(temp_dir(), basename(url)))
 
   } else {
 
