@@ -50,9 +50,8 @@ clean_stop <- function(...)
 #' @importFrom lubridate month
 date_in_bathing_season <- function(x)
 {
-  months <- lubridate::month(x)
-
-  months >= 5 & months < 10
+  # May to September
+  lubridate::month(x) %in% 5:9
 }
 
 # extract_yyyymm ---------------------------------------------------------------
