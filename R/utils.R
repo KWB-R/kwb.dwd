@@ -61,7 +61,7 @@ extract_yyyymm <- function(x)
 }
 
 # filter_by_extension ----------------------------------------------------------
-filter_by_extension <- function(x)
+filter_by_extension <- function(x, extension)
 {
   x[endsWith(x, extension)]
 }
