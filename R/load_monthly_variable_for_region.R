@@ -7,8 +7,7 @@ load_monthly_variable_for_region <- function(
   match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
-  base_url <- ftp_path_monthly_grids(variable)
-  urls <- list_zipped_esri_ascii_grids(base_url, from, to)
+  urls <- list_zipped_esri_ascii_grids(variable, from, to)
 
   if (version == 1L) {
 

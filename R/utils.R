@@ -160,16 +160,19 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 
 #' Get URLs of Files in Zipped ESRI-ascii-grid Format
 #'
-#' @param base_url URL from which to start listing (recursively by default)
+#' @param variable variable for which to look for URLs. Must be one of
+#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids()}
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
 list_zipped_esri_ascii_grids <- function(
-  base_url, from = NULL, to = NULL, recursive = TRUE
+  variable, from = NULL, to = NULL, recursive = TRUE
 )
 {
   # List data files
-  relative_urls <- list_url(base_url, recursive = recursive) %>%
+  relative_urls <- variable %>%
+    ftp_path_monthly_grids() %>%
+    list_url(recursive = recursive) %>%
     filter_by_extension_asc_gz() %>%
     filter_by_month_range(from, to)
 
