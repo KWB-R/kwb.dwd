@@ -6,13 +6,13 @@ download_daily_grids_germany <- function(
 )
 {
   variable %>%
-    list_daily_grids_germany(from, to) %>%
+    list_daily_grids_germany_tgz(from, to) %>%
     lapply(download_and_extract) %>%
     unlist()
 }
 
-# list_daily_grids_germany -----------------------------------------------------
-list_daily_grids_germany <- function(
+# list_daily_grids_germany_tgz -------------------------------------------------
+list_daily_grids_germany_tgz <- function(
     variable,
     from = to,
     to = last_month_as_yyyymm()

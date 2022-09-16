@@ -160,7 +160,7 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
-# list_monthly_grids_zipped_esri_ascii -------------------------------------------------
+# list_monthly_grids_germany_asc_gz -------------------------------------------------
 
 #' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 #'
@@ -169,7 +169,7 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_monthly_grids_zipped_esri_ascii <- function(
+list_monthly_grids_germany_asc_gz <- function(
   variable, from = NULL, to = NULL, recursive = TRUE
 )
 {
