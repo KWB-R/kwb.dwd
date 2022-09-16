@@ -15,11 +15,11 @@ get_dwd_urls_metadata <- function()
 
   combinations <- get_dwd_config_combinations()
 
-  directory_urls <- apply(combinations, 1, function(x) do.call(
+  directory_urls <- apply(combinations, 1L, function(x) do.call(
     dwd_url_climate_dir, as.list(x)
   ))
 
-  filenames <- apply(combinations[, 1:2], 1, function(x) do.call(
+  filenames <- apply(combinations[, 1:2], 1L, function(x) do.call(
     dwd_filename_stations, as.list(x)
   ))
 
@@ -40,7 +40,8 @@ get_dwd_urls_metadata <- function()
 #' @noMd
 #' @importFrom  kwb.utils expandGrid
 get_dwd_config_combinations <- function(
-  frequencies = c("daily", "hourly"), currentnesses = c("historical", "recent")
+  frequencies = c("daily", "hourly"),
+  currentnesses = c("historical", "recent")
 )
 {
   specification <- get_dwd_url_specification()
@@ -76,11 +77,11 @@ get_dwd_url_specification <- function(category = NULL)
     "wind,FF,,wind"
   )
 
-  result <- matrix(strsplit(content, ",")[[1]], ncol = 4, byrow = TRUE)
+  result <- matrix(strsplit(content, ",")[[1L]], ncol = 4L, byrow = TRUE)
 
-  dimnames(result) <- list(result[, 1], result[1, ])
+  dimnames(result) <- list(result[, 1L], result[1L, ])
 
-  result <- result[-1, -1]
+  result <- result[-1L, -1L]
 
   if (is.null(category)) {
     return(result)
@@ -127,6 +128,7 @@ ftp_path_cdc <- function(...)
   file.path("ftp://opendata.dwd.de/climate_environment/CDC", ...)
 }
 
+# ftp_path_monthly_grids -------------------------------------------------------
 ftp_path_monthly_grids <- function(...)
 {
   ftp_path_cdc("grids_germany/monthly", ...)
