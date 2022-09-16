@@ -49,10 +49,6 @@ list_daily_grids_germany <- function(
 # download_and_extract ---------------------------------------------------------
 download_and_extract <- function(url)
 {
-  #url <- urls_tgz[366L]
-  temp_dir <- kwb.dwd:::temp_dir
-  download_if_not_there <- kwb.dwd:::download_if_not_there
-
   # Create a dedicated temporary folder
   target_dir <- temp_dir(kwb.utils::removeExtension(basename(url)))
 
