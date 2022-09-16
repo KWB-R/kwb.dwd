@@ -16,8 +16,17 @@ read_asc_gz_file_into_matrix <- function(url, scale = NULL)
   # Download .gz file from URL, extract the file and read the lines as text
   text <- read_lines_from_gz_file(url = url)
 
+  read_esri_ascii_grid_lines_into_matrix(text, scale = scale) %>%
+    add_attributes(extract_metadata_from_urls(url))
+}
+
+# read_esri_ascii_grid_lines_into_matrix ---------------------------------------
+read_esri_ascii_grid_lines_into_matrix <- function(text, scale = NULL)
+{
   # The first six rows are header rows
   header_indices <- 1:6
+
+  stopifnot(is.character(text), length(text) > max(header_indices))
 
   # Extract the actual data values into a matrix
   result <- as.matrix(utils::read.table(text = text[-header_indices]))
@@ -27,11 +36,15 @@ read_asc_gz_file_into_matrix <- function(url, scale = NULL)
   }
 
   # Add header and further metadata as attributes
-  do.call(structure, c(
-    list(result),
-    extract_metadata_from_header(text[header_indices]),
-    extract_metadata_from_urls(url)
-  ))
+  add_attributes(result, extract_metadata_from_header(text[header_indices]))
+}
+
+# add_attributes ---------------------------------------------------------------
+add_attributes <- function(x, attrs)
+{
+  stopifnot(is.list(attrs))
+
+  do.call(structure, c(list(x), attrs))
 }
 
 # extract_metadata_from_header -------------------------------------------------
