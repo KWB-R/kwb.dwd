@@ -43,7 +43,7 @@ load_monthly_variable_for_region <- function(
     ))
   }
 
-  stop("version must be 1 or 2")
+  clean_stop("version must be 1 or 2")
 }
 
 # get_berlin_dwd_mask ----------------------------------------------------------

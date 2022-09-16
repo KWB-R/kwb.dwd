@@ -10,15 +10,12 @@ assert_ending_gz <- function(x)
 assert_url <- function(url, final_slash = TRUE)
 {
   stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
+  stopifnot(length(url) == 1L)
 
   # Append slash if necessary
   if (final_slash) {
-
     kwb.utils::assertFinalSlash(url)
-
   } else {
-
     url
   }
 }

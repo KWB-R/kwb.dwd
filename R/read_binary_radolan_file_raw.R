@@ -126,11 +126,9 @@ read_binary_radolan_header <- function(path, buffer_size = 1024L)
   is_end_of_header <- buffer == 0x03
 
   if (! any(is_end_of_header)) {
-
-    stop(
+    clean_stop(
       "Could not find a byte '0x03' indicating the end of the header\n",
-      "within the first ", buffer_size, " bytes of the file\n", path, ".",
-      call. = FALSE
+      "within the first ", buffer_size, " bytes of the file\n", path, "."
     )
   }
 
