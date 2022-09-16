@@ -175,6 +175,25 @@ list_monthly_grids_germany_asc_gz <- function(
 {
   base_url <- ftp_path_monthly_grids(variable)
 
+  # Code to get the possible choices
+  # base_url <- kwb.dwd:::ftp_path_monthly_grids()
+  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
+
+  # Make sure that the given variable name is a possible choice
+  variable <- match.arg(variable, c(
+    "air_temperature_max",
+    "air_temperature_mean",
+    "air_temperature_min",
+    "drought_index",
+    "evapo_p",
+    "evapo_r",
+    "frost_depth",
+    "precipitation",
+    "soil_moist",
+    "soil_temperature_5cm",
+    "sunshine_duration"
+  ))
+
   # List data files
   relative_urls <- base_url %>%
     list_url(recursive = recursive) %>%
@@ -228,4 +247,16 @@ temp_dir <- function(...)
 {
   path <- file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...)
   kwb.utils::createDirectory(path, dbg = FALSE)
+}
+
+# url_subdirs_containing_files_with_extension ----------------------------------
+url_subdirs_containing_files_with_extension <- function(url, extension)
+{
+  subdir_urls <- list_url(url, full_names = TRUE)
+
+  found <- sapply(subdir_urls, function(subdir_url) {
+    any(endsWith(list_url(subdir_url, recursive = TRUE), extension))
+  })
+
+  basename(subdir_urls[found])
 }

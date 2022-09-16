@@ -134,6 +134,12 @@ ftp_path_monthly_grids <- function(...)
   ftp_path_cdc("grids_germany/monthly", ...)
 }
 
+# ftp_path_daily_grids ---------------------------------------------------------
+ftp_path_daily_grids <- function(...)
+{
+  ftp_path_cdc("grids_germany/daily", ...)
+}
+
 # dwd_filename_stations --------------------------------------------------------
 dwd_filename_stations <- function(category, frequency)
 {
