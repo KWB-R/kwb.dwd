@@ -1,7 +1,7 @@
 # assert_ending_gz -------------------------------------------------------------
 assert_ending_gz <- function(x)
 {
-  stopifnot(all(grepl("\\.gz$", x)))
+  stopifnot(all(endsWith(x, ".gz")))
   invisible(x)
 }
 
