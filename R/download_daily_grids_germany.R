@@ -42,7 +42,7 @@ list_daily_grids_germany <- function(
   "grids_germany/daily" %>%
     ftp_path_cdc(variable) %>%
     list_url(full_names = TRUE) %>%
-    filter_for_tgz_extension() %>%
+    filter_for_extension_tgz() %>%
     filter_by_month_range(from, to)
 }
 
