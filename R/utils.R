@@ -64,6 +64,12 @@ extract_yyyymm <- function(x)
   gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 }
 
+# filter_for_tgz_extension -----------------------------------------------------
+filter_for_tgz_extension <- function(x)
+{
+  x[endsWith(x, ".tgz")]
+}
+
 # filter_zipped_esri_ascii_grids -----------------------------------------------
 #' @importFrom kwb.utils defaultIfNULL
 filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
@@ -124,6 +130,12 @@ indicate_directories <- function(x, is_directory)
 is_empty <- function(x)
 {
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
+}
+
+# last_month_as_yyyymm ---------------------------------------------------------
+last_month_as_yyyymm <- function()
+{
+  format(Sys.Date() - 31L, "%Y%m")
 }
 
 # list_files_in_zip_files ------------------------------------------------------
