@@ -81,6 +81,10 @@ filter_by_extension_tgz <- function(x)
 # filter_by_month_range --------------------------------------------------------
 filter_by_month_range <- function(urls, from = NULL, to = NULL)
 {
+  if (length(urls) == 0L) {
+    return(urls)
+  }
+
   from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
   to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
 
@@ -156,22 +160,23 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
-# list_zipped_esri_ascii_grids -------------------------------------------------
+# list_monthly_grids_zipped_esri_ascii -------------------------------------------------
 
-#' Get URLs of Files in Zipped ESRI-ascii-grid Format
+#' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 #'
 #' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids()}
+#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_zipped_esri_ascii_grids <- function(
+list_monthly_grids_zipped_esri_ascii <- function(
   variable, from = NULL, to = NULL, recursive = TRUE
 )
 {
+  base_url <- ftp_path_monthly_grids(variable)
+
   # List data files
-  relative_urls <- variable %>%
-    ftp_path_monthly_grids() %>%
+  relative_urls <- base_url %>%
     list_url(recursive = recursive) %>%
     filter_by_extension_asc_gz() %>%
     filter_by_month_range(from, to)
