@@ -27,11 +27,8 @@ read_daily_data_over_shape <- function(file, variable, from, to)
   # Read shape file and transform to projection used in DWD's grid files
   shape <- read_shape_with_dwd_projection(file)
 
-  # Get URLs to .asc.gz files with daily grids on DWD server
-  base_url <- ftp_path_cdc("grids_germany/daily", variable)
-  urls <- list_url(base_url, recursive = TRUE, full_names = TRUE)
-  urls <- grep("\\.tgz$", urls, value = TRUE)
-  urls <- filter_by_month_range(urls, from, to)
+  # Get URLs to .tgz files with daily grids on DWD server
+  urls <- list_daily_grids_germany(variable, from, to)
 
   # One URL contains files for one month
   monthly_data_frames <- lapply(urls, get_daily_data_from_one_url, shape, scale)
