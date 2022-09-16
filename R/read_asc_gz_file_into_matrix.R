@@ -39,14 +39,6 @@ read_esri_ascii_grid_lines_into_matrix <- function(text, scale = NULL)
   add_attributes(result, extract_metadata_from_header(text[header_indices]))
 }
 
-# add_attributes ---------------------------------------------------------------
-add_attributes <- function(x, attrs)
-{
-  stopifnot(is.list(attrs))
-
-  do.call(structure, c(list(x), attrs))
-}
-
 # extract_metadata_from_header -------------------------------------------------
 #' @importFrom stats setNames
 extract_metadata_from_header <- function(header_lines)
@@ -81,16 +73,4 @@ read_lines_from_gz_file <- function(
   con <- gzfile(file, encoding = encoding)
   on.exit(close(con))
   readLines(con)
-}
-
-# download_if_not_there --------------------------------------------------------
-download_if_not_there <- function(url, file = file.path(tempdir(), basename(url)))
-{
-  if (file.exists(file)) {
-    cat("File already available:", file, "\n")
-  } else {
-    download.file(url, file, method = "auto")
-  }
-
-  file
 }

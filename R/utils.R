@@ -1,3 +1,11 @@
+# add_attributes ---------------------------------------------------------------
+add_attributes <- function(x, attrs)
+{
+  stopifnot(is.list(attrs))
+
+  do.call(structure, c(list(x), attrs))
+}
+
 # assert_ending_gz -------------------------------------------------------------
 assert_ending_gz <- function(x)
 {
@@ -52,6 +60,18 @@ date_in_bathing_season <- function(x)
 {
   # May to September
   lubridate::month(x) %in% 5:9
+}
+
+# download_if_not_there --------------------------------------------------------
+download_if_not_there <- function(url, file = file.path(tempdir(), basename(url)))
+{
+  if (file.exists(file)) {
+    cat("File already available:", file, "\n")
+  } else {
+    download.file(url, file, method = "auto")
+  }
+
+  file
 }
 
 # extract_yyyymm ---------------------------------------------------------------
