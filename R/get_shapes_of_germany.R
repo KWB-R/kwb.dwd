@@ -10,7 +10,7 @@
 #' @export
 get_shapes_of_germany <- function(recreate = FALSE)
 {
-  # Set cache directory in subfolder within Windows TEMP folder
+  # Set cache directory in sub folder within Windows TEMP folder
   cache_dir <- temp_dir("cache")
 
   # Path to file in cache in which shapes may have been stored before
@@ -24,7 +24,7 @@ get_shapes_of_germany <- function(recreate = FALSE)
   # List shape files. If required, the shape files are downloaded, unzipped and
   # stored locally. They are downloaded from:
   # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
-  files <- list_shape_files(check_or_download_shapes_germany())[-1L]
+  files <- list_local_shape_files(check_or_download_shapes_germany())[-1L]
 
   # Read shapes at different levels of detail
   shapes_germany <- lapply(stats::setNames(nm = files), read_shape_file)
@@ -42,8 +42,8 @@ get_shapes_of_germany <- function(recreate = FALSE)
   shapes_germany
 }
 
-# list_shape_files -------------------------------------------------------------
-list_shape_files <- function(path)
+# list_local_shape_files -------------------------------------------------------
+list_local_shape_files <- function(path)
 {
   dir(path, "shp$", full.names = TRUE)
 }

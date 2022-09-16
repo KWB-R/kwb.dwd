@@ -1,5 +1,5 @@
-# list_contents ----------------------------------------------------------------
-list_contents <- function(x = character(), full_info = FALSE, ...)
+# list_ftp_contents ------------------------------------------------------------
+list_ftp_contents <- function(x = character(), full_info = FALSE, ...)
 {
   # Return the empty
   if (length(x) == 0L) {

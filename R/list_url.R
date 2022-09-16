@@ -32,7 +32,7 @@ list_url <- function(
     ...,
     curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE),
     depth = 0,
-    FUN = list_contents
+    FUN = list_ftp_contents
   )
 
   if (full_info) {

@@ -7,8 +7,7 @@ load_monthly_variable_for_region <- function(
   match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
-  base_url <- ftp_path_monthly_grids(variable)
-  urls <- list_zipped_esri_ascii_grids(base_url, from, to)
+  urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
 
   if (version == 1L) {
 
@@ -43,7 +42,7 @@ load_monthly_variable_for_region <- function(
     ))
   }
 
-  stop("version must be 1 or 2")
+  clean_stop("version must be 1 or 2")
 }
 
 # get_berlin_dwd_mask ----------------------------------------------------------

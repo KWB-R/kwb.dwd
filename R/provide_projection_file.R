@@ -1,4 +1,5 @@
 # provide_projection_file ------------------------------------------------------
+#' @importFrom kwb.utils catAndRun catIf replaceFileExtension stopFormatted
 provide_projection_file <- function(file, dbg = FALSE)
 {
   destfile <- file.path(
@@ -30,7 +31,7 @@ provide_projection_file <- function(file, dbg = FALSE)
   success <- file.copy(from = prj_file, to = destfile)
 
   if (! all(success)) {
-    stop(sprintf("Could not copy %s to %s", prj_file, destfile))
+    kwb.utils::stopFormatted("Could not copy %s to %s", prj_file, destfile)
   }
 }
 

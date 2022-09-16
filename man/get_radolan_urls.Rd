@@ -7,8 +7,8 @@
 get_radolan_urls(
   start_daily = "2006-10",
   start_hourly = "2005-06",
-  end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(), roll_to_first
-    = TRUE)),
+  end_daily = format(format = "\%Y-\%m", lubridate::rollback(Sys.Date(), roll_to_first =
+    TRUE)),
   end_hourly = end_daily,
   ...
 )

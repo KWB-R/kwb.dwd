@@ -1,7 +1,7 @@
 # assert_ending_gz -------------------------------------------------------------
 assert_ending_gz <- function(x)
 {
-  stopifnot(all(grepl("\\.gz$", x)))
+  stopifnot(all(endsWith(x, ".gz")))
   invisible(x)
 }
 
@@ -10,15 +10,12 @@ assert_ending_gz <- function(x)
 assert_url <- function(url, final_slash = TRUE)
 {
   stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
+  stopifnot(length(url) == 1L)
 
   # Append slash if necessary
   if (final_slash) {
-
     kwb.utils::assertFinalSlash(url)
-
   } else {
-
     url
   }
 }
@@ -53,9 +50,8 @@ clean_stop <- function(...)
 #' @importFrom lubridate month
 date_in_bathing_season <- function(x)
 {
-  months <- lubridate::month(x)
-
-  months >= 5 & months < 10
+  # May to September
+  lubridate::month(x) %in% 5:9
 }
 
 # extract_yyyymm ---------------------------------------------------------------
@@ -64,16 +60,31 @@ extract_yyyymm <- function(x)
   gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 }
 
-# filter_zipped_esri_ascii_grids -----------------------------------------------
-#' @importFrom kwb.utils defaultIfNULL
-filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
+# filter_by_extension ----------------------------------------------------------
+filter_by_extension <- function(x, extension)
 {
-  filter_by_month_range(grep("\\.asc\\.gz$", urls, value = TRUE), from, to)
+  x[endsWith(x, extension)]
+}
+
+# filter_by_extension_asc_gz ---------------------------------------------------
+filter_by_extension_asc_gz <- function(x)
+{
+  filter_by_extension(x, ".asc.gz")
+}
+
+# filter_by_extension_tgz ------------------------------------------------------
+filter_by_extension_tgz <- function(x)
+{
+  filter_by_extension(x, ".tgz")
 }
 
 # filter_by_month_range --------------------------------------------------------
 filter_by_month_range <- function(urls, from = NULL, to = NULL)
 {
+  if (length(urls) == 0L) {
+    return(urls)
+  }
+
   from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
   to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
 
@@ -126,6 +137,12 @@ is_empty <- function(x)
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
 }
 
+# last_month_as_yyyymm ---------------------------------------------------------
+last_month_as_yyyymm <- function()
+{
+  format(Sys.Date() - 31L, "%Y%m")
+}
+
 # list_files_in_zip_files ------------------------------------------------------
 #' @importFrom kwb.utils catAndRun noFactorDataFrame
 #' @importFrom utils untar
@@ -143,23 +160,48 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
-# list_zipped_esri_ascii_grids -------------------------------------------------
+# list_monthly_grids_germany_asc_gz -------------------------------------------------
 
-#' Get URLs of Files in Zipped ESRI-ascii-grid Format
+#' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 #'
-#' @param base_url URL from which to start listing (recursively by default)
+#' @param variable variable for which to look for URLs. Must be one of
+#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_zipped_esri_ascii_grids <- function(
-  base_url, from = NULL, to = NULL, recursive = TRUE
+list_monthly_grids_germany_asc_gz <- function(
+  variable, from = NULL, to = NULL, recursive = TRUE
 )
 {
+  base_url <- ftp_path_monthly_grids(variable)
+
+  # Code to get the possible choices
+  # base_url <- kwb.dwd:::ftp_path_monthly_grids()
+  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
+
+  # Make sure that the given variable name is a possible choice
+  variable <- match.arg(variable, c(
+    "air_temperature_max",
+    "air_temperature_mean",
+    "air_temperature_min",
+    "drought_index",
+    "evapo_p",
+    "evapo_r",
+    "frost_depth",
+    "precipitation",
+    "soil_moist",
+    "soil_temperature_5cm",
+    "sunshine_duration"
+  ))
+
   # List data files
-  relative_urls <- list_url(base_url, recursive = recursive)
+  relative_urls <- base_url %>%
+    list_url(recursive = recursive) %>%
+    filter_by_extension_asc_gz() %>%
+    filter_by_month_range(from, to)
 
   # Provide full paths to zipped files in ESRI-ascii-grid-format
-  file.path(base_url, filter_zipped_esri_ascii_grids(relative_urls, from, to))
+  file.path(base_url, relative_urls)
 }
 
 # month_numbers ----------------------------------------------------------------
@@ -201,8 +243,45 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
 }
 
 # temp_dir ---------------------------------------------------------------------
-temp_dir <- function(...)
+temp_dir <- function(..., template. = NULL, create. = TRUE, dbg. = FALSE)
 {
-  path <- file.path(Sys.getenv("TEMP"), "R_kwb.dwd", ...)
-  kwb.utils::createDirectory(path, dbg = FALSE)
+  dot_args <- list(...)
+
+  stop_on_dot_args <- function() {
+    if (!is_empty(dot_args)) {
+      clean_stop(
+        "Further arguments to temp_dir() not allowed if 'template.' is given."
+      )
+    }
+  }
+
+  # If no template (path) is given, use the arguments in ... as sub directory
+  # names. Otherwise, use the base file name of the template without the file
+  # name extension as sub directory name
+  args <- if (is.null(template.)) {
+    dot_args
+  } else {
+    stop_on_dot_args()
+    list(kwb.utils::removeExtension(basename(template.)))
+  }
+
+  path <- do.call(file.path, c(list(Sys.getenv("TEMP"), "R_kwb.dwd"), args))
+
+  if (create.) {
+    kwb.utils::createDirectory(path, dbg = dbg.)
+  }
+
+  path
+}
+
+# url_subdirs_containing_files_with_extension ----------------------------------
+url_subdirs_containing_files_with_extension <- function(url, extension)
+{
+  subdir_urls <- list_url(url, full_names = TRUE)
+
+  found <- sapply(subdir_urls, function(subdir_url) {
+    any(endsWith(list_url(subdir_url, recursive = TRUE), extension))
+  })
+
+  basename(subdir_urls[found])
 }
