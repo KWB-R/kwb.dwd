@@ -60,22 +60,22 @@ extract_yyyymm <- function(x)
   gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 }
 
-# filter_for_extension ---------------------------------------------------------
-filter_for_extension <- function(x)
+# filter_by_extension ----------------------------------------------------------
+filter_by_extension <- function(x)
 {
   x[endsWith(x, extension)]
 }
 
-# filter_for_extension_asc_gz --------------------------------------------------
-filter_for_extension_asc_gz <- function(x)
+# filter_by_extension_asc_gz ---------------------------------------------------
+filter_by_extension_asc_gz <- function(x)
 {
-  filter_for_extension(x, ".asc.gz")
+  filter_by_extension(x, ".asc.gz")
 }
 
-# filter_for_extension_tgz -----------------------------------------------------
-filter_for_extension_tgz <- function(x)
+# filter_by_extension_tgz ------------------------------------------------------
+filter_by_extension_tgz <- function(x)
 {
-  filter_for_extension(x, ".tgz")
+  filter_by_extension(x, ".tgz")
 }
 
 # filter_by_month_range --------------------------------------------------------
@@ -170,7 +170,7 @@ list_zipped_esri_ascii_grids <- function(
 {
   # List data files
   relative_urls <- list_url(base_url, recursive = recursive) %>%
-    filter_for_extension_asc_gz() %>%
+    filter_by_extension_asc_gz() %>%
     filter_by_month_range(from, to)
 
   # Provide full paths to zipped files in ESRI-ascii-grid-format
