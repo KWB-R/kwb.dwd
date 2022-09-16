@@ -52,19 +52,12 @@ read_shape_with_dwd_projection <- function(file)
 # get_daily_data_from_one_url --------------------------------------------------
 get_daily_data_from_one_url <- function(url, shape, scale)
 {
+  #kwb.utils::assignPackageObjects("kwb.dwd")
+  #urls <- list_daily_grids_germany("evapo_p")
   #url <- urls[1L]
-  # Create a dedicated temporary folder
-  target_dir <- temp_dir(kwb.utils::removeExtension(basename(url)))
 
-  # Download the file into the dedicated folder
-  tgz_file <- file.path(target_dir, basename(url))
-  tgz_file <- download_if_not_there(url, tgz_file)
-
-  # Extract the file into the same folder
-  archive::archive_extract(tgz_file, dir = target_dir)
-
-  # List the extracted files
-  grid_files <- dir(target_dir, "\\.asc", full.names = TRUE)
+  # Download and extract files from URL
+  grid_files <- download_and_extract(url)
 
   # For each file, provide a projection (.prj) file containing DWD's projection
   lapply(grid_files, provide_projection_file)
