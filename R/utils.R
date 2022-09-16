@@ -64,6 +64,12 @@ extract_yyyymm <- function(x)
   gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 }
 
+# filter_for_asc_gz_extension --------------------------------------------------
+filter_for_asc_gz_extension <- function(x)
+{
+  x[endsWith(x, ".asc.gz")]
+}
+
 # filter_for_tgz_extension -----------------------------------------------------
 filter_for_tgz_extension <- function(x)
 {
@@ -71,10 +77,11 @@ filter_for_tgz_extension <- function(x)
 }
 
 # filter_zipped_esri_ascii_grids -----------------------------------------------
-#' @importFrom kwb.utils defaultIfNULL
 filter_zipped_esri_ascii_grids <- function(urls, from = NULL, to = NULL)
 {
-  filter_by_month_range(grep("\\.asc\\.gz$", urls, value = TRUE), from, to)
+  urls %>%
+    filter_for_asc_gz_extension() %>%
+    filter_by_month_range(from, to)
 }
 
 # filter_by_month_range --------------------------------------------------------
