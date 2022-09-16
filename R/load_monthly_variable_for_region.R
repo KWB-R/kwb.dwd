@@ -4,14 +4,14 @@ load_monthly_variable_for_region <- function(
 )
 {
   # Currently, three variables are supported
-  match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
+  variable <- match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
   urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
 
   if (version == 1L) {
 
-    match.arg(region, "berlin")
+    region <- match.arg(region, "berlin")
 
     # Read all files into a list of matrices
     matrices <- lapply(urls, read_asc_gz_file_into_matrix, scale = scale)
