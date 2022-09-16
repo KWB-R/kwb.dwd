@@ -40,7 +40,7 @@ list_daily_grids_germany <- function(
   variable <- kwb.utils::selectElements(choices, variable)
 
   "grids_germany/daily" %>%
-    kwb.dwd:::ftp_path_cdc(variable) %>%
+    ftp_path_cdc(variable) %>%
     list_url(full_names = TRUE) %>%
     filter_for_tgz_extension() %>%
     filter_by_month_range(from, to)
