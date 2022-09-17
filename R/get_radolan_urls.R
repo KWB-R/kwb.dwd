@@ -86,7 +86,7 @@ get_radolan_url <- function(frequency, year_month, ftp_root = ftp_path_cdc())
 
   # Check that year_month strings are not before the first available string
   if (any(year_month < starts[frequency])) clean_stop(sprintf(
-    "The first avaible year and month is '%s'. You requested: '%s'",
+    "The first available year and month is '%s'. You requested: '%s'",
     starts[[frequency]], kwb.utils::stringList(year_month)
   ))
 
