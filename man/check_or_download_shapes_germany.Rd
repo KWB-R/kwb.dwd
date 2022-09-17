@@ -4,7 +4,10 @@
 \alias{check_or_download_shapes_germany}
 \title{Check Local Availability or Download Shape Files}
 \usage{
-check_or_download_shapes_germany()
+check_or_download_shapes_germany(quiet = FALSE)
+}
+\arguments{
+\item{quiet}{passed if \code{TRUE} status messages are suppressed}
 }
 \value{
 path to folder containing shape files

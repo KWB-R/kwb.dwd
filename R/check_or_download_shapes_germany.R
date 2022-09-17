@@ -8,24 +8,30 @@
 #' \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip})
 #' and unpacked into that folder.
 #'
+#' @param quiet passed if \code{TRUE} status messages are suppressed
 #' @return path to folder containing shape files
 #' @export
 #' @importFrom archive archive_extract
 #' @importFrom kwb.utils createDirectory removeExtension
-check_or_download_shapes_germany <- function()
+check_or_download_shapes_germany <- function(quiet = FALSE)
 {
   url <- "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip"
 
   # Path to sub folder below %TEMP% containing shape files for Germany
-  shape_dir <- temp_dir(template. = url, create. = FALSE)
+  shape_dir <- temp_dir(template. = url)
 
-  if (dir.exists(shape_dir)) {
+  # If the shape directory contains at least one .shp file, return the path to
+  # the directory
+  if (length(dir(shape_dir, "\\.shp$")) > 0L) {
     return(shape_dir)
   }
 
-  # If <shape_dir> does not exist, create it, download the zip-archive from
+  # If <shape_dir> does not contain .shp files, download the zip-archive from
   # <url> and extract it into <shape_dir>
-  archive::archive_extract(download_if_not_there(url), shape_dir)
+  file <- download_if_not_there(url, quiet = quiet)
+
+  # Extract the archive file into the shape directory
+  archive::archive_extract(file, dir = shape_dir)
 
   shape_dir
 }
