@@ -1,5 +1,3 @@
-# Current developments
-
 # kwb.dwd 0.2.0 (2022-09-17)
 
 * add contributors Michael Rustler, Lukas Guericke
@@ -13,7 +11,6 @@
         * remove args "depth", "curl", add arg "full_names"
         * reimplement using kwb.utils::listToDepth()
 * add new functions
-    - add read_asc_gz_file()
     - calculate_masked_grid_stats()
     - check_or_download_shapes_germany()
     - get_berlin_dwd_mask()
@@ -23,10 +20,8 @@
     - load_potential_evaporation_berlin_2()
     - load_precipitation_berlin()
     - open_description()
-    - open_description()
     - read_asc_gz_file()
     - read_daily_data_over_shape()
-    - unzip_asc_gz_file()
     - unzip_asc_gz_file()
 * export functions that were private before 
     - coordinates_to_EPSG_4326()
