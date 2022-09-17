@@ -13,11 +13,7 @@
 unzip_asc_gz_file <- function(file, url = NULL, target_dir = tempdir())
 {
   # Prepare arguments to read_lines_from_gz_file (either file or url)
-  args <- if (is.null(url)) {
-    list(file = file)
-  } else {
-    list(url = url)
-  }
+  args <- arg_list_file_or_url(file, url)
 
   # Read text lines from (remote or local) .gz file
   text <- do.call(read_lines_from_gz_file, args)
