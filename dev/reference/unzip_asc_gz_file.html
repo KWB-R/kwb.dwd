@@ -57,18 +57,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">unzip_asc_gz_file</span><span class="op">(</span><span class="va">file</span>, url <span class="op">=</span> <span class="cn">NULL</span>, target_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">unzip_asc_gz_file</span><span class="op">(</span><span class="va">file</span>, target_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>file</dt>
-<dd><p>path to asc.gz file to be unzipped</p></dd>
-
-
-<dt>url</dt>
-<dd><p>optional. If given, the file to be unzipped is first downloaded
-from that URL</p></dd>
+<dd><p>path to asc.gz file to be unzipped or URL from which the file is
+to be downloaded first</p></dd>
 
 
 <dt>target_dir</dt>
