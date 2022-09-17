@@ -1,6 +1,6 @@
 Package: kwb.dwd
 Title: Access Information from Deutscher Wetterdienst (DWD)
-Version: 0.1.1.9000
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Hauke",
              family = "Sonnenberg",
