@@ -4,8 +4,13 @@
 \alias{crop_radolan_radial}
 \title{Crop Radolan Data}
 \usage{
-crop_radolan_radial(radolan, longitude, latitude, radius = 10,
-  as_data_frame = TRUE)
+crop_radolan_radial(
+  radolan,
+  longitude,
+  latitude,
+  radius = 10,
+  as_data_frame = TRUE
+)
 }
 \arguments{
 \item{radolan}{radolan data as returned by

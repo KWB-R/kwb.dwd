@@ -1,11 +1,26 @@
 # try_to_get_url ---------------------------------------------------------------
+#' try to get url
+#'
+#' @param url url
+#' @param n_trials n_trails (default: 3)
+#' @param timeout timeout (default: NULL)
+#' @param sleep_time sleep time (default: 5)
+#' @param user_pwd user password (default: NULL)
+#' @param ... additional arguments passed to \code{RCurl::getURL}
+#' @param dbg debug (default: TRUE)
+#'
+#' @return ???
+#' @keywords internal
+#' @noMd
+#' @noRd
+#' @importFrom RCurl curlOptions getCurlOptionsConstants
+#' @importFrom kwb.utils catIf
 try_to_get_url <- function(
   url, n_trials = 3, timeout = NULL, sleep_time = 5, user_pwd = NULL, ...,
   dbg = TRUE
 )
 {
-  stopifnot(is.character(url))
-  stopifnot(length(url) == 1)
+  url <- assert_url(url)
 
   success <- FALSE
   trial <- 0

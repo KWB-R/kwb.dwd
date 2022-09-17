@@ -1,27 +1,26 @@
+# List all available files and create path info dataset in the package ---------
 if (FALSE)
 {
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/hourly/radolan"
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC"
-  base_url <- "ftp://opendata.dwd.de/climate_environment/CDC/"
+  base_url <- kwb.dwd:::ftp_path_cdc()
 
   kwb.utils::clearConsole()
 
   system.time({
-    x <- kwb.dwd::list_url(base_url, recursive = TRUE)
-    result_urls <- paste0(kwb.utils::assertFinalSlash(base_url), x)
+    dwd_files <- kwb.dwd::list_url(base_url, recursive = TRUE, full_info = TRUE)
   })
 
-  # user  system elapsed
-  # 209.935   8.589 590.817
+  #   User      System verstrichen
+  # 122.08        3.12      461.75
 
-  subdir_matrix <- kwb.file:::to_subdir_matrix(result_urls)
-
-  View(subdir_matrix)
+  # Save dataset in the package
+  usethis::use_data(dwd_files, overwrite = TRUE)
 }
 
 # Save all URLs in a text file -------------------------------------------------
 if (FALSE)
 {
+  result_urls <- paste0(kwb.utils::assertFinalSlash(base_url), dwd_files$file)
+
   file <- format(Sys.time(), format = "inst/extdata/urls_dwd_%Y%m%d_%H%M.txt")
 
   stopifnot(basename(getwd()) == "kwb.dwd")
@@ -29,15 +28,24 @@ if (FALSE)
   writeLines(result_urls, file)
 }
 
-# ------------------------------------------------------------------------------
+# Split URLs into matrix of subdirectory names ---------------------------------
 if (FALSE)
 {
-  base_url <- "ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany"
+  subdir_matrix <- kwb.file::to_subdir_matrix(result_urls)
+  head(subdir_matrix)
+  dim(subdir_matrix)
+  # [1] 700830     13
+}
 
-  url_hourly <- paste0(base_url, "/hourly")
+# List all paths below grids_germany -------------------------------------------
+if (FALSE)
+{
+  base_url <- kwb.dwd:::ftp_path_cdc("grids_germany")
+
+  url_hourly <- paste0(base_url, "/hourly/radolan/reproc")
   url_monthly <- paste0(base_url, "/monthly")
 
-  all_urls_hourly <- kwb.dwd::list_url(url_hourly, recursive = TRUE)
+  all_urls_hourly <- kwb.dwd::list_url(url_hourly, recursive = TRUE, full_info = TRUE)
   all_urls_monthly <- kwb.dwd::list_url(url_monthly, recursive = TRUE)
 
   urls <- kwb.dwd::list_url(url = base_url, recursive = TRUE)
@@ -49,7 +57,7 @@ if (FALSE)
   View(data.frame(url = urls))
 }
 
-# Provide all URLs as data in the package --------------------------------------
+# Compare latest path lists ----------------------------------------------------
 if (FALSE)
 {
   # Get most current two files
@@ -66,31 +74,4 @@ if (FALSE)
 
   length(a[! a %in% b])
   length(b[! b %in% a])
-
-  a <- gsub("opendata.dwd.de/climate_environment", "ftp-cdc.dwd.de/pub", a)
-
-  n <- 1000
-  table(head(a, n) == head(b, n))
-
-  kwb.utils::compareSets(a, b)
-
-  # Select the URLs of one file only
-  urls <- c
-  urls <- urls_list[[1]]
-
-  urls[duplicated(urls)]
-
-  dwd_files <- kwb.utils::noFactorDataFrame(
-    path = dirname(urls),
-    file = basename(urls)
-  )
-
-  opendata_files <- dwd_files
-
-  View(dwd_files)
-
-  # Most frequent file names
-  tail(sort(table(dwd_files$file)))
-
-  usethis::use_data(opendata_files)
 }

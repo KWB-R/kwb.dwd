@@ -8,7 +8,9 @@
 #' @param path path to rst database (folder)
 #' @param years vector of year numbers for which to read Radolan data files
 #' @export
-#'
+#' @importFrom kwb.utils left
+#' @importFrom raster stack
+#' @importFrom stats setNames
 read_relevant_years_radolan <- function(path, years)
 {
   stopifnot(is.numeric(years))
@@ -29,7 +31,7 @@ read_relevant_years_radolan <- function(path, years)
   }
 
   # Extract date strings (yymmdd) from file names
-  date_strings <- substr(basename(files), 1, 6)
+  date_strings <- kwb.utils::left(basename(files), 6L)
 
   # Load radolan files for relevant years and label layers with date strings
   stats::setNames(raster::stack(files), date_strings)

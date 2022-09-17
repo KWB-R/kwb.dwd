@@ -4,9 +4,14 @@
 \alias{list_url}
 \title{List Files or Folders in a FTP Directory}
 \usage{
-list_url(url, recursive = !is.na(max_depth), max_depth = NA, ...,
-  depth = 0, full_info = FALSE,
-  curl = RCurl::getCurlHandle(ftp.use.epsv = TRUE))
+list_url(
+  url = ftp_path_cdc(),
+  recursive = !is.na(max_depth),
+  max_depth = NA,
+  full_info = FALSE,
+  full_names = FALSE,
+  ...
+)
 }
 \arguments{
 \item{url}{URL to FTP server, including "ftp://"}
@@ -17,15 +22,14 @@ subdirectories (default: \code{FALSE})}
 \item{max_depth}{maximum folder depth to consider when
 \code{recursive = TRUE}}
 
-\item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
-\code{n_trials}, \code{timeout}, or \code{sleep_time}}
-
-\item{depth}{for start depth when \code{recursive = TRUE}}
-
 \item{full_info}{if \code{TRUE}, not only the path and filename are returned
 but also the file properties. The default is \code{FALSE}.}
 
-\item{curl}{RCurl handle passed to \code{kwb.dwd:::try_to_get_url}}
+\item{full_names}{if \code{TRUE}, the full URLs are returned, otherwise (the
+default) only the paths relative to \code{url}.}
+
+\item{\dots}{arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
+\code{n_trials}, \code{timeout}, or \code{sleep_time}}
 }
 \description{
 List Files or Folders in a FTP Directory

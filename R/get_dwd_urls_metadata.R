@@ -7,18 +7,19 @@
 #'   "_Beschreibung_Stationen.txt" describing measurement stations.
 #'
 #' @export
-#'
+#' @importFrom stats setNames
+#' @importFrom kwb.utils pasteColumns
 get_dwd_urls_metadata <- function()
 {
   # Note: category "solar" is not considered
 
   combinations <- get_dwd_config_combinations()
 
-  directory_urls <- apply(combinations, 1, function(x) do.call(
+  directory_urls <- apply(combinations, 1L, function(x) do.call(
     dwd_url_climate_dir, as.list(x)
   ))
 
-  filenames <- apply(combinations[, 1:2], 1, function(x) do.call(
+  filenames <- apply(combinations[, 1:2], 1L, function(x) do.call(
     dwd_filename_stations, as.list(x)
   ))
 
@@ -28,8 +29,19 @@ get_dwd_urls_metadata <- function()
 }
 
 # get_dwd_config_combinations --------------------------------------------------
+
+#' Get DWD config combinations
+#'
+#' @param frequencies default: c("daily", "hourly")
+#' @param currentnesses default: c("historical", "recent")
+#' @return data.frame with columns frequency category and currentness
+#' @keywords internal
+#' @noRd
+#' @noMd
+#' @importFrom  kwb.utils expandGrid
 get_dwd_config_combinations <- function(
-  frequencies = c("daily", "hourly"), currentnesses = c("historical", "recent")
+  frequencies = c("daily", "hourly"),
+  currentnesses = c("historical", "recent")
 )
 {
   specification <- get_dwd_url_specification()
@@ -65,11 +77,11 @@ get_dwd_url_specification <- function(category = NULL)
     "wind,FF,,wind"
   )
 
-  result <- matrix(strsplit(content, ",")[[1]], ncol = 4, byrow = TRUE)
+  result <- matrix(strsplit(content, ",")[[1L]], ncol = 4L, byrow = TRUE)
 
-  dimnames(result) <- list(result[, 1], result[1, ])
+  dimnames(result) <- list(result[, 1L], result[1L, ])
 
-  result <- result[-1, -1]
+  result <- result[-1L, -1L]
 
   if (is.null(category)) {
     return(result)
@@ -83,7 +95,7 @@ dwd_url_climate_dir <- function(
   frequency = NULL, category = NULL, currentness = NULL
 )
 {
-  url <- "ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate"
+  url <- ftp_path_cdc("observations_germany/climate")
 
   if (is.null(frequency)) {
     return(url)
