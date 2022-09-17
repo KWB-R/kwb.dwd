@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   radolan: radolan.html
-last_built: 2022-09-16T18:42Z
+last_built: 2022-09-17T11:24Z
 urls:
   reference: https://kwb-r.github.io/kwb.dwd/reference
   article: https://kwb-r.github.io/kwb.dwd/articles
