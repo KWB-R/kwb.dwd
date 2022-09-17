@@ -11,14 +11,12 @@
 #' @importFrom kwb.utils removeExtension
 unzip_asc_gz_file <- function(file, target_dir = tempdir())
 {
-  # Read text lines from (remote or local) .gz file
-  text <- read_lines_from_gz_file(file)
+  # Path to the target file
+  target <- file.path(target_dir, kwb.utils::removeExtension(basename(file)))
 
-  target_name <- kwb.utils::removeExtension(basename(file))
+  # Read text lines from (remote or local) .gz file and write to target file
+  writeLines(read_lines_from_gz_file(file), target)
 
-  file <- file.path(target_dir, target_name)
-
-  writeLines(text, file)
-
-  file
+  # Return the path to the created file
+  target
 }
