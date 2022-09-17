@@ -63,12 +63,16 @@ date_in_bathing_season <- function(x)
 }
 
 # download_if_not_there --------------------------------------------------------
-download_if_not_there <- function(url, file = file.path(tempdir(), basename(url)))
+download_if_not_there <- function(
+    url,
+    file = file.path(tempdir(), basename(url)),
+    quiet = FALSE
+)
 {
   if (file.exists(file)) {
     cat("File already available:", file, "\n")
   } else {
-    download.file(url, file, method = "auto")
+    download.file(url, file, method = "auto", quiet = quiet)
   }
 
   file
