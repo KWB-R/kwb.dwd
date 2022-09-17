@@ -4,13 +4,11 @@
 \alias{unzip_asc_gz_file}
 \title{Download a .gz File and Unzip it}
 \usage{
-unzip_asc_gz_file(file, url = NULL, target_dir = tempdir())
+unzip_asc_gz_file(file, target_dir = tempdir())
 }
 \arguments{
-\item{file}{path to asc.gz file to be unzipped}
-
-\item{url}{optional. If given, the file to be unzipped is first downloaded
-from that URL}
+\item{file}{path to asc.gz file to be unzipped or URL from which the file is
+to be downloaded first}
 
 \item{target_dir}{path to folder into which to (if applicable, download and)
 unzip the file}

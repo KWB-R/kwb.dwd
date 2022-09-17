@@ -6,16 +6,6 @@ add_attributes <- function(x, attrs)
   do.call(structure, c(list(x), attrs))
 }
 
-# arg_list_file_or_url ---------------------------------------------------------
-arg_list_file_or_url <- function(file, url)
-{
-  if (is.null(url)) {
-    list(file = file)
-  } else {
-    list(url = url)
-  }
-}
-
 # assert_ending_gz -------------------------------------------------------------
 assert_ending_gz <- function(x)
 {

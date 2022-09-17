@@ -17,9 +17,8 @@ read_asc_gz_file <- function(file, url = NULL)
   }
 
   # Call the unzip function setting either "url" or "file" argument
-  grid_file <- kwb.utils::callWith(
-    FUN = unzip_asc_gz_file,
-    arg_list_file_or_url(file, url),
+  grid_file <- unzip_asc_gz_file(
+    file = if (is.null(url)) file else url,
     target_dir = target_dir
   )
 

@@ -49,25 +49,23 @@ extract_metadata_from_header <- function(header_lines)
 # read_lines_from_gz_file ------------------------------------------------------
 #' @importFrom kwb.utils safePath
 read_lines_from_gz_file <- function(
-  file, url = NULL, encoding = getOption("encoding")
+    file,
+    encoding = getOption("encoding")
 )
 {
-  # If URL is given, download file from URL to temporary directory
-  if (! is.null(url)) {
+  assert_ending_gz(file)
 
-    assert_url(url, final_slash = FALSE)
-    assert_ending_gz(url)
+  # If the file does not exist, treat it as an URL
+  if (!file.exists(file)) {
 
+    assert_url(file, final_slash = FALSE)
+
+    # Download file from URL to temporary directory
     file <- download_if_not_there(
-      url,
-      file.path(temp_dir(), basename(url)),
+      file,
+      file.path(temp_dir(), basename(file)),
       quiet = TRUE
     )
-
-  } else {
-
-    assert_ending_gz(file)
-    kwb.utils::safePath(file)
   }
 
   con <- gzfile(file, encoding = encoding)
