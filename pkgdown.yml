@@ -1,6 +1,10 @@
-pandoc: '2.2'
-pkgdown: 1.4.1
+pandoc: 2.7.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   radolan: radolan.html
+last_built: 2022-09-17T18:08Z
+urls:
+  reference: https://kwb-r.github.io/kwb.dwd/reference
+  article: https://kwb-r.github.io/kwb.dwd/articles
 
