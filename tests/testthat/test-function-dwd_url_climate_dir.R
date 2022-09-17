@@ -14,4 +14,9 @@ test_that("dwd_url_climate_dir() works", {
   expect_length(result, 1L)
   expect_type(result, "character")
   expect_true(startsWith(result, "ftp://"))
+
+  result2 <- f("daily")
+
+  expect_error(f("no-such-frequency"))
+  expect_error(f("daily", category = "no-such-category"))
 })
