@@ -6,15 +6,12 @@
 #' @param \dots arguments passed to \code{\link{get_radolan_urls}}, such as
 #'   \code{start_daily}, \code{start_hourly}, \code{end_daily},
 #'   \code{end_hourly}
-#' @importFrom magrittr %>%
-#' @importFrom kwb.utils catAndRun
-#' @importFrom fs dir_create
-#' @importFrom utils download.file
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
-#' @export
 #' @importFrom fs dir_create
 #' @importFrom kwb.utils catAndRun
+#' @importFrom magrittr %>%
 #' @importFrom utils download.file
+#' @export
 #' @examples
 #' \dontrun{download_radolan(resolution = "daily")}
 download_radolan <- function(resolution = "daily", export_dir = "data", ...)
