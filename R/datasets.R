@@ -2,9 +2,9 @@
 #'
 #' Information on files that are available for download at
 #' \url{ftp://opendata.dwd.de/climate_environment/CDC/} [base_url]. The
-#' information were last updated on 2022-04-27.
+#' information were last updated on 2022-09-17.
 #'
-#' @format A data frame with 701795 observations of 8 variables:
+#' @format A data frame with 784332 observations of 8 variables:
 #' \describe{
 #'   \item{file}{path to the file below [base_url]}
 #'   \item{isdir}{TRUE for a directory, FALSE for a file}
