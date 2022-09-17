@@ -3,43 +3,52 @@ load_monthly_variable_for_region <- function(
   variable, region, scale = NULL, from = NULL, to = NULL, version = 1L
 )
 {
+  #kwb.utils::assignPackageObjects("kwb.dwd")
+
   # Currently, three variables are supported
   variable <- match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
   urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
 
+  #
+  files <- download_monthly_grids_germany(variable, from, to)
+
   if (version == 1L) {
 
     region <- match.arg(region, "berlin")
 
     # Read all files into a list of matrices
-    matrices <- lapply(urls, read_asc_gz_file_into_matrix, scale = scale)
+    matrices <- lapply(seq_along(urls), function(i) {
+      read_asc_gz_file_into_matrix(files[i], scale = scale) %>%
+      add_attributes(extract_metadata_from_urls(urls[i]))
+    })
 
     # Get mask matrix for Berlin region
     geo_mask <- get_berlin_dwd_mask()
 
     # Calculate monthly stats for Berlin
-    return (calculate_masked_grid_stats(matrices, geo_mask = geo_mask))
+    return(calculate_masked_grid_stats(matrices, geo_mask = geo_mask))
   }
 
   if (version == 2L) {
 
     # Read all files into a list of RasterLayer objects
-    grids <- lapply(urls, read_asc_gz_file, file = NULL)
+    grids <- lapply(files, read_asc_gz_file)
 
     # Get shape of region in same projection as grid
     shape <- get_shape_of_german_region(region)
 
-    return (cbind(
-      extract_metadata_from_urls(urls, c("file", "year", "month")),
-      do.call(rbind, lapply(grids, function(grid) {
-        raster_stats(
-          raster::crop(raster::mask(grid, shape), shape),
-          scale = scale
-        )
-      }))
-    ))
+    data_frames <- lapply(grids, function(grid) {
+      grid %>%
+        raster::mask(shape) %>%
+        raster::crop(shape) %>%
+        raster_stats(scale = scale)
+    })
+
+    metadata <- extract_metadata_from_urls(urls, c("file", "year", "month"))
+
+    return(cbind(metadata, do.call(rbind, data_frames)))
   }
 
   clean_stop("version must be 1 or 2")

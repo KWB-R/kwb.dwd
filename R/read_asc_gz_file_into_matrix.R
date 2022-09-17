@@ -2,22 +2,18 @@
 
 #' Read Zipped File(s) in ESRI-ascii-grid-format at URL
 #'
-#' @param url URL to file
+#' @param file path to downloaded file to be read
 #' @param scale optional. Scaling factor by which to multiply each matrix value
 #' @return matrix with attributes containing metadata
 #' @keywords internal
 #' @noMd
 #' @noRd
 #' @importFrom utils read.table
-read_asc_gz_file_into_matrix <- function(url, scale = NULL)
+read_asc_gz_file_into_matrix <- function(file, scale = NULL)
 {
-  #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/evapo_p/grids_germany_monthly_evapo_p_202203.asc.gz"
-
   # Download .gz file from URL, extract the file and read the lines as text
-  text <- read_lines_from_gz_file(url = url)
-
-  read_esri_ascii_grid_lines_into_matrix(text, scale = scale) %>%
-    add_attributes(extract_metadata_from_urls(url))
+  read_lines_from_gz_file(file) %>%
+    read_esri_ascii_grid_lines_into_matrix(scale = scale)
 }
 
 # read_esri_ascii_grid_lines_into_matrix ---------------------------------------
@@ -62,7 +58,11 @@ read_lines_from_gz_file <- function(
     assert_url(url, final_slash = FALSE)
     assert_ending_gz(url)
 
-    file <- download_if_not_there(url, file.path(temp_dir(), basename(url)))
+    file <- download_if_not_there(
+      url,
+      file.path(temp_dir(), basename(url)),
+      quiet = TRUE
+    )
 
   } else {
 

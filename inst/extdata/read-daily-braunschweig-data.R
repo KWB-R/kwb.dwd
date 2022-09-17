@@ -33,6 +33,25 @@ if (FALSE)
 }
 
 #
+# Download monthly grids for Germany (.asc.gz files)
+#
+if (FALSE)
+{
+  from = "202201"
+  to = "202207"
+
+  files <- kwb.dwd:::download_monthly_grids_germany("frost_depth", from, to)
+
+  kwb.file::remove_common_root(files)
+
+  file <- files[1L]
+
+  kwb.utils::hsOpenWindowsExplorer(dirname(file))
+
+  kwb.dwd:::read_asc_gz_file(file)
+}
+
+#
 # Read daily data from DWD, mask region with given shape file
 #
 
