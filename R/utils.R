@@ -289,7 +289,9 @@ temp_dir <- function(..., template. = NULL, create. = TRUE, dbg. = FALSE)
     list(kwb.utils::removeExtension(basename(template.)))
   }
 
-  path <- do.call(file.path, c(list(Sys.getenv("TEMP"), "R_kwb.dwd"), args))
+  tmp_dir <- Sys.getenv("TEMP", Sys.getenv("TMP", tempdir()))
+
+  path <- do.call(file.path, c(list(tmp_dir, "R_kwb.dwd"), args))
 
   if (create.) {
     kwb.utils::createDirectory(path, dbg = dbg.)
