@@ -100,12 +100,7 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
   metadata <- extract_metadata_from_files_daily(files = grid_files)
 
   # Mask the full grid over Germany with the shape and crop the grid
-  grids <- lapply(grids, function(grid) {
-    kwb.utils::catAndRun(
-      "Masking and cropping",
-      raster::crop(raster::mask(grid, shape), shape)
-    )
-  })
+  grids <- mask_and_crop_grids(grids, shape)
 
   # Calculate statistics, considering the conversion factor "scale"
   data <- do.call(rbind, lapply(grids, raster_stats, scale = scale))
@@ -117,23 +112,64 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
 # extract_metadata_from_files_daily --------------------------------------------
 extract_metadata_from_files_daily <- function(files)
 {
+  extract_metadata_from_files(files, is_daily = TRUE)
+}
+
+# extract_metadata_from_files_monthly ------------------------------------------
+extract_metadata_from_files_monthly <- function(files)
+{
+  extract_metadata_from_files(files, is_daily = FALSE)
+}
+
+# extract_metadata_from_files --------------------------------------------------
+extract_metadata_from_files <- function(files, is_daily)
+{
   base_names <- basename(files)
 
-  date_parts <- kwb.utils::extractSubstring(
-    pattern = "_(\\d{4})(\\d{2})(\\d{2})\\.",
-    base_names,
-    c(year = 1L, month = 2L, day = 3L)
-  )
+  date_parts <- if (is_daily) {
+    kwb.utils::extractSubstring(
+      pattern = "_(\\d{4})(\\d{2})(\\d{2})\\.",
+      base_names,
+      c(year = 1L, month = 2L, day = 3L)
+    )
+  } else {
+    kwb.utils::extractSubstring(
+      pattern = "_(\\d{4})(\\d{2})\\.",
+      base_names,
+      c(year = 1L, month = 2L)
+    )
+  }
 
   date_parts <- as.data.frame(lapply(date_parts, as.integer))
 
-  metadata <- kwb.utils::noFactorDataFrame(
-    file = base_names,
-    date = as.Date(sprintf(
+  date_strings <- if (is_daily) {
+    sprintf(
       "%04d-%02d-%02d",
       date_parts$year, date_parts$month, date_parts$day
-    ))
+    )
+  } else {
+    sprintf(
+      "%04d-%02d-01",
+      date_parts$year, date_parts$month
+    )
+  }
+
+  metadata <- kwb.utils::noFactorDataFrame(
+    file = base_names,
+    date = as.Date(date_strings)
   )
 
   cbind(metadata, date_parts)
+}
+
+# mask_and_crop_grids ----------------------------------------------------------
+mask_and_crop_grids <- function(grids, shape, dbg = TRUE)
+{
+  lapply(grids, function(grid) {
+    kwb.utils::catAndRun(
+      paste("Masking and cropping", grid@data@names),
+      raster::crop(raster::mask(grid, shape), shape),
+      dbg = dbg
+    )
+  })
 }
