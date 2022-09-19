@@ -15,26 +15,9 @@
 read_daily_data_over_shape <- function(file, variable, from, to)
 {
   # Define scaling factors per variable. Depending on the variable, the values
-  # in the data files need to be multiplied with a scaling factor. Ask the
-  # documentation for the factor:
-  #
-  # urls <- kwb.dwd:::list_daily_grids_germany_tgz("soil_temperature_5cm")
-  # kwb.dwd:::open_description(urls[1L])
+  # in the data files need to be multiplied with a scaling factor.
 
-  scales <- list(
-    # Die Werte im Raster muessen durch 10 dividiert werden, um die richtigen
-    # Werte in mm zu bekommen
-    "evapo_p" = 0.1,
-    # wie "evapo_p"
-    "evapo_r" = 0.1,
-    # Die Werte sind in cm
-    "frost_depth" = 1,
-    # Die Werte sind in Prozent pflanzenverfügbares Wasser
-    "soil_moist" = 1,
-    # Die Werte im Raster müssen durch 10 dividiert werden, um die richtigen
-    # Werte in Grad Celsius zu bekommen
-    "soil_temperature_5cm" = 0.1
-  )
+  scales <- get_scaling_factors()
 
   variable <- match.arg(variable, names(scales))
 
