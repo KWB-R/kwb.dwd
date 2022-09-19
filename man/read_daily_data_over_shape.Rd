@@ -9,7 +9,8 @@ read_daily_data_over_shape(file, variable, from, to)
 \arguments{
 \item{file}{path to shape file .shp}
 
-\item{variable}{currently only "evapo_p" is supported}
+\item{variable}{currently, the following variables are supported: "evapo_p",
+"evapo_r", "frost_depth", "soil_moist", "soil_temperature_5cm"}
 
 \item{from}{first month as "yyyymm" string}
 

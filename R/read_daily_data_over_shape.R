@@ -6,7 +6,8 @@
 #' must be given
 #'
 #' @param file path to shape file .shp
-#' @param variable currently only "evapo_p" is supported
+#' @param variable currently, the following variables are supported: "evapo_p",
+#'   "evapo_r", "frost_depth", "soil_moist", "soil_temperature_5cm"
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
 #' @return data frame
