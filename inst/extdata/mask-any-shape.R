@@ -2,6 +2,16 @@ if (FALSE)
 {
   `%>%` <- magrittr::`%>%`
 
+  # Read monthly data for the whole of Germany
+  rain_2012 <- kwb.dwd:::read_monthly_data_over_shape(
+    variable = "precipitation",
+    from = "202101",
+    to = "202112"
+  )
+
+  head(rain_2012)
+  warnings()
+
   shape_file <- "~/../Downloads/A/amarex/GIS-Verschneidung/EZG_Berlin_BWB_shape.shp"
 
   system.time(evapo_p_daily <- kwb.dwd::read_daily_data_over_shape(
@@ -23,6 +33,77 @@ if (FALSE)
   ))
   # User      System verstrichen
   # 1.71        0.36        4.08
+
+  # Read the shape file on your own and pass the spatial object in "shape"
+  shape <- kwb.dwd:::read_shape_file(shape_file, drop_z = TRUE, use_sf = TRUE)
+
+  system.time(evapo_p_monthly2 <- kwb.dwd::read_monthly_data_over_shape(
+    shape = shape,
+    variable = "evapo_p",
+    from = "202001",
+    to = "202002"
+  ))
+
+  identical(evapo_p_monthly, evapo_p_monthly2)
+
+  # Now, the same with a subset of the spatial object
+  system.time(evapo_p_monthly_bln_x <- kwb.dwd::read_monthly_data_over_shape(
+    shape = shape[shape$Pumpwerk == "APw Bln X", ],
+    variable = "evapo_p",
+    from = "202001",
+    to = "202002"
+  ))
+
+  # Rainfall in the different Berliner Bezirke
+
+  shape_file_bezirke_berlin <- kwb.dwd:::download_and_extract(
+    "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip"
+  )
+
+  zip_file_bezirke_berlin <- kwb.dwd:::download_if_not_there(
+    "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip"
+  )
+
+  archive::archive_extract(zip_file_bezirke_berlin)
+
+  shapes_bezirke <- kwb.dwd:::read_shape_file("./bezirksgrenzen.shp", use_sf = TRUE)
+
+  sp::plot(shapes_bezirke)
+
+  shapes_by_bezirk <- split(shapes_bezirke, shapes_bezirke$Gemeinde_n)
+
+  rain_by_bezirk <- lapply(shapes_by_bezirk, function(shape) {
+    kwb.dwd::read_monthly_data_over_shape(
+      variable = "precipitation",
+      from = "202001",
+      to = "202012",
+      shape = shape
+    )
+  })
+
+  rain_by_bezirk_df <- kwb.utils::rbindAll(
+    rain_by_bezirk,
+    nameColumn = "bezirk"
+  )
+
+  View(rain_by_bezirk_df)
+
+  library(ggplot2)
+  library(magrittr)
+
+  rain_by_bezirk_df %>%
+    ggplot(aes(
+      x = as.factor(.data$month),
+      y = .data$mean
+    )) +
+    geom_bar(stat = 'identity', position = 'dodge') +
+    facet_wrap(~ .data$bezirk) +
+    labs(x = "month", y = "precipitation in mm")
+
+  # Problem: the download is repeated for each catchment!
+
+  evapo_p_monthly
+  evapo_p_monthly_bln_x
 
   # We should find the monthly data when summarising the daily data...
   evapo_p_daily %>%
