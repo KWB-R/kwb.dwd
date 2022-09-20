@@ -4,7 +4,7 @@
 \alias{read_monthly_data_over_shape}
 \title{Read monthly data from DWD, mask region with given shape file}
 \usage{
-read_monthly_data_over_shape(file, variable, from, to, ...)
+read_monthly_data_over_shape(file, variable, from, to, quiet = FALSE, ...)
 }
 \arguments{
 \item{file}{path to shape file .shp}
@@ -14,6 +14,8 @@ read_monthly_data_over_shape(file, variable, from, to, ...)
 \item{from}{first month as "yyyymm" string}
 
 \item{to}{last month as "yyyymm" string}
+
+\item{quiet}{passed to \code{\link{download.file}}}
 
 \item{\dots}{further arguments passed to \code{kwb.dwd:::read_shape_file},
 such as \code{drop_z = TRUE, use_sf = TRUE}}

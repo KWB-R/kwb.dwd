@@ -6,11 +6,12 @@
 #' @param variable currently only "evapo_p" is supported
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
+#' @param quiet passed to \code{\link{download.file}}
 #' @param \dots further arguments passed to \code{kwb.dwd:::read_shape_file},
 #'   such as \code{drop_z = TRUE, use_sf = TRUE}
 #' @return data frame
 #' @export
-read_monthly_data_over_shape <- function(file, variable, from, to, ...)
+read_monthly_data_over_shape <- function(file, variable, from, to, quiet = FALSE, ...)
 {
   # Define scaling factors per variable. Depending on the variable, the values
   # in the data files need to be multiplied with a scaling factor.
@@ -25,7 +26,7 @@ read_monthly_data_over_shape <- function(file, variable, from, to, ...)
   shape <- read_shape_with_dwd_projection(file, ...)
 
   # Download files from DWD server
-  grid_files <- download_monthly_grids_germany(variable, from, to)
+  grid_files <- download_monthly_grids_germany(variable, from, to, quiet = quiet)
 
   # Read the files into RasterLayer objects with DWD projection
   grids <- lapply(grid_files, read_asc_gz_file)
