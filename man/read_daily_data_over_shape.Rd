@@ -4,7 +4,7 @@
 \alias{read_daily_data_over_shape}
 \title{Read daily data from DWD, mask region with given shape file}
 \usage{
-read_daily_data_over_shape(file, variable, from, to)
+read_daily_data_over_shape(file, variable, from, to, quiet = FALSE)
 }
 \arguments{
 \item{file}{path to shape file .shp}
@@ -15,6 +15,8 @@ read_daily_data_over_shape(file, variable, from, to)
 \item{from}{first month as "yyyymm" string}
 
 \item{to}{last month as "yyyymm" string}
+
+\item{quiet}{passed to \code{\link{download.file}}}
 }
 \value{
 data frame
