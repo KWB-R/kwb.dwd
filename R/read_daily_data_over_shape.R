@@ -10,9 +10,10 @@
 #'   "evapo_r", "frost_depth", "soil_moist", "soil_temperature_5cm"
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
+#' @param quiet passed to \code{\link{download.file}}
 #' @return data frame
 #' @export
-read_daily_data_over_shape <- function(file, variable, from, to)
+read_daily_data_over_shape <- function(file, variable, from, to, quiet = FALSE)
 {
   # Define scaling factors per variable. Depending on the variable, the values
   # in the data files need to be multiplied with a scaling factor.
@@ -28,7 +29,7 @@ read_daily_data_over_shape <- function(file, variable, from, to)
   shape <- read_shape_with_dwd_projection(file)
 
   # Download and extract files from URLs to .tgz files on DWD server
-  grid_files <- download_daily_grids_germany(variable, from, to)
+  grid_files <- download_daily_grids_germany(variable, from, to, quiet = quiet)
 
   # Read data within shape from all grid files
   get_daily_data_from_grid_files(grid_files, shape, scale)
