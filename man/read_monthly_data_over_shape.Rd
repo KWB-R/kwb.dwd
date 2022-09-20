@@ -5,14 +5,14 @@
 \title{Read monthly data from DWD, mask region with given shape file}
 \usage{
 read_monthly_data_over_shape(
-  file,
+  file = NULL,
   variable,
   from,
   to,
-  ...,
   quiet = FALSE,
   shape = NULL,
-  use_sf = TRUE
+  use_sf = TRUE,
+  ...
 )
 }
 \arguments{
@@ -24,10 +24,6 @@ read_monthly_data_over_shape(
 
 \item{to}{last month as "yyyymm" string}
 
-\item{\dots}{further arguments passed to \code{kwb.dwd:::read_shape_file},
-such as \code{drop_z = TRUE}
-\code{kwb.dwd:::transform_coords} if applicable}
-
 \item{quiet}{passed to \code{\link{download.file}}}
 
 \item{shape}{object of class sf or sf_layers or SpatialPolygonsDataFrame.
@@ -35,6 +31,9 @@ If \code{NULL} (the default), this object is obtained by calling
 \code{kwb.dwd:::read_shape_file} on \code{file}.}
 
 \item{use_sf}{passed to \code{kwb.dwd:::read_shape_file} if applicable}
+
+\item{\dots}{further arguments passed to \code{kwb.dwd:::read_shape_file},
+such as \code{drop_z = TRUE}, if applicable}
 }
 \value{
 data frame
