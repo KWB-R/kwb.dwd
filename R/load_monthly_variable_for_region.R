@@ -154,7 +154,13 @@ filter_shapes <- function(shapes, config)
 # raster_stats -----------------------------------------------------------------
 raster_stats <- function(r, scale = NULL)
 {
-  x <- r@data@values
+  x <- raster::getValues(r)
+
+  # Just for my understanding: does getValues() return r@data@values?
+  if (length(r@data@values) > 0L) {
+    stopifnot(identical(r@data@values, x))
+  }
+
   x <- x[! is.na(x)]
 
   if (! is.null(scale)) {
