@@ -55,18 +55,21 @@ if (FALSE)
   ))
 
   # Rainfall in the different Berliner Bezirke
-
-  shape_file_bezirke_berlin <- kwb.dwd:::download_and_extract(
-    "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip"
-  )
-
   zip_file_bezirke_berlin <- kwb.dwd:::download_if_not_there(
     "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip"
   )
 
-  archive::archive_extract(zip_file_bezirke_berlin)
+  shape_dir_bezirke <- kwb.dwd:::temp_dir("bezirke")
 
-  shapes_bezirke <- kwb.dwd:::read_shape_file("./bezirksgrenzen.shp", use_sf = TRUE)
+  archive::archive_extract(
+    zip_file_bezirke_berlin,
+    dir = shape_dir_bezirke
+  )
+
+  shapes_bezirke <- kwb.dwd:::read_shape_file(
+    file.path(shape_dir_bezirke, "bezirksgrenzen.shp"),
+    use_sf = TRUE
+  )
 
   sp::plot(shapes_bezirke)
 
