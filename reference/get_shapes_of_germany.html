@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_shapes_of_germany</span><span class="op">(</span>recreate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_shapes_of_germany</span><span class="op">(</span>recreate <span class="op">=</span> <span class="cn">FALSE</span>, use_sf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,6 +68,10 @@ downloaded from <a href="https://gadm.org/" class="external-link">https://gadm.o
 in DWD data files and stored locally in an RData file. The default is
 <code>FALSE</code>, i.e. the required data are read form the locally stored RData
 file, provided that the file exists.</p></dd>
+
+
+<dt>use_sf</dt>
+<dd><p>passed to <code>kwb.dwd:::transform_coords</code></p></dd>
 
 </dl></div>
 

@@ -57,7 +57,16 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_monthly_data_over_shape</span><span class="op">(</span><span class="va">file</span>, <span class="va">variable</span>, <span class="va">from</span>, <span class="va">to</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_monthly_data_over_shape</span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">variable</span>,</span>
+<span>  <span class="va">from</span>,</span>
+<span>  <span class="va">to</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shape <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_sf <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -82,9 +91,19 @@
 <dd><p>passed to <code><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></code></p></dd>
 
 
+<dt>shape</dt>
+<dd><p>object of class sf or sf_layers or SpatialPolygonsDataFrame.
+If <code>NULL</code> (the default), this object is obtained by calling
+<code>kwb.dwd:::read_shape_file</code> on <code>file</code>.</p></dd>
+
+
+<dt>use_sf</dt>
+<dd><p>passed to <code>kwb.dwd:::read_shape_file</code> if applicable</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments passed to <code>kwb.dwd:::read_shape_file</code>,
-such as <code>drop_z = TRUE, use_sf = TRUE</code></p></dd>
+such as <code>drop_z = TRUE</code>, if applicable</p></dd>
 
 </dl></div>
     <div class="section level2">
