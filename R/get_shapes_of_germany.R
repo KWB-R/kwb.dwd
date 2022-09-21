@@ -7,8 +7,9 @@
 #'   in DWD data files and stored locally in an RData file. The default is
 #'   \code{FALSE}, i.e. the required data are read form the locally stored RData
 #'   file, provided that the file exists.
+#' @param use_sf passed to \code{kwb.dwd:::transform_coords}
 #' @export
-get_shapes_of_germany <- function(recreate = FALSE)
+get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 {
   # Set cache directory in sub folder within Windows TEMP folder
   cache_dir <- temp_dir("cache")
@@ -33,7 +34,12 @@ get_shapes_of_germany <- function(recreate = FALSE)
   example_grid <- get_example_grid_germany()
 
   # Transform all shapes according to the projection of the example grid
-  shapes_germany <- lapply(shapes_germany, sp::spTransform, example_grid@crs)
+  shapes_germany <- lapply(
+    shapes_germany,
+    FUN = transform_coords,
+    target_crs = example_grid@crs,
+    use_sf = use_sf
+  )
 
   # Save the shapes so that next time they can be loaded directly
   save(shapes_germany, file = rdata_file)

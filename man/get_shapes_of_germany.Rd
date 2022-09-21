@@ -4,7 +4,7 @@
 \alias{get_shapes_of_germany}
 \title{Provide List of SpatialPolygonsDataFrame for Germany}
 \usage{
-get_shapes_of_germany(recreate = FALSE)
+get_shapes_of_germany(recreate = FALSE, use_sf = FALSE)
 }
 \arguments{
 \item{recreate}{logical. If \code{TRUE} the required shape files are freshly
@@ -12,6 +12,8 @@ downloaded from \url{https://gadm.org/}, transformed to the projection used
 in DWD data files and stored locally in an RData file. The default is
 \code{FALSE}, i.e. the required data are read form the locally stored RData
 file, provided that the file exists.}
+
+\item{use_sf}{passed to \code{kwb.dwd:::transform_coords}}
 }
 \description{
 Provide List of SpatialPolygonsDataFrame for Germany

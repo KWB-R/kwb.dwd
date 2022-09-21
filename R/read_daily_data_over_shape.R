@@ -64,14 +64,8 @@ read_shape_file <- function(
     rgdal::readOGR(file)
   }
 
-  # Transform to coordinate reference system if given
-  if (!is.null(target_crs)) {
-    shape <- if (use_sf) {
-      sf::st_transform(shape, target_crs)
-    } else {
-      sp::spTransform(shape, target_crs)
-    }
-  }
+  # Transform to target coordinate reference system if given
+  shape <- transform_coords(shape, target_crs, use_sf)
 
   # Drop z dimensions if desired
   if (drop_z) {
