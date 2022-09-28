@@ -42,10 +42,15 @@ jobs:
           
       - uses: r-lib/actions/setup-pandoc@master
       
-      - name: Install spatial dependencies
-        if: runner.os != 'Windows'
+      - name: Install spatial dependencies on macOS
+        if: runner.os == 'macOS'
         run: |
           brew install gdal proj
+          
+      - name: Install spatial dependencies on Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install gdal-bin
           
       - name: Query dependencies
         run: |
