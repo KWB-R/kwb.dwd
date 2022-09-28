@@ -5,11 +5,8 @@
 # Open description file (how to interpret the data?) ---------------------------
 if (FALSE)
 {
-  base_url <- kwb.dwd:::ftp_path_monthly_grids("evapo_p")
-  urls <- kwb.dwd::list_url(base_url, full_names = TRUE)
-  (url <- grep("_202201", urls, value = TRUE))
-
-  kwb.dwd::open_description(url)
+  urls <- kwb.dwd:::list_monthly_grids_germany_asc_gz("evapo_p", "202201")
+  kwb.dwd::open_description(urls[1L])
 }
 
 # Compare two versions of reading data for Berlin ------------------------------
