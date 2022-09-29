@@ -64,12 +64,9 @@ read_monthly_data_over_shape <- function(
     grids <- mask_and_crop_grids(grids, shape)
   }
 
-  # Calculate statistics, considering the conversion factor "scale"
-  data <- do.call(rbind, lapply(grids, raster_stats, scale = scale))
-
   # Provide file metadata (file, year, month)
   metadata <- extract_metadata_from_files_monthly(files = grid_files)
 
-  # Add metadata
-  cbind(metadata, data)
+  # Calculate statistics, considering the scaling factor, add metadata
+  cbind(metadata, summarise_over_all_grids(grids, scale))
 }

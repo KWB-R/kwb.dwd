@@ -97,11 +97,14 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
   # Mask the full grid over Germany with the shape and crop the grid
   grids <- mask_and_crop_grids(grids, shape)
 
-  # Calculate statistics, considering the conversion factor "scale"
-  data <- do.call(rbind, lapply(grids, raster_stats, scale = scale))
+  # Calculate statistics, considering the scaling factor, add metadata
+  cbind(metadata, summarise_over_all_grids(grids, scale))
+}
 
-  # Add metadata
-  cbind(metadata, data)
+# summarise_over_all_grids -----------------------------------------------------
+summarise_over_all_grids <- function(grids, scale)
+{
+  do.call(rbind, lapply(grids, raster_stats, scale = scale))
 }
 
 # extract_metadata_from_files_daily --------------------------------------------
