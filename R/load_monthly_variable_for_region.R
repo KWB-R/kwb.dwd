@@ -148,10 +148,11 @@ filter_shapes <- function(shapes, config)
   s[grep(config$pattern, s[[config$variable]]), ]
 }
 
-
 # raster_stats -----------------------------------------------------------------
 raster_stats <- function(r, scale = NULL)
 {
+  stopifnot(inherits(r, "BasicRaster"))
+
   x <- raster::getValues(r)
 
   # Just for my understanding: does getValues() return r@data@values?
