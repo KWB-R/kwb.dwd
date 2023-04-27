@@ -5,7 +5,7 @@
 \alias{dwd_files}
 \title{Files Available on DWD's FTP Server}
 \format{
-A data frame with 784332 observations of 8 variables:
+A data frame with 838345 observations of 8 variables:
 \describe{
   \item{file}{path to the file below [base_url]}
   \item{isdir}{TRUE for a directory, FALSE for a file}
@@ -26,6 +26,6 @@ dwd_files
 \description{
 Information on files that are available for download at
 \url{ftp://opendata.dwd.de/climate_environment/CDC/} [base_url]. The
-information were last updated on 2022-09-17.
+information were last updated on 2023-04-26.
 }
 \keyword{datasets}
