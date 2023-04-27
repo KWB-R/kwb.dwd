@@ -184,50 +184,6 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
   }))
 }
 
-# list_monthly_grids_germany_asc_gz -------------------------------------------------
-
-#' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
-#'
-#' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}
-#' @param from optional. First month to be considered, as "yyyymm" string
-#' @param to optional. Last month to be considered, as "yyyymm" string
-#' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_monthly_grids_germany_asc_gz <- function(
-  variable, from = NULL, to = NULL, recursive = TRUE
-)
-{
-  base_url <- ftp_path_monthly_grids(variable)
-
-  # Code to get the possible choices
-  # base_url <- kwb.dwd:::ftp_path_monthly_grids()
-  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
-
-  # Make sure that the given variable name is a possible choice
-  variable <- match.arg(variable, c(
-    "air_temperature_max",
-    "air_temperature_mean",
-    "air_temperature_min",
-    "drought_index",
-    "evapo_p",
-    "evapo_r",
-    "frost_depth",
-    "precipitation",
-    "soil_moist",
-    "soil_temperature_5cm",
-    "sunshine_duration"
-  ))
-
-  # List data files
-  relative_urls <- base_url %>%
-    list_url(recursive = recursive) %>%
-    filter_by_extension_asc_gz() %>%
-    filter_by_month_range(from, to)
-
-  # Provide full paths to zipped files in ESRI-ascii-grid-format
-  file.path(base_url, relative_urls)
-}
-
 # month_numbers ----------------------------------------------------------------
 month_numbers <- function()
 {
