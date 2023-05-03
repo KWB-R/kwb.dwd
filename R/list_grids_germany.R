@@ -82,7 +82,7 @@ list_daily_grids_germany_tgz <- function(
   "grids_germany/daily" %>%
     ftp_path_cdc(variable) %>%
     list_url(full_names = TRUE) %>%
-    filter_by_extension_tgz() %>%
+    filter_by_extension(".tgz") %>%
     filter_by_month_range(from, to)
 }
 
@@ -126,7 +126,7 @@ list_monthly_grids_germany_asc_gz <- function(
   # List data files
   relative_urls <- base_url %>%
     list_url(recursive = recursive) %>%
-    filter_by_extension_asc_gz() %>%
+    filter_by_extension(".asc.gz") %>%
     filter_by_month_range(from, to)
 
   # Provide full paths to zipped files in ESRI-ascii-grid-format

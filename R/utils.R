@@ -87,19 +87,7 @@ extract_yyyymm <- function(x)
 # filter_by_extension ----------------------------------------------------------
 filter_by_extension <- function(x, extension)
 {
-  x[endsWith(x, extension)]
-}
-
-# filter_by_extension_asc_gz ---------------------------------------------------
-filter_by_extension_asc_gz <- function(x)
-{
-  filter_by_extension(x, ".asc.gz")
-}
-
-# filter_by_extension_tgz ------------------------------------------------------
-filter_by_extension_tgz <- function(x)
-{
-  filter_by_extension(x, ".tgz")
+  x[endsWith(tolower(x), tolower(extension))]
 }
 
 # filter_by_month_range --------------------------------------------------------
