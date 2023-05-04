@@ -86,7 +86,7 @@ list_daily_grids_germany_tgz <- function(
     filter_by_month_range(from, to)
 }
 
-# list_monthly_grids_germany_asc_gz -------------------------------------------------
+# list_monthly_grids_germany_asc_gz --------------------------------------------
 
 #' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 #'
