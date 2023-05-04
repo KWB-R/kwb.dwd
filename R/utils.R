@@ -141,6 +141,15 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
   x[safe_element(element, names(x), name)]
 }
 
+# get_relative_path ------------------------------------------------------------
+get_relative_path <- function(
+    file,
+    base_dir = kwb.utils::getAttribute(file, "base_dir")
+)
+{
+  remove_left(file, nchar(kwb.utils::assertFinalSlash(base_dir)))
+}
+
 # indicate_directories ---------------------------------------------------------
 #' @importFrom kwb.utils assertFinalSlash
 indicate_directories <- function(x, is_directory)
