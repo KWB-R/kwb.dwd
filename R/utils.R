@@ -62,17 +62,27 @@ date_in_bathing_season <- function(x)
   lubridate::month(x) %in% 5:9
 }
 
+# download_dir -----------------------------------------------------------------
+download_dir <- function(...)
+{
+  kwb.utils::createDirectory(
+    path.expand(file.path("~/../Downloads", ...)),
+    dbg = FALSE
+  )
+}
+
 # download_if_not_there --------------------------------------------------------
 download_if_not_there <- function(
     url,
     file = file.path(tempdir(), basename(url)),
-    quiet = FALSE
+    quiet = FALSE,
+    mode = "w"
 )
 {
   if (file.exists(file)) {
     cat("File already available:", file, "\n")
   } else {
-    download.file(url, file, method = "auto", quiet = quiet)
+    download.file(url, file, method = "auto", quiet = quiet, mode = mode)
   }
 
   file
