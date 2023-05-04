@@ -175,7 +175,7 @@ kwb.dwd::download_radolan(resolution = "daily")
 ```
 
 ```{r}
-head(dir("~/Downloads/radolan/daily/historical/"))
+head(dir(kwb.dwd:::download_dir("radolan/daily/historical")))
 ```
 
 ## Download data from other sources
@@ -284,7 +284,11 @@ We need a binary file as provided by DWD. See above for how to download
 Radolan binary files.
 
 ```{r}
-bin_file <- "~/Downloads/radolan/raa01-sf_10000-1808041150-dwd---bin"
+bin_file <- file.path(
+  kwb.dwd:::download_dir("radolan"), 
+  "raa01-sf_10000-1808041150-dwd---bin"
+)
+
 raster <- kwb.dwd::convert_bin_to_raster_file(bin_file)
 ```
 
@@ -320,7 +324,7 @@ Function: `crop_radolan_radial()`
 We need a folder with rst files...
 
 ```{r eval = FALSE}
-rst_path <- "~/Downloads/rst"
+rst_path <- kwb.dwd:::download_dir("rst")
 
 files <- dir(rst_path, full.names = TRUE)
 
