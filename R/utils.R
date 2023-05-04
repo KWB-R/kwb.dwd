@@ -208,6 +208,29 @@ month_sequence_simple <- function(from, to)
   unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
 }
 
+# remove_left ------------------------------------------------------------------
+remove_left <- function(x, n)
+{
+  n_char <- nchar(x)
+  stopifnot(all(n_char >= n))
+  substr(x, n + 1L, n_char)
+}
+
+# remove_protocol --------------------------------------------------------------
+remove_protocol <- function(x)
+{
+  gsub("^[^/]+://", "", x)
+}
+
+
+# remove_right -----------------------------------------------------------------
+remove_right <- function(x, n)
+{
+  n_char <- nchar(x)
+  stopifnot(all(n_char >= n))
+  substr(x, 1L, n_char - n)
+}
+
 # safe_element -----------------------------------------------------------------
 #' @importFrom kwb.utils stringList
 safe_element <- function(element, elements, name = deparse(substitute(element)))
