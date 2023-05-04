@@ -5,7 +5,7 @@ test_that("download_daily_grids_germany() works", {
   expect_error(f())
   expect_error(f("x"))
 
-  capture.output(result <- f("evapo_p", quiet = TRUE))
+  capture.output(result <- f(variable = "evapo_p", quiet = TRUE))
 
   expect_type(result, "character")
   expect_true(all(sapply(result, file.exists)))
