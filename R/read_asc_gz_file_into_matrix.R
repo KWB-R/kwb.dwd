@@ -64,7 +64,8 @@ read_lines_from_gz_file <- function(
     file <- download_if_not_there(
       file,
       file.path(temp_dir(), basename(file)),
-      quiet = TRUE
+      quiet = TRUE,
+      mode = "wb"
     )
   }
 
