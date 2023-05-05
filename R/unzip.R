@@ -39,7 +39,8 @@ unzip_tar_gz_file <- function(file, target_dir)
   stopifnot(file.exists(file))
   stopifnot(endsWith(file, ".tar.gz"))
 
-  kwb.utils::safePath(target_dir)
+  # Check and expand directory path (e.g. replace tilde with home directory)
+  target_dir <- path.expand(kwb.utils::safePath(target_dir))
 
   # Get the names of the files contained in the zip archive
   zipped_files <- list_zipped_files(file)
