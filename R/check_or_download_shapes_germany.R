@@ -28,10 +28,15 @@ check_or_download_shapes_germany <- function(quiet = FALSE)
 
   # If <shape_dir> does not contain .shp files, download the zip-archive from
   # <url> and extract it into <shape_dir>
-  file <- download_if_not_there(url, quiet = quiet)
+  file <- download_if_not_there(
+    url,
+    target_dir = download_dir("shapes"),
+    quiet = quiet,
+    mode = "wb"
+  )
 
   # Extract the archive file into the shape directory
-  archive::archive_extract(file, dir = shape_dir)
+  unzip_zip_file(file, target_dir = shape_dir)
 
   shape_dir
 }

@@ -63,7 +63,7 @@ read_lines_from_gz_file <- function(
     # Download file from URL to temporary directory
     file <- download_if_not_there(
       file,
-      file.path(temp_dir(), basename(file)),
+      target_dir = temp_dir(),
       quiet = TRUE,
       mode = "wb"
     )

@@ -21,7 +21,7 @@ download_and_extract <- function(url, quiet = FALSE)
   # Download the file into the dedicated folder
   file <- download_if_not_there(
     url,
-    file.path(target_dir, basename(url)),
+    target_dir = target_dir,
     quiet = quiet,
     mode = "wb"
   )
