@@ -54,6 +54,16 @@ clean_stop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# copy_file --------------------------------------------------------------------
+copy_file <- function(from, to)
+{
+  success <- file.copy(from = from, to = to)
+
+  if (!all(success)) {
+    kwb.utils::stopFormatted("Could not copy %s to %s", from, to)
+  }
+}
+
 # date_in_bathing_season -------------------------------------------------------
 #' @importFrom lubridate month
 date_in_bathing_season <- function(x)
