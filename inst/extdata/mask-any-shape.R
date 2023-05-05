@@ -1,5 +1,7 @@
+# MAIN -------------------------------------------------------------------------
 if (FALSE)
 {
+  # Load pipe operator
   `%>%` <- magrittr::`%>%`
 
   # Read monthly data for the whole of Germany
@@ -10,7 +12,6 @@ if (FALSE)
   )
 
   head(rain_2012)
-  warnings()
 
   shape_file <- "~/../Downloads/A/amarex/GIS-Verschneidung/EZG_Berlin_BWB_shape.shp"
 
@@ -56,18 +57,18 @@ if (FALSE)
 
   # Rainfall in the different Berliner Bezirke
   zip_file_bezirke_berlin <- kwb.dwd:::download_if_not_there(
-    "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip"
+    "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip",
+    target_dir = kwb.dwd:::download_dir("tsb"),
+    mode = "wb"
   )
 
-  shape_dir_bezirke <- kwb.dwd:::temp_dir("bezirke")
-
-  archive::archive_extract(
+  unzipped_files <- kwb.dwd:::unzip_zip_file(
     zip_file_bezirke_berlin,
-    dir = shape_dir_bezirke
+    target_dir = kwb.dwd:::temp_dir("bezirke")
   )
 
   shapes_bezirke <- kwb.dwd:::read_shape_file(
-    file.path(shape_dir_bezirke, "bezirksgrenzen.shp"),
+    grep("\\.shp$", unzipped_files, value = TRUE),
     use_sf = TRUE
   )
 
