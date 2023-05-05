@@ -74,15 +74,30 @@ download_dir <- function(...)
 # download_if_not_there --------------------------------------------------------
 download_if_not_there <- function(
     url,
-    file = file.path(tempdir(), basename(url)),
+    file = file.path(target_dir, basename(url)),
+    target_dir = download_dir(),
     quiet = FALSE,
     mode = "w"
 )
 {
+
   if (file.exists(file)) {
-    cat("File already available:", file, "\n")
+
+    kwb.utils::catIf(!quiet, "File already there:", file, "\n")
+
   } else {
-    download.file(url, file, method = "auto", quiet = quiet, mode = mode)
+
+    kwb.utils::catAndRun(
+      sprintf("Downloading\n  %s\nto\n  %s", url, file),
+      dbg = !quiet,
+      expr = download.file(
+        url = url,
+        destfile = file,
+        method = "auto",
+        quiet = TRUE,
+        mode = mode
+      )
+    )
   }
 
   file
@@ -179,16 +194,26 @@ last_month_as_yyyymm <- function()
 #' @importFrom utils untar
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
-  do.call(rbind, lapply(zip_files, function(x) {
+  list_files <- function(file) {
     kwb.utils::catAndRun(
-      messageText = paste("Getting names of files in", x),
+      messageText = paste("Getting names of files in", file),
       dbg = dbg,
       expr = kwb.utils::noFactorDataFrame(
-        zip_file = basename(x),
-        file = utils::untar(x, list = TRUE)
+        zip_file = basename(file),
+        file = list_zipped_files(file)
       )
     )
-  }))
+  }
+
+  lapply(zip_files, list_files) %>%
+    do.call(what = rbind) %>%
+    kwb.utils::orderBy(c("zip_file", "file"))
+}
+
+# list_zipped_files ------------------------------------------------------------
+list_zipped_files <- function(file)
+{
+  utils::untar(file, list = TRUE)
 }
 
 # month_numbers ----------------------------------------------------------------
