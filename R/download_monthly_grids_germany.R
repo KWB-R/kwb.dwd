@@ -1,3 +1,12 @@
+#kwb.utils::assignPackageObjects("kwb.dwd")
+
+if (FALSE)
+{
+  kwb.dwd:::download_monthly_grids_germany(
+    variable = "air_temperature_mean"
+  )
+}
+
 download_monthly_grids_germany <- function(
     variable,
     from = to,
@@ -10,15 +19,10 @@ download_monthly_grids_germany <- function(
     urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
   }
 
-  unlist(lapply(urls, function(url) {
-    #url <- urls[1L]
-    download_if_not_there(
-      url,
-      file = file.path(
-        temp_dir(template. = kwb.utils::removeExtension(url)),
-        basename(url)
-      ),
-      quiet = quiet
-    )
-  }))
+  download_into_folder_structure(
+    urls,
+    target_dir = download_dir("dwd"),
+    skip_url_segments = 4L,
+    mode = "wb"
+  )
 }
