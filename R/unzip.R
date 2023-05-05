@@ -86,5 +86,7 @@ unzip_tar_gz_file <- function(file, target_dir)
 # unzip_zip_file ---------------------------------------------------------------
 unzip_zip_file <- function(file, target_dir)
 {
-  archive::archive_extract(file, dir = target_dir)
+  paths <- archive::archive_extract(file, dir = target_dir)
+
+  file.path(target_dir, paths)
 }
