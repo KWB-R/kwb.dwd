@@ -12,7 +12,7 @@
 unzip_asc_gz_file <- function(file, target_dir = tempdir())
 {
   # Path to the target file
-  target <- file.path(target_dir, kwb.utils::removeExtension(basename(file)))
+  target <- file.path(target_dir, remove_right(basename(file), nchar(".gz")))
 
   # Read text lines from (remote or local) .gz file and write to target file
   writeLines(read_lines_from_gz_file(file), target)
