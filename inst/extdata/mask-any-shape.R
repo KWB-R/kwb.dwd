@@ -147,6 +147,7 @@ if (FALSE)
   as.matrix(shaped_grid)
 }
 
+# crop_and_mask ----------------------------------------------------------------
 crop_and_mask <- function(grid, shape_spatial)
 {
   `%>%` <- magrittr::`%>%`
@@ -162,6 +163,7 @@ crop_and_mask <- function(grid, shape_spatial)
   result
 }
 
+# as.matrix.RasterLayer --------------------------------------------------------
 as.matrix.RasterLayer <- function(x)
 {
   matrix(x@data@values, nrow = x@nrows, byrow = TRUE)
