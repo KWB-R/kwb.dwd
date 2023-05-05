@@ -42,13 +42,13 @@ if (FALSE)
 
   files <- kwb.dwd:::download_monthly_grids_germany("frost_depth", from, to)
 
-  kwb.file::remove_common_root(files)
-
   file <- files[1L]
 
   kwb.utils::hsOpenWindowsExplorer(dirname(file))
 
-  kwb.dwd:::read_asc_gz_file(file)
+  grid <- kwb.dwd:::read_asc_gz_file(file)
+
+  raster::plot(grid)
 }
 
 #
