@@ -83,7 +83,7 @@ read_binary_radolan_file_raw_v2 <- function(path)
 read_binary_radolan_file_raw_v3 <- function(path)
 {
   # Read the header from the file
-  header <- read_binary_radolan_header(path)
+  header <- read_binary_radolan_header(path, dbg = FALSE)
 
   # Open file for binary reading
   stream <- file(path, "rb")
@@ -92,7 +92,7 @@ read_binary_radolan_file_raw_v3 <- function(path)
   on.exit(close(stream))
 
   # Skip the header
-  readBin(stream, "raw", nchar(header) + 1)
+  readBin(stream, "raw", nchar(header) + 1L)
 
   # We expect to find 900 x 900 in the header
   stopifnot(grepl(" 900x 900", header))
@@ -102,7 +102,11 @@ read_binary_radolan_file_raw_v3 <- function(path)
 
   # Read integer values of two bytes each
   integers <- readBin(
-    stream, "integer", n = n_integers, size = 2, signed = FALSE,
+    stream,
+    what = "integer",
+    n = n_integers,
+    size = 2,
+    signed = FALSE,
     endian = "little"
   )
 
@@ -111,7 +115,7 @@ read_binary_radolan_file_raw_v3 <- function(path)
 }
 
 # read_binary_radolan_header ---------------------------------------------------
-read_binary_radolan_header <- function(path, buffer_size = 1024L)
+read_binary_radolan_header <- function(path, buffer_size = 1024L, dbg = TRUE)
 {
   # Open file for binary reading
   stream <- file(path, "rb")
@@ -119,19 +123,25 @@ read_binary_radolan_header <- function(path, buffer_size = 1024L)
   # Close file on exit
   on.exit(close(stream))
 
-  # Read the first bytes into a buffer
-  buffer <- readBin(stream, "raw", buffer_size)
+  kwb.utils::catAndRun(
+    paste("Reading header from binary file", basename(path)),
+    dbg = dbg,
+    expr = {
+      # Read the first bytes into a buffer
+      buffer <- readBin(stream, "raw", buffer_size)
 
-  # Which byte indicates the end of the header?
-  is_end_of_header <- buffer == 0x03
+      # Which byte indicates the end of the header?
+      is_end_of_header <- buffer == 0x03
 
-  if (! any(is_end_of_header)) {
-    clean_stop(
-      "Could not find a byte '0x03' indicating the end of the header\n",
-      "within the first ", buffer_size, " bytes of the file\n", path, "."
-    )
-  }
+      if (!any(is_end_of_header)) {
+        clean_stop(
+          "Could not find a byte '0x03' indicating the end of the header\n",
+          "within the first ", buffer_size, " bytes of the file\n", path, "."
+        )
+      }
 
-  # Get the header information as character string
-  rawToChar(buffer[seq_len(which(is_end_of_header)[1] - 1)])
+      # Get the header information as character string
+      rawToChar(buffer[seq_len(which(is_end_of_header)[1L] - 1L)])
+    }
+  )
 }
