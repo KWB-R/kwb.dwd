@@ -29,3 +29,29 @@ read_asc_gz_file <- function(file, url = NULL)
 
   raster::raster(grid_file)
 }
+
+# read_asc_file ----------------------------------------------------------------
+
+#' Read Raster Data from .ASC File
+#'
+#' @param file path to .asc file
+#' @param projection projection string used in Radolan data
+#' @param dbg logical indicating whether to show debug messages
+#' @importFrom kwb.utils catAndRun
+#' @importFrom raster `crs<-` raster
+read_asc_file <- function(
+    file,
+    projection = readLines(default_projection_file()),
+    dbg = TRUE
+)
+{
+  kwb.utils::catAndRun(
+    sprintf("Reading %s using raster::raster()", basename(file)),
+    dbg = dbg,
+    expr = {
+      result <- raster::raster(file, values = TRUE)
+      raster::crs(result) <- projection
+      result
+    }
+  )
+}
