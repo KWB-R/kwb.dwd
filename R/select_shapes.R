@@ -29,8 +29,12 @@ select_shapes <- function(shapes)
     pattern = pattern
   )
 
-  cat("Code to create this configuration:\n")
-  cat("config <-", kwb.utils::objectToText(result))
+  writeLines(c(
+    "***",
+    "# Code to create this configuration:",
+    paste("config <-", kwb.utils::objectToText(result)),
+    "***"
+  ))
 
   result
 }
