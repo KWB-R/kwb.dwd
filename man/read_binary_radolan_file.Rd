@@ -4,7 +4,11 @@
 \alias{read_binary_radolan_file}
 \title{Read Binary Radolan File}
 \usage{
-read_binary_radolan_file(path, set_projection_and_extent = TRUE)
+read_binary_radolan_file(
+  path,
+  set_projection_and_extent = TRUE,
+  consider_flags = FALSE
+)
 }
 \arguments{
 \item{path}{path to binary Radolan file}
@@ -13,6 +17,12 @@ read_binary_radolan_file(path, set_projection_and_extent = TRUE)
 and extent of the raster object are set to the Radolan specific values,
 returned by \code{kwb.dwd::get_radolan_projection_string()} and
 \code{kwb.dwd::get_radolan_extension()}, respectively.}
+
+\item{consider_flags}{logical. Should the flags be considered? If
+\code{TRUE}, values where the "invalid" or "clutter" flag is set are set to
+\code{NA} and values where the "negative" flag is set are negated. The
+default is \code{TRUE} (for compatibility reasons) but this should change
+in future!}
 }
 \description{
 Read Binary Radolan File
