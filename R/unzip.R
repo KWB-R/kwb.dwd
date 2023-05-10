@@ -57,7 +57,7 @@ unzip_tar_gz_file <- function(file, target_dir)
   if (length(files_to_extract) == 0L) {
 
     writeLines(sprintf(
-      "\nNothing to do. All files in\n  %s\nare already available in\n  %s.",
+      "\nNothing to do. All files in\n  %s\nare already in\n  %s.",
       file,
       target_dir
     ))
