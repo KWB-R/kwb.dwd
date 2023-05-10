@@ -154,13 +154,36 @@ get_radolan_timestamps <- function(bin_files, from = "headers")
 }
 
 # get_radolan_timestamps_from_filenames ----------------------------------------
-get_radolan_timestamps_from_filenames <- function(bin_files)
+get_radolan_timestamps_from_filenames <- function(files)
 {
-  as.POSIXct(
-    basename(bin_files),
-    format = "raa01-rw_10000-%y%m%d%H%M-dwd---bin",
-    tz = "UTC"
-  )
+  filenames <- basename(files)
+
+  extensions <- kwb.utils::fileExtension(filenames)
+
+  stopifnot(kwb.utils::allAreEqual(extensions))
+
+  extension <- extensions[1L]
+
+  if (extension == "") {
+
+    pattern <- "-([0-9]{10})-dwd---bin"
+    format <- "%y%m%d%H%M"
+
+  } else if (extension == "asc") {
+
+    pattern <- "_([0-9]{8}-[0-9]{4})\\.asc"
+    format <- "RW_%Y%m%d-%H%M.asc"
+
+  } else {
+
+    kwb.utils::stopFormatted("File extension '%s' not supported.", extension)
+  }
+
+  stopifnot(all(grepl(pattern, filenames)))
+
+  timestrings <- kwb.utils::extractSubstring(pattern, filenames, index = 1L)
+
+  as.POSIXct(timestrings, format = format, tz = "UTC")
 }
 
 # get_radolan_timestamps_from_headers ------------------------------------------
