@@ -47,7 +47,8 @@ download_and_extract_hourly_radolan_historical_bin_url <- function(
   # Extract the binary files and return their paths
   unzip_dir <- get_relative_path(file) %>%
     temp_dir() %>%
-    remove_right(nchar(".tar.gz"))
+    remove_right(nchar(".tar.gz")) %>%
+    kwb.utils::createDirectory(dbg = FALSE)
 
   unzip_tar_gz_file(file, target_dir = unzip_dir)
 }
