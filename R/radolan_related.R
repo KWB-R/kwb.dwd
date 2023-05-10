@@ -201,21 +201,58 @@ get_radolan_timestamps_from_headers <- function(bin_files, dbg = FALSE)
   )
 }
 
-# get_regional_stats_from_binary_radolan_files ---------------------------------
-get_regional_stats_from_binary_radolan_files <- function(
-    bin_files, shape, blocksize = 24L, dbg = TRUE
+# get_regional_stats_from_radolan_asc_files ------------------------------------
+get_regional_stats_from_radolan_asc_files <- function(
+    asc_files, shape, blocksize = 24L, dbg = TRUE
+)
+{
+  get_regional_stats_from_radolan_files(
+    asc_files,
+    shape = shape,
+    read_function = kwb.dwd:::read_asc_file,
+    blocksize = blocksize,
+    dbg = dbg
+  )
+}
+
+# get_regional_stats_from_radolan_files ----------------------------------------
+get_regional_stats_from_radolan_files <- function(
+    files,
+    shape,
+    read_function,
+    ...,
+    blocksize = 24L,
+    dbg = TRUE,
+    run_parallel = TRUE
 )
 {
   shape <- transform_coords(shape, get_radolan_projection_string())
 
   # Create timestamps from file names
-  bin_times <- get_radolan_timestamps(bin_files, from = "filenames")
+  datetimes <- get_radolan_timestamps_from_filenames(files)
 
-  block_indices <- data.frame(i = seq_along(bin_files)) %>%
+  block_indices <- data.frame(i = seq_along(files)) %>%
     kwb.utils::splitIntoFixSizedBlocks(blocksize = blocksize) %>%
     lapply(kwb.utils::selectColumns, "i")
 
-  result_list <- lapply(seq_along(block_indices), function(block_no) {
+  # Number of cores to use
+  ncores <- parallel::detectCores() - 1L
+
+  # Can we do parallel processing?
+  do_run_parallel <- run_parallel && ncores > 1L
+
+  # Prepare parallel processing if required
+  if (do_run_parallel) {
+
+    cl <- parallel::makeCluster(ncores)
+    on.exit(parallel::stopCluster(cl))
+
+  } else {
+
+    ncores <- 1L
+  }
+
+  read_block_of_files <- function(block_no) {
 
     #block_no <- 1L
     kwb.utils::catAndRun(
@@ -225,27 +262,34 @@ get_regional_stats_from_binary_radolan_files <- function(
 
         indices <- block_indices[[block_no]]
 
-        # Read binary files into raster objects
-        grids_bin <- lapply(
-          bin_files[indices],
-          kwb.dwd:::read_binary_radolan_file,
-          consider_flags = TRUE
-        )
+        # Read files into raster objects using the given read function
+        grids <- lapply(files[indices], read_function, ...)
 
-        data <- as.data.frame(do.call(rbind, lapply(grids_bin, function(grid) {
+        data <- as.data.frame(do.call(rbind, lapply(grids, function(grid) {
           grid %>%
             raster::mask(shape) %>%
             raster::crop(shape) %>%
             kwb.dwd:::raster_stats()
         })))
-
       }
     )
+  }
 
-  })
+  # Vector of indices to loop through
+  X <- seq_along(block_indices)
+
+  # Call the read function in a (parallel or sequential) loop
+  result_list <- if (do_run_parallel) {
+
+    parallel::parLapply(cl, X = X, fun = read_block_of_files)
+
+  } else {
+
+    lapply(X = X, FUN = read_block_of_files)
+  }
 
   do.call(rbind, result_list) %>%
-    kwb.utils::setColumns(datetime_utc = bin_times) %>%
+    kwb.utils::setColumns(datetime_utc = datetimes) %>%
     kwb.utils::moveColumnsToFront("datetime_utc")
 }
 
