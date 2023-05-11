@@ -223,7 +223,8 @@ get_regional_stats_from_radolan_files <- function(
     ...,
     blocksize = 24L,
     dbg = TRUE,
-    run_parallel = TRUE
+    run_parallel = TRUE,
+    method = 1L
 )
 {
   shape <- transform_coords(shape, get_radolan_projection_string())
@@ -252,7 +253,7 @@ get_regional_stats_from_radolan_files <- function(
     ncores <- 1L
   }
 
-  read_block_of_files <- function(block_no) {
+  read_block_of_files <- function(block_no, method = 1L) {
 
     #block_no <- 1L
     kwb.utils::catAndRun(
@@ -265,12 +266,24 @@ get_regional_stats_from_radolan_files <- function(
         # Read files into raster objects using the given read function
         grids <- lapply(files[indices], read_function, ...)
 
-        data <- as.data.frame(do.call(rbind, lapply(grids, function(grid) {
-          grid %>%
+        if (method == 1L) {
+
+          as.data.frame(do.call(rbind, lapply(grids, function(grid) {
+            grid %>%
+              raster::mask(shape) %>%
+              raster::crop(shape) %>%
+              raster_stats()
+          })))
+
+        } else if (method == 2L) {
+
+          raster::stack(grids) %>%
             raster::mask(shape) %>%
             raster::crop(shape) %>%
-            kwb.dwd:::raster_stats()
-        })))
+            lapply(kwb.dwd:::raster_stats()) %>%
+            do.call(what = rbind) %>%
+            as.data.frame()
+        }
       }
     )
   }
