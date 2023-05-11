@@ -75,10 +75,10 @@ date_in_bathing_season <- function(x)
 # download_dir -----------------------------------------------------------------
 download_dir <- function(...)
 {
-  kwb.utils::createDirectory(
-    path.expand(file.path("~/../Downloads", ...)),
-    dbg = FALSE
-  )
+  ifelse(on_windows(), "~/../Downloads", "~/Downloads") %>%
+    path.expand() %>%
+    file.path(...) %>%
+    kwb.utils::createDirectory(dbg = FALSE)
 }
 
 # download_if_not_there --------------------------------------------------------
