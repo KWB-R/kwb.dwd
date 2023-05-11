@@ -13,6 +13,9 @@
     <loc>https://kwb-r.github.io/kwb.dwd/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/articles/overview.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/articles/radolan.html</loc>
   </url>
   <url>
@@ -95,6 +98,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/reference/radolan_raw_to_raster.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/reference/read_asc_file.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/reference/read_asc_gz_file.html</loc>
