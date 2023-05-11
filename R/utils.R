@@ -252,6 +252,12 @@ month_sequence_simple <- function(from, to)
   unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
 }
 
+# on_windows -------------------------------------------------------------------
+on_windows <- function()
+{
+  Sys.info()[["sysname"]] == "Windows"
+}
+
 # remove_left ------------------------------------------------------------------
 remove_left <- function(x, n)
 {
