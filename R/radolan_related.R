@@ -209,7 +209,7 @@ get_regional_stats_from_radolan_asc_files <- function(
   get_regional_stats_from_radolan_files(
     asc_files,
     shape = shape,
-    read_function = kwb.dwd:::read_asc_file,
+    read_function = read_asc_file,
     blocksize = blocksize,
     dbg = dbg
   )
