@@ -280,7 +280,7 @@ get_regional_stats_from_radolan_files <- function(
           raster::stack(grids) %>%
             raster::mask(shape) %>%
             raster::crop(shape) %>%
-            lapply(kwb.dwd:::raster_stats()) %>%
+            lapply(raster_stats()) %>%
             do.call(what = rbind) %>%
             as.data.frame()
         }
