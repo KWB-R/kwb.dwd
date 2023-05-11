@@ -41,7 +41,8 @@ read_asc_gz_file <- function(file, url = NULL)
 #' @importFrom raster `crs<-` raster
 read_asc_file <- function(
     file,
-    projection = readLines(default_projection_file()),
+    projection = get_radolan_projection_string(),
+    #projection = readLines(default_projection_file()),
     dbg = TRUE
 )
 {
@@ -49,8 +50,14 @@ read_asc_file <- function(
     sprintf("Reading %s using raster::raster()", basename(file)),
     dbg = dbg,
     expr = {
-      result <- raster::raster(file, values = TRUE)
-      raster::crs(result) <- projection
+
+      # Provide a copy of the projection file in the same folder
+      provide_projection_file(file)
+      result <- raster::raster(file)
+
+      #result <- raster::raster(file, values = TRUE)
+      #raster::crs(result) <- projection
+
       result
     }
   )
