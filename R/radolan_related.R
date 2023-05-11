@@ -289,7 +289,7 @@ get_regional_stats_from_radolan_files <- function(
   }
 
   do.call(rbind, result_list) %>%
-    kwb.utils::setColumns(datetime_utc = datetimes) %>%
+    kwb.utils::setColumns(datetime_utc = datetimes, dbg = FALSE) %>%
     kwb.utils::moveColumnsToFront("datetime_utc")
 }
 
