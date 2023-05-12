@@ -258,6 +258,19 @@ on_windows <- function()
   Sys.info()[["sysname"]] == "Windows"
 }
 
+# open_for_reading_in_binary_mode ----------------------------------------------
+open_for_reading_in_binary_mode <- function(file)
+{
+  if (endsWith(file, ".gz")) {
+
+    base::gzfile(file, "rb")
+
+  } else {
+
+    base::file(file, "rb")
+  }
+}
+
 # remove_left ------------------------------------------------------------------
 remove_left <- function(x, n)
 {

@@ -21,7 +21,7 @@ read_binary_radolan_file_raw_v1 <- function(path)
 {
   header_end <- regexpr("\003", readLines(path, 1, warn = FALSE))
 
-  rb_stream <- file(path, "rb")
+  rb_stream <- open_for_reading_in_binary_mode(path)
   on.exit(close(rb_stream))
 
   skip_temp <- readBin(rb_stream, "raw", n = header_end, endian = "little")
@@ -51,8 +51,7 @@ read_binary_radolan_file_raw_v2 <- function(path)
   # Read the header from the file
   header <- read_binary_radolan_header(path)
 
-  # Open file for binary reading
-  stream <- file(path, "rb")
+  stream <- open_for_reading_in_binary_mode(path)
 
   # Close file on exit
   on.exit(close(stream))
@@ -85,8 +84,7 @@ read_binary_radolan_file_raw_v3 <- function(path)
   # Read the header from the file
   header <- read_binary_radolan_header(path, dbg = FALSE)
 
-  # Open file for binary reading
-  stream <- file(path, "rb")
+  stream <- open_for_reading_in_binary_mode(path)
 
   # Close file on exit
   on.exit(close(stream))
@@ -117,8 +115,7 @@ read_binary_radolan_file_raw_v3 <- function(path)
 # read_binary_radolan_header ---------------------------------------------------
 read_binary_radolan_header <- function(path, buffer_size = 1024L, dbg = TRUE)
 {
-  # Open file for binary reading
-  stream <- file(path, "rb")
+  stream <- open_for_reading_in_binary_mode(path)
 
   # Close file on exit
   on.exit(close(stream))
