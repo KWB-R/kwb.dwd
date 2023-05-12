@@ -164,7 +164,7 @@ get_radolan_timestamps_from_filenames <- function(files)
 
   extension <- extensions[1L]
 
-  if (extension == "") {
+  if (extension == "" || extension == "gz") {
 
     pattern <- "-([0-9]{10})-dwd---bin"
     format <- "%y%m%d%H%M"

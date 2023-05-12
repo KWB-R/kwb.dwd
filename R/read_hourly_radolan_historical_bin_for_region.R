@@ -4,9 +4,16 @@ read_hourly_radolan_historical_bin_for_region <- function(
     pattern = NULL, ...
 )
 {
+  #kwb.utils::assignPackageObjects("kwb.dwd")
+  #kwb.utils::assignArgumentDefaults(kwb.dwd:::read_hourly_radolan_historical_bin_for_region)
+  #year <- 2009L
+  #`%>%` <- magrittr::`%>%`
+  #shape <- kwb.dwd:::get_shape_of_german_region("berlin")
+
   stopifnot(is.integer(year), length(year) == 1L)
 
-  pattern <- kwb.utils::defaultIfNULL(pattern, "--bin$")
+  # files may optionally be zipped
+  pattern <- kwb.utils::defaultIfNULL(pattern, "--bin(\\.gz)?$")
 
   # List locally available extracted binary files
   bin_files <- "grids_germany/hourly/radolan/historical/bin/" %>%
@@ -17,7 +24,7 @@ read_hourly_radolan_historical_bin_for_region <- function(
   if (length(bin_files) == 0L) {
     writeLines(c(
       "No binary files locally available. ",
-      "Please run download_and_extract_hourly_radolan_historical_bin() first."
+      "Please run download_and_extract_radolan() first."
     ))
     return(character())
   }
@@ -34,8 +41,8 @@ read_hourly_radolan_historical_bin_for_region <- function(
       bin_files,
       shape = shape,
       blocksize = blocksize,
-      run_parallel = run_parallel,
-      ...
+      run_parallel = run_parallel
+      , ...
     )
   )
 }

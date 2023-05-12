@@ -166,6 +166,16 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
   x[safe_element(element, names(x), name)]
 }
 
+# get_full_extension -----------------------------------------------------------
+get_full_extension <- function(x)
+{
+  if (endsWith(x, ".tar.gz")) {
+    "tar.gz"
+  } else {
+    kwb.utils::fileExtension(x)
+  }
+}
+
 # get_relative_path ------------------------------------------------------------
 get_relative_path <- function(
     file,
