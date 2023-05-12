@@ -4,11 +4,7 @@
 \alias{read_asc_file}
 \title{Read Raster Data from .ASC File}
 \usage{
-read_asc_file(
-  file,
-  projection = readLines(default_projection_file()),
-  dbg = TRUE
-)
+read_asc_file(file, projection = get_radolan_projection_string(), dbg = TRUE)
 }
 \arguments{
 \item{file}{path to .asc file}
