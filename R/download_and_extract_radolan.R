@@ -1,33 +1,48 @@
 # download_and_extract_radolan -------------------------------------------------
 # TODO: compare with download_radolan()
-download_and_extract_radolan <- function(year, resolution, format, ...)
+download_and_extract_radolan <- function(
+    from = NULL,
+    to = NULL,
+    resolution,
+    format,
+    year = NULL,
+    config = NULL,
+    ...
+)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
-  #resolution <- "hourly"
-  #resolution <- "daily"
-  #format <- "bin"
 
-  stopifnot(is.integer(year))
-  stopifnot(resolution %in% c("hourly", "daily"))
-  stopifnot(format %in% c("bin", "asc"))
+  # Create a configuration from the arguments, if required
+  config <- configure_radolan(
+    from = from,
+    to = to,
+    resolution = resolution,
+    format = format,
+    year = year,
+    config = config
+  )
 
-  # If year is a vector of years, call this function for each year
-  if (length(year) > 1L) {
-    return(unlist(lapply(
-      year,
-      download_and_extract_radolan,
-      resolution = resolution,
-      format = format,
-      ...
-    )))
-  }
+  # Now, take the argument values from the configuration
+  as_configured <- kwb.utils::createAccessor(config)
 
-  stopifnot(length(year) == 1L)
+  from <- as_configured("from")
+  to <- as_configured("to")
+  resolution <- as_configured("resolution")
+  format <- as_configured("format")
 
-  urls <- "grids_germany/%s/radolan/historical/%s/%d" %>%
-    sprintf(resolution, format, year) %>%
-    ftp_path_cdc() %>%
-    list_url(recursive = TRUE, full_names = TRUE)
+  # Pattern to filter for files related to months between from and to
+  pattern <- sprintf("[^0-9](%s)[.]tar", month_range_pattern(from, to))
+
+  urls <- kwb.utils::catAndRun(
+    "Listing available files and filtering for related months",
+    expr = {
+      "grids_germany/%s/radolan/historical/%s" %>%
+        sprintf(resolution, format) %>%
+        ftp_path_cdc() %>%
+        list_url(recursive = TRUE, full_names = TRUE, dbg = FALSE) %>%
+        grep(pattern = pattern, value = TRUE)
+    }
+  )
 
   # Download and extract the files
   files <- unlist(lapply(
@@ -37,7 +52,7 @@ download_and_extract_radolan <- function(year, resolution, format, ...)
     ...
   ))
 
-  files
+  structure(files, config = config)
 }
 
 # download_and_extract_radolan_url ---------------------------------------------
