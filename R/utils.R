@@ -174,11 +174,23 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
 # get_full_extension -----------------------------------------------------------
 get_full_extension <- function(x)
 {
-  if (endsWith(x, ".tar.gz")) {
-    "tar.gz"
-  } else {
-    kwb.utils::fileExtension(x)
-  }
+  parts <- lapply(strsplit(x, "\\."), rev)
+
+  result <- extension <- character(length(x))
+
+  n_parts <- lengths(parts)
+
+  selected <- n_parts > 1L
+  result[selected] <- sapply(parts[selected], "[", 1L)
+
+  selected <- n_parts > 2L
+  extension[selected] <- sapply(parts[selected], "[", 2L)
+
+  extension[!looks_like_file_extension(extension)] <- ""
+  selected <- extension != ""
+  result[selected] <- paste0(extension[selected], ".", result[selected])
+
+  result
 }
 
 # get_relative_path ------------------------------------------------------------
@@ -239,6 +251,12 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 list_zipped_files <- function(file)
 {
   utils::untar(file, list = TRUE)
+}
+
+# looks_like_file_extension ----------------------------------------------------
+looks_like_file_extension <- function(x)
+{
+  !grepl("(^[0-9]+$)|[_-]", x)
 }
 
 # month_numbers ----------------------------------------------------------------
