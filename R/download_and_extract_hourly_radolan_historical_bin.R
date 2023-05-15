@@ -4,22 +4,22 @@ download_and_extract_hourly_radolan_historical_bin <- function(year)
 {
   download_and_extract_radolan(
     year = year,
-    time_resolution = "hourly",
+    resolution = "hourly",
     format = "bin"
   )
 }
 
 # download_and_extract_radolan -------------------------------------------------
 # TODO: compare with download_radolan()
-download_and_extract_radolan <- function(year, time_resolution, format, ...)
+download_and_extract_radolan <- function(year, resolution, format, ...)
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
-  #time_resolution <- "hourly"
-  #time_resolution <- "daily"
+  #resolution <- "hourly"
+  #resolution <- "daily"
   #format <- "bin"
 
   stopifnot(is.integer(year))
-  stopifnot(time_resolution %in% c("hourly", "daily"))
+  stopifnot(resolution %in% c("hourly", "daily"))
   stopifnot(format %in% c("bin", "asc"))
 
   # If year is a vector of years, call this function for each year
@@ -27,15 +27,16 @@ download_and_extract_radolan <- function(year, time_resolution, format, ...)
     return(unlist(lapply(
       year,
       download_and_extract_radolan,
-      time_resolution = time_resolution,
-      format = format
+      resolution = resolution,
+      format = format,
+      ...
     )))
   }
 
   stopifnot(length(year) == 1L)
 
   urls <- "grids_germany/%s/radolan/historical/%s/%d" %>%
-    sprintf(time_resolution, format, year) %>%
+    sprintf(resolution, format, year) %>%
     ftp_path_cdc() %>%
     list_url(recursive = TRUE, full_names = TRUE)
 
@@ -65,10 +66,10 @@ download_and_extract_radolan_url <- function(
 
   info <- get_radolan_metadata(url)
 
-  time_resolution <- info$resolution
+  resolution <- info$resolution
   format <- info$format
 
-  stopifnot(time_resolution %in% c("daily", "hourly"))
+  stopifnot(resolution %in% c("daily", "hourly"))
   stopifnot(format %in% c("asc", "bin"))
 
   file <- download_into_folder_structure(
