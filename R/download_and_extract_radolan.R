@@ -1,14 +1,3 @@
-# download_and_extract_hourly_radolan_historical_bin ---------------------------
-# TODO: compare with download_radolan()
-download_and_extract_hourly_radolan_historical_bin <- function(year)
-{
-  download_and_extract_radolan(
-    year = year,
-    resolution = "hourly",
-    format = "bin"
-  )
-}
-
 # download_and_extract_radolan -------------------------------------------------
 # TODO: compare with download_radolan()
 download_and_extract_radolan <- function(year, resolution, format, ...)
