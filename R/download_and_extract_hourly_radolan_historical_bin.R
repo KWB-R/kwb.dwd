@@ -11,13 +11,15 @@ download_and_extract_hourly_radolan_historical_bin <- function(year)
 
 # download_and_extract_radolan -------------------------------------------------
 # TODO: compare with download_radolan()
-download_and_extract_radolan <- function(year, time_resolution, format)
+download_and_extract_radolan <- function(year, time_resolution, format, ...)
 {
+  #kwb.utils::assignPackageObjects("kwb.dwd")
   #time_resolution <- "hourly"
-  #format <- "asc"
+  #time_resolution <- "daily"
+  #format <- "bin"
 
   stopifnot(is.integer(year))
-  stopifnot(time_resolution %in% c("hourly"))
+  stopifnot(time_resolution %in% c("hourly", "daily"))
   stopifnot(format %in% c("bin", "asc"))
 
   # If year is a vector of years, call this function for each year
@@ -38,21 +40,25 @@ download_and_extract_radolan <- function(year, time_resolution, format)
     list_url(recursive = TRUE, full_names = TRUE)
 
   # Download and extract the files
-  unlist(lapply(
+  files <- unlist(lapply(
     X = urls,
     FUN = download_and_extract_radolan_url,
-    target_dir = download_dir("dwd")
+    target_dir = download_dir("dwd"),
+    ...
   ))
+
+  files
 }
 
 # download_and_extract_radolan_url ---------------------------------------------
 # TODO: compare with download_radolan()
 download_and_extract_radolan_url <- function(
-    url, target_dir = download_dir("dwd")
+    url, target_dir = download_dir("dwd"), timeout = 120
 )
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/historical/bin/2009/RW200901.tar.gz"
+  #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
   #url <- urls[1L]
 
   stopifnot(length(url) == 1L)
@@ -62,14 +68,15 @@ download_and_extract_radolan_url <- function(
   time_resolution <- info$resolution
   format <- info$format
 
-  stopifnot(time_resolution %in% c("hourly"))
-  stopifnot(format %in% c("bin", "asc"))
+  stopifnot(time_resolution %in% c("daily", "hourly"))
+  stopifnot(format %in% c("asc", "bin"))
 
   file <- download_into_folder_structure(
     url,
     target_dir = target_dir,
     skip_url_segments = 3L,
-    mode = "wb"
+    mode = "wb",
+    timeout = timeout
   )
 
   full_extension <- get_full_extension(url)
