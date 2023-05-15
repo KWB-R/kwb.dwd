@@ -1,7 +1,13 @@
 # read_hourly_radolan_historical_bin_for_region --------------------------------
 read_hourly_radolan_historical_bin_for_region <- function(
-    year, shape, dbg = TRUE, blocksize = 24L, run_parallel = TRUE,
-    pattern = NULL, ...
+    from = NULL,
+    to = NULL,
+    shape = NULL,
+    year = NULL,
+    dbg = TRUE,
+    blocksize = 24L,
+    run_parallel = TRUE,
+    ...
 )
 {
   #kwb.utils::assignPackageObjects("kwb.dwd")
@@ -10,24 +16,16 @@ read_hourly_radolan_historical_bin_for_region <- function(
   #`%>%` <- magrittr::`%>%`
   #shape <- kwb.dwd:::get_shape_of_german_region("berlin")
 
-  stopifnot(is.integer(year), length(year) == 1L)
-
-  # files may optionally be zipped
-  pattern <- kwb.utils::defaultIfNULL(pattern, "--bin(\\.gz)?$")
-
-  # List locally available extracted binary files
-  bin_files <- "grids_germany/hourly/radolan/historical/bin/" %>%
-    paste0(year) %>%
-    temp_dir() %>%
-    dir(pattern = pattern, recursive = TRUE, full.names = TRUE)
-
-  if (length(bin_files) == 0L) {
-    writeLines(c(
-      "No binary files locally available. ",
-      "Please run download_and_extract_radolan() first."
-    ))
-    return(character())
+  if (!is.null(year)) {
+    stopifnot(is.integer(year), length(year) == 1L)
   }
+
+  bin_files <- list_extracted_radolan_files(
+    from = kwb.utils::defaultIfNULL(from, paste0(year, "01")),
+    to = kwb.utils::defaultIfNULL(to, paste0(year, "12")),
+    resolution = "hourly",
+    format = "bin"
+  )
 
   #file_sizes_mib <- file.size(bin_files)/2^20
   #max(which(cumsum(file_sizes_mib) <= 1024))
