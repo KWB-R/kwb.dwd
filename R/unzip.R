@@ -80,6 +80,13 @@ unzip_tar_gz_file <- function(file, target_dir)
     )
   )
 
+  # If the extracted file is a .tar file, extract that file and remove it
+  if (length(target_files) == 1L && endsWith(target_files, ".tar")) {
+    tar_file <- target_files
+    target_files <- unzip_tar_file(tar_file, target_dir = target_dir)
+    unlink(tar_file)
+  }
+
   # Return the paths to the unzipped files
   target_files
 }
