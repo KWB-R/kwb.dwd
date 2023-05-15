@@ -87,7 +87,8 @@ download_if_not_there <- function(
     file = file.path(target_dir, basename(url)),
     target_dir = download_dir(),
     quiet = FALSE,
-    mode = "w"
+    mode = "w",
+    timeout = getOption("timeout")
 )
 {
 
@@ -96,6 +97,10 @@ download_if_not_there <- function(
     kwb.utils::catIf(!quiet, "File already there:", file, "\n")
 
   } else {
+
+    # Temporarily set the timeout option
+    old_options <- options(timeout = timeout)
+    on.exit(options(old_options))
 
     kwb.utils::catAndRun(
       sprintf("Downloading\n  %s\nto\n  %s", url, file),
