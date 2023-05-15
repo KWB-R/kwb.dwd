@@ -94,7 +94,7 @@ download_if_not_there <- function(
 
   if (file.exists(file)) {
 
-    kwb.utils::catIf(!quiet, "File already there:", file, "\n")
+    kwb.utils::catIf(!quiet, "\nFile already there:", file, "\n")
 
   } else {
 
@@ -103,7 +103,7 @@ download_if_not_there <- function(
     on.exit(options(old_options))
 
     kwb.utils::catAndRun(
-      sprintf("Downloading\n  %s\nto\n  %s", url, file),
+      sprintf("\nDownloading\n  %s\nto\n  %s", url, file),
       dbg = !quiet,
       expr = download.file(
         url = url,
