@@ -250,7 +250,21 @@ list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 # list_zipped_files ------------------------------------------------------------
 list_zipped_files <- function(file)
 {
-  utils::untar(file, list = TRUE)
+  result <- utils::untar(kwb.utils::safePath(file), list = TRUE)
+
+  if (!is.null(attr(result, "status"))) {
+
+    tar_message <- grep("tar.exe: ", result, value = TRUE) %>%
+      gsub(pattern = "^.*(tar.exe: .*)$", replacement = "\\1")
+
+    clean_stop(
+      "There was a warning listing the files in\n  ", file, ".\n",
+      "The file seems to be corrupt.\n",
+      paste(tar_message, collapse = "\n")
+    )
+  }
+
+  result
 }
 
 # looks_like_file_extension ----------------------------------------------------
