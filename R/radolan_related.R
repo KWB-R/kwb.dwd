@@ -158,25 +158,24 @@ get_radolan_timestamps_from_filenames <- function(files)
 {
   filenames <- basename(files)
 
-  extensions <- kwb.utils::fileExtension(filenames)
+  extensions <- unique(kwb.utils::fileExtension(filenames))
 
-  stopifnot(kwb.utils::allAreEqual(extensions))
-
-  extension <- extensions[1L]
-
-  if (extension == "" || extension == "gz") {
+  if (all(extensions %in% c("", "gz"))) {
 
     pattern <- "-([0-9]{10})-dwd---bin"
     format <- "%y%m%d%H%M"
 
-  } else if (extension == "asc") {
+  } else if (all(extensions == "asc")) {
 
     pattern <- "_([0-9]{8}-[0-9]{4})\\.asc"
-    format <- "RW_%Y%m%d-%H%M.asc"
+    format <- "%Y%m%d-%H%M"
 
   } else {
 
-    kwb.utils::stopFormatted("File extension '%s' not supported.", extension)
+    kwb.utils::stopFormatted(
+      "Any of file extension %s not supported.",
+      kwb.utils::stringList(extensions)
+    )
   }
 
   stopifnot(all(grepl(pattern, filenames)))
