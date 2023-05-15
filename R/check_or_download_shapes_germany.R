@@ -11,8 +11,6 @@
 #' @param quiet passed if \code{TRUE} status messages are suppressed
 #' @return path to folder containing shape files
 #' @export
-#' @importFrom archive archive_extract
-#' @importFrom kwb.utils createDirectory removeExtension
 check_or_download_shapes_germany <- function(quiet = FALSE)
 {
   url <- "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip"

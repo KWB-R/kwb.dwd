@@ -13,6 +13,7 @@ download_daily_grids_germany <- function(
 }
 
 # download_and_extract ---------------------------------------------------------
+#' @importFrom archive archive_extract
 download_and_extract <- function(url, quiet = FALSE)
 {
   # Create a dedicated temporary folder
