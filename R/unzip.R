@@ -24,7 +24,7 @@ unzip_asc_gz_file <- function(file, target_dir = tempdir())
 # unzip_tar_file ---------------------------------------------------------------
 unzip_tar_file <- function(file, target_dir)
 {
-  relative_paths <- utils::untar(file, list = TRUE)
+  relative_paths <- list_zipped_files(file)
 
   utils::untar(file, exdir = target_dir)
 
