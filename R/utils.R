@@ -140,7 +140,7 @@ filter_by_month_range <- function(urls, from = NULL, to = NULL)
   from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
   to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
 
-  pattern <- paste(month_sequence_simple(from, to), collapse = "|")
+  pattern <- month_range_pattern(from, to)
 
   urls[grep(pattern, urls)]
 }
@@ -266,6 +266,12 @@ month_numbers <- function()
     Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
     Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
   )
+}
+
+# month_range_pattern ----------------------------------------------------------
+month_range_pattern <- function(from, to)
+{
+  paste(month_sequence_simple(from, to), collapse = "|")
 }
 
 # month_sequence ---------------------------------------------------------------
