@@ -10,7 +10,7 @@ if (FALSE)
 download_monthly_grids_germany <- function(
     variable,
     from = to,
-    to = last_month_as_yyyymm(),
+    to = last_month(),
     urls = NULL,
     quiet = FALSE
 )

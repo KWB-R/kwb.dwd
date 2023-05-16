@@ -220,10 +220,10 @@ is_empty <- function(x)
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
 }
 
-# last_month_as_yyyymm ---------------------------------------------------------
-last_month_as_yyyymm <- function()
+# last_month -------------------------------------------------------------------
+last_month <- function(format = "%Y%m")
 {
-  format(Sys.Date() - 31L, "%Y%m")
+  format.Date(Sys.Date() - 31L, format)
 }
 
 # list_files_in_zip_files ------------------------------------------------------
