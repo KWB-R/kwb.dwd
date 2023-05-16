@@ -137,10 +137,10 @@ the package was last updated.</p>
 <div class="section level3">
 <h3 id="get-urls-to-monthly-grids-in-zipped-esri-ascii-grid-format">Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format<a class="anchor" aria-label="anchor" href="#get-urls-to-monthly-grids-in-zipped-esri-ascii-grid-format"></a>
 </h3>
-<p>Function: <code><a href="../reference/list_monthly_grids_germany_asc_gz.html">list_monthly_grids_germany_asc_gz()</a></code></p>
+<p>Function: <code><a href="../reference/list_grids_germany.html">list_grids_germany()</a></code></p>
 <p>Example:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">urls</span> <span class="op">&lt;-</span> <span class="fu">kwb.dwd</span><span class="fu">:::</span><span class="fu"><a href="../reference/list_monthly_grids_germany_asc_gz.html">list_monthly_grids_germany_asc_gz</a></span><span class="op">(</span><span class="st">"precipitation"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">urls</span> <span class="op">&lt;-</span> <span class="fu">kwb.dwd</span><span class="fu">:::</span><span class="fu"><a href="../reference/list_grids_germany.html">list_grids_germany</a></span><span class="op">(</span><span class="st">"monthly"</span>, <span class="st">".asc.gz"</span>, <span class="st">"precipitation"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188101.asc.gz"
