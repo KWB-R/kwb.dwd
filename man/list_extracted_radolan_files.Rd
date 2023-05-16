@@ -6,6 +6,24 @@
 \usage{
 list_extracted_radolan_files(from, to, resolution, format)
 }
+\arguments{
+\item{from}{begin of time interval as "yyyymm" string (4 digits year + 2
+digits month)}
+
+\item{to}{end of time interval as "yyyymm" string (4 digits year + 2 digits
+month)}
+
+\item{resolution}{temporal resolution, currently one of "daily", "hourly"}
+
+\item{format}{file format, currently one of "asc" (ASCII text), "bin"
+(binary)}
+}
+\value{
+paths to files on the local drive, below the folder returned by
+  \code{\link{temp_dir}},  that contain data in the requested \code{format},
+  time \code{resolution} and time interval (specified by \code{from} and
+  \code{to}).
+}
 \description{
 List the Locally Available Extracted Files
 }

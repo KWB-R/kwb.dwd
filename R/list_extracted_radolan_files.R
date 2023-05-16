@@ -2,6 +2,18 @@
 
 #' List the Locally Available Extracted Files
 #'
+#' @param from begin of time interval as "yyyymm" string (4 digits year + 2
+#'   digits month)
+#' @param to end of time interval as "yyyymm" string (4 digits year + 2 digits
+#'   month)
+#' @param resolution temporal resolution, currently one of "daily", "hourly"
+#' @param format file format, currently one of "asc" (ASCII text), "bin"
+#'   (binary)
+#' @return paths to files on the local drive, below the folder returned by
+#'   \code{\link{temp_dir}},  that contain data in the requested \code{format},
+#'   time \code{resolution} and time interval (specified by \code{from} and
+#'   \code{to}).
+#' @export
 list_extracted_radolan_files <- function(from, to, resolution, format)
 {
   # resolution = "daily"
