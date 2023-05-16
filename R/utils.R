@@ -273,15 +273,6 @@ looks_like_file_extension <- function(x)
   !grepl("(^[0-9]+$)|[_-]", x)
 }
 
-# month_numbers ----------------------------------------------------------------
-month_numbers <- function()
-{
-  list(
-    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
-    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
-  )
-}
-
 # month_range_pattern ----------------------------------------------------------
 month_range_pattern <- function(from, to)
 {
