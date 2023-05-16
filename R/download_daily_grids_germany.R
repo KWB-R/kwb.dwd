@@ -6,8 +6,7 @@ download_daily_grids_germany <- function(
     quiet = FALSE
 )
 {
-  variable %>%
-    list_daily_grids_germany_tgz(from, to) %>%
+  list_grids_germany("daily", ".tgz", variable, from, to)
     lapply(download_and_extract, quiet = quiet) %>%
     unlist()
 }

@@ -5,7 +5,7 @@
 # Open description file (how to interpret the data?) ---------------------------
 if (FALSE)
 {
-  urls <- kwb.dwd:::list_monthly_grids_germany_asc_gz("evapo_p", "202201")
+  urls <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "evapo_p", "202201")
   kwb.dwd::open_description(urls[1L])
 }
 

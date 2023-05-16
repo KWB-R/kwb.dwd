@@ -1,6 +1,6 @@
-test_that("list_monthly_grids_germany_asc_gz() works", {
+test_that("list_grids_germany() works", {
 
-  f <- kwb.dwd:::list_monthly_grids_germany_asc_gz
+  f <- kwb.dwd:::list_grids_germany
 
   expect_error(f())
   expect_error(f("no-such-variable"))

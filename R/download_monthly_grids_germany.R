@@ -16,7 +16,7 @@ download_monthly_grids_germany <- function(
 )
 {
   if (is.null(urls)) {
-    urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
+    urls <- list_grids_germany("monthly", ".asc.gz", variable, from, to)
   }
 
   download_into_folder_structure(

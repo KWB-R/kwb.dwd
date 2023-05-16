@@ -56,79 +56,65 @@ if (FALSE)
   )
 }
 
-# list_daily_grids_germany_tgz -------------------------------------------------
-list_daily_grids_germany_tgz <- function(
-    variable,
-    from = NULL,
-    to = NULL
-)
-{
-  # Base URL to daily grids
-  base_url <- ftp_path_grids_germany("daily")
+# list_grids_germany -----------------------------------------------------------
 
-  # Code to get the possible choices
-  # base_url <- kwb.dwd:::ftp_path_cdc("grids_germany/daily")
-  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".tgz")
-
-  # Make sure that the given variable name is a possible choice
-  variable <- match.arg(variable, c(
-    "evapo_p",
-    "evapo_r",
-    "frost_depth",
-    "soil_moist",
-    "soil_temperature_5cm"
-  ))
-
-  "grids_germany/daily" %>%
-    ftp_path_cdc(variable) %>%
-    list_url(full_names = TRUE) %>%
-    filter_by_extension(".tgz") %>%
-    filter_by_month_range(from, to)
-}
-
-# list_monthly_grids_germany_asc_gz --------------------------------------------
-
-#' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
+#' Get URLs to Zipped Files Containing Grid Data for Germany
 #'
+#' @param resolution one of "monthly", "daily"
 #' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany("monthly"))}
+#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany(resolution))}
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_monthly_grids_germany_asc_gz <- function(
-    variable,
-    from = NULL,
-    to = NULL,
-    recursive = TRUE
+#'
+list_grids_germany <- function(
+    resolution, extension, variable, from = NULL, to = NULL, recursive = TRUE
 )
 {
-  base_url <- ftp_path_grids_germany("monthly", variable)
+  #resolution = "monthly"
+  #extension = ".asc.gz"
 
   # Code to get the possible choices
-  # base_url <- kwb.dwd:::ftp_path_grids_germany("monthly")
-  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
+  # base_url <- kwb.dwd:::ftp_path_grids_germany(resolution)
+  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, extension)
 
   # Make sure that the given variable name is a possible choice
-  variable <- match.arg(variable, c(
-    "air_temperature_max",
-    "air_temperature_mean",
-    "air_temperature_min",
-    "drought_index",
-    "evapo_p",
-    "evapo_r",
-    "frost_depth",
-    "precipitation",
-    "soil_moist",
-    "soil_temperature_5cm",
-    "sunshine_duration"
-  ))
+  if (resolution == "monthly") {
+
+    safe_element(variable, c(
+      "air_temperature_max",
+      "air_temperature_mean",
+      "air_temperature_min",
+      "drought_index",
+      "evapo_p",
+      "evapo_r",
+      "frost_depth",
+      "precipitation",
+      "soil_moist",
+      "soil_temperature_5cm",
+      "sunshine_duration"
+    ))
+
+  } else if (resolution == "daily") {
+
+    safe_element(variable, c(
+      "evapo_p",
+      "evapo_r",
+      "frost_depth",
+      "soil_moist",
+      "soil_temperature_5cm"
+    ))
+  }
+
+  # Base URL to grids of Germany in requested temporal resolution
+  base_url <- ftp_path_grids_germany(resolution, variable)
 
   # List data files
   relative_urls <- base_url %>%
     list_url(recursive = recursive) %>%
-    filter_by_extension(".asc.gz") %>%
+    filter_by_extension(extension) %>%
     filter_by_month_range(from, to)
 
-  # Provide full paths to zipped files in ESRI-ascii-grid-format
+  # Provide full URLs to zipped files
   file.path(base_url, relative_urls)
 }

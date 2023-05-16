@@ -86,12 +86,12 @@ tail(radolan_urls$hourly_historical_urls)
 
 ### Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 
-Function: `list_monthly_grids_germany_asc_gz()`
+Function: `list_grids_germany()`
 
 Example:
 
 ```{r eval = FALSE}
-urls <- kwb.dwd:::list_monthly_grids_germany_asc_gz("precipitation")
+urls <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "precipitation")
 
 head(urls)
 ```
