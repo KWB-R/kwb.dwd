@@ -41,6 +41,7 @@ download_and_extract_radolan <- function(
         ftp_path_cdc() %>%
         list_url(recursive = TRUE, full_names = TRUE, dbg = FALSE) %>%
         grep(pattern = pattern, value = TRUE)
+        # filter_by_month_range(from, to) # TODO: combine both approaches
     }
   )
 
@@ -52,7 +53,11 @@ download_and_extract_radolan <- function(
     ...
   ))
 
-  structure(files, config = config)
+  structure(
+    files,
+    config = config,
+    urls = urls
+  )
 }
 
 # download_and_extract_radolan_url ---------------------------------------------
