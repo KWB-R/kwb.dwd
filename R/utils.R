@@ -378,10 +378,6 @@ temp_dir <- function(..., template = NULL, create = TRUE, dbg = FALSE)
 {
   dot_args <- list(...)
 
-  stop_on_dot_args <- function() {
-
-  }
-
   # If no template (path) is given, use the arguments in ... as sub directory
   # names. Otherwise, use the base file name of the template without the file
   # name extension as sub directory name
