@@ -32,7 +32,7 @@ list_ftp_contents <- function(x = character(), full_info = FALSE, ...)
 #' @keywords internal
 #' @noMd
 #' @noRd
-#' @importFrom kwb.utils selectColumns
+#' @importFrom kwb.utils commonNames moveColumnsToFront selectColumns
 response_to_data_frame <- function(response, full_info = FALSE)
 {
   template <- empty_file_info(full_info)
@@ -53,9 +53,17 @@ response_to_data_frame <- function(response, full_info = FALSE)
     return(get_info(c("file", "isdir")))
   }
 
-  # Replace columns "year_or_time", "month", "day" with "modification_time".
-  # Put the most important columns first.
-  main_columns_first(simplify_time_info(info))
+  # Replace columns "year_or_time", "month", "day" with "modification_time"
+  simple_info <- simplify_time_info(info)
+
+  # Put the most important columns first
+  kwb.utils::moveColumnsToFront(
+    simple_info,
+    columns = kwb.utils::commonNames(
+      empty_file_info(full_info = TRUE),
+      simple_info
+    )
+  )
 }
 
 # empty_file_info --------------------------------------------------------------
@@ -176,21 +184,4 @@ columns_to_timestamp <- function(info)
     as.integer(pull("day")),
     ifelse(is_year, "00:00", years_or_times)
   )
-}
-
-# main_columns_first -----------------------------------------------------------
-#' Main Columns first
-#'
-#' @param df data.frame
-#' @return ???
-#' @keywords internal
-#' @noMd
-#' @noRd
-#' @importFrom kwb.utils moveColumnsToFront
-#'
-main_columns_first <- function(df)
-{
-  columns <- intersect(names(empty_file_info(full_info = TRUE)), names(df))
-
-  kwb.utils::moveColumnsToFront(df, columns)
 }
