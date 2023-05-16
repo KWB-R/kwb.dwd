@@ -92,7 +92,7 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
   })
 
   # Provide file metadata (file, year, month, day)
-  metadata <- extract_metadata_from_files_daily(files = grid_files)
+  metadata <- extract_metadata_from_files(files = grid_files, is_daily = TRUE)
 
   # Mask the full grid over Germany with the shape and crop the grid
   grids <- mask_and_crop_grids(grids, shape)
@@ -105,18 +105,6 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
 summarise_over_all_grids <- function(grids, scale)
 {
   do.call(rbind, lapply(grids, raster_stats, scale = scale))
-}
-
-# extract_metadata_from_files_daily --------------------------------------------
-extract_metadata_from_files_daily <- function(files)
-{
-  extract_metadata_from_files(files, is_daily = TRUE)
-}
-
-# extract_metadata_from_files_monthly ------------------------------------------
-extract_metadata_from_files_monthly <- function(files)
-{
-  extract_metadata_from_files(files, is_daily = FALSE)
 }
 
 # extract_metadata_from_files --------------------------------------------------

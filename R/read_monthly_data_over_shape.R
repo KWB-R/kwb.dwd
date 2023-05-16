@@ -65,7 +65,7 @@ read_monthly_data_over_shape <- function(
   }
 
   # Provide file metadata (file, year, month)
-  metadata <- extract_metadata_from_files_monthly(files = grid_files)
+  metadata <- extract_metadata_from_files(files = grid_files, is_daily = FALSE)
 
   # Calculate statistics, considering the scaling factor, add metadata
   cbind(metadata, summarise_over_all_grids(grids, scale))
