@@ -276,24 +276,23 @@ looks_like_file_extension <- function(x)
 # month_range_pattern ----------------------------------------------------------
 month_range_pattern <- function(from, to)
 {
-  paste(month_sequence_simple(from, to), collapse = "|")
+  paste(month_sequence(from, to, simple = TRUE), collapse = "|")
 }
 
 # month_sequence ---------------------------------------------------------------
 #' @importFrom lubridate ymd
-month_sequence <- function(start, end)
+month_sequence <- function(start, end, simple = FALSE)
 {
-  to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
+  if (simple) {
 
-  seq(to_date(start), to_date(end), by = 'months')
-}
+    as_date <- function(x) as.Date(paste0(x, "01"), format = "%Y%m%d")
+    unique(format(seq(as_date(start), as_date(end), 1L), "%Y%m"))
 
-# month_sequence_simple --------------------------------------------------------
-month_sequence_simple <- function(from, to)
-{
-  as_date <- function(x) as.Date(paste0(x, "01"), format = "%Y%m%d")
+  } else {
 
-  unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
+    as_date <- function(x) lubridate::ymd(paste0(x, "-01"))
+    seq(as_date(start), as_date(end), by = 'months')
+  }
 }
 
 # on_windows -------------------------------------------------------------------
