@@ -128,12 +128,6 @@ dwd_filename_stations <- function(category, frequency)
   sprintf(
     "%s_%swerte_Beschreibung_Stationen.txt",
     get_element_or_stop(get_dwd_url_specification(category), "file_prefix"),
-    frequency_prefix(frequency)
+    get_element_or_stop(c(daily = "Tages", hourly = "Stunden"), frequency)
   )
-}
-
-# frequency_prefix -------------------------------------------------------------
-frequency_prefix <- function(frequency)
-{
-  get_element_or_stop(c(daily = "Tages", hourly = "Stunden"), frequency)
 }
