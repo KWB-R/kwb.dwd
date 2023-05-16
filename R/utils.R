@@ -118,12 +118,6 @@ download_if_not_there <- function(
   file
 }
 
-# extract_yyyymm ---------------------------------------------------------------
-extract_yyyymm <- function(x)
-{
-  gsub("^.*(\\d{6}).*$", "\\1", basename(x))
-}
-
 # filter_by_extension ----------------------------------------------------------
 filter_by_extension <- function(x, extension)
 {
@@ -136,6 +130,8 @@ filter_by_month_range <- function(urls, from = NULL, to = NULL)
   if (length(urls) == 0L) {
     return(urls)
   }
+
+  extract_yyyymm <- function(x) gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 
   from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
   to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
