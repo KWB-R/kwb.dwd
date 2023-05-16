@@ -17,7 +17,7 @@ download_daily_grids_germany <- function(
 download_and_extract <- function(url, quiet = FALSE)
 {
   # Create a dedicated temporary folder
-  target_dir <- temp_dir(template. = url)
+  target_dir <- temp_dir(template = url)
 
   # Download the file into the dedicated folder
   file <- download_if_not_there(

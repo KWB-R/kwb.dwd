@@ -13,7 +13,7 @@ read_asc_gz_file <- function(file, url = NULL)
   target_dir <- if (is.null(url)) {
     dirname(file)
   } else {
-    temp_dir(template. = kwb.utils::removeExtension(url))
+    temp_dir(template = kwb.utils::removeExtension(url))
   }
 
   # Call the unzip function setting either "url" or "file" argument

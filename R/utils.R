@@ -360,34 +360,52 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
 }
 
 # temp_dir ---------------------------------------------------------------------
-temp_dir <- function(..., template. = NULL, create. = TRUE, dbg. = FALSE)
+#' Path to Permanent Temporary Directory
+#'
+#' @param \dots parts of the path after \code{<TEMP_DIR>/R_kwb.dwd/}, passed to
+#'   \code{\link{file.path}} where \code{<TEMP_DIR>} is either the value of
+#'   environment variable \code{TEMP} (if set) or \code{TMP} (if set) or the
+#'   result of calling \code{\link{tempdir}}.
+#' @param template optional. If given, it is assumed to be a path to a file. The
+#'   name of the file without file name extension is then used as folder name
+#'   below \code{<TEMP_DIR>/R_kwb.dwd/}.
+#' @param create logical indicating whether or not to create the folder if it
+#'   does not yet exist. Defaults to \code{TRUE}.
+#' @param dbg logical indicating whether or not to print debug messages
+#' @return The function returns the path to the temporary folder specified.
+#' @export
+temp_dir <- function(..., template = NULL, create = TRUE, dbg = FALSE)
 {
   dot_args <- list(...)
 
   stop_on_dot_args <- function() {
-    if (!is_empty(dot_args)) {
-      clean_stop(
-        "Further arguments to temp_dir() not allowed if 'template.' is given."
-      )
-    }
+
   }
 
   # If no template (path) is given, use the arguments in ... as sub directory
   # names. Otherwise, use the base file name of the template without the file
   # name extension as sub directory name
-  args <- if (is.null(template.)) {
+  args <- if (is.null(template)) {
+
     dot_args
+
+  } else if (!is_empty(dot_args)) {
+
+    clean_stop(
+      "Further arguments to temp_dir() not allowed if 'template' is given."
+    )
+
   } else {
-    stop_on_dot_args()
-    list(kwb.utils::removeExtension(basename(template.)))
+
+    list(kwb.utils::removeExtension(basename(template)))
   }
 
   tmp_dir <- Sys.getenv("TEMP", Sys.getenv("TMP", tempdir()))
 
   path <- do.call(file.path, c(list(tmp_dir, "R_kwb.dwd"), args))
 
-  if (create.) {
-    kwb.utils::createDirectory(path, dbg = dbg.)
+  if (create) {
+    kwb.utils::createDirectory(path, dbg = dbg)
   }
 
   path

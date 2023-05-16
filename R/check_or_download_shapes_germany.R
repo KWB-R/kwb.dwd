@@ -16,7 +16,7 @@ check_or_download_shapes_germany <- function(quiet = FALSE)
   url <- "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip"
 
   # Path to sub folder below %TEMP% containing shape files for Germany
-  shape_dir <- temp_dir(template. = url)
+  shape_dir <- temp_dir(template = url)
 
   # If the shape directory contains at least one .shp file, return the path to
   # the directory
