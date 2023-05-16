@@ -61,8 +61,41 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_extracted_radolan_files</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, <span class="va">resolution</span>, <span class="va">format</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <dl><dt>from</dt>
+<dd><p>begin of time interval as "yyyymm" string (4 digits year + 2
+digits month)</p></dd>
 
-  </main></div>
+
+<dt>to</dt>
+<dd><p>end of time interval as "yyyymm" string (4 digits year + 2 digits
+month)</p></dd>
+
+
+<dt>resolution</dt>
+<dd><p>temporal resolution, currently one of "daily", "hourly"</p></dd>
+
+
+<dt>format</dt>
+<dd><p>file format, currently one of "asc" (ASCII text), "bin"
+(binary)</p></dd>
+
+</dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>paths to files on the local drive, below the folder returned by</p>
+<p></p>
+<p><code>temp_dir</code>,  that contain data in the requested <code>format</code>,
+  time <code>resolution</code> and time interval (specified by <code>from</code> and</p>
+<p></p>
+<p><code>to</code>).</p>
+    </div>
+
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
