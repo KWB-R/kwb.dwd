@@ -1,7 +1,7 @@
 # MAIN -------------------------------------------------------------------------
 if (FALSE)
 {
-  #kwb.dwd:::ftp_path_daily_grids()
+  #kwb.dwd:::ftp_path_grids_germany("daily")
 
   ftp_path_radolan_all()
   ftp_path_radolan_all(use_placeholder = TRUE)

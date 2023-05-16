@@ -64,7 +64,7 @@ list_daily_grids_germany_tgz <- function(
 )
 {
   # Base URL to daily grids
-  base_url <- ftp_path_daily_grids()
+  base_url <- ftp_path_grids_germany("daily")
 
   # Code to get the possible choices
   # base_url <- kwb.dwd:::ftp_path_cdc("grids_germany/daily")
@@ -91,7 +91,7 @@ list_daily_grids_germany_tgz <- function(
 #' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
 #'
 #' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}
+#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany("monthly"))}
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
 #' @param recursive whether to list files recursively. Default: \code{TRUE}
@@ -102,10 +102,10 @@ list_monthly_grids_germany_asc_gz <- function(
     recursive = TRUE
 )
 {
-  base_url <- ftp_path_monthly_grids(variable)
+  base_url <- ftp_path_grids_germany("monthly", variable)
 
   # Code to get the possible choices
-  # base_url <- kwb.dwd:::ftp_path_monthly_grids()
+  # base_url <- kwb.dwd:::ftp_path_grids_germany("monthly")
   # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
 
   # Make sure that the given variable name is a possible choice

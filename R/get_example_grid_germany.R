@@ -7,5 +7,5 @@
 get_example_grid_germany <- function()
 {
   path <- "evapo_p/grids_germany_monthly_evapo_p_202201.asc.gz"
-  read_asc_gz_file(url = ftp_path_monthly_grids(path))
+  read_asc_gz_file(url = ftp_path_grids_germany("monthly", path))
 }

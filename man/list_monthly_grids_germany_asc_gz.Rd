@@ -13,7 +13,7 @@ list_monthly_grids_germany_asc_gz(
 }
 \arguments{
 \item{variable}{variable for which to look for URLs. Must be one of
-\code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}}
+\code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany("monthly"))}}
 
 \item{from}{optional. First month to be considered, as "yyyymm" string}
 
