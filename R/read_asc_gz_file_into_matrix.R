@@ -53,7 +53,7 @@ read_lines_from_gz_file <- function(
     encoding = getOption("encoding")
 )
 {
-  assert_ending_gz(file)
+  assert_all_ending_with(file, ".gz")
 
   # If the file does not exist, treat it as an URL
   if (!file.exists(file)) {

@@ -6,10 +6,10 @@ add_attributes <- function(x, attrs)
   do.call(structure, c(list(x), attrs))
 }
 
-# assert_ending_gz -------------------------------------------------------------
-assert_ending_gz <- function(x)
+# assert_all_ending_with -------------------------------------------------------------
+assert_all_ending_with <- function(x, suffix)
 {
-  stopifnot(all(endsWith(x, ".gz")))
+  stopifnot(all(endsWith(x, suffix)))
   invisible(x)
 }
 
