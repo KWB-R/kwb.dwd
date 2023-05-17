@@ -71,7 +71,7 @@ download_and_extract_radolan_url <- function(
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
   #url <- urls[1L]
 
-  stopifnot(length(url) == 1L)
+  assert_url(url)
 
   info <- get_radolan_metadata(url)
 
