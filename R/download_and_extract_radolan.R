@@ -91,7 +91,7 @@ download_and_extract_radolan_url <- function(
 
   full_extension <- get_full_extension(url)
 
-  # Extract the binary files and return their paths
+  # Extract the files and return their paths
   unzip_dir <- get_relative_path(file) %>%
     remove_right(nchar(full_extension) + 1L) %>%
     temp_dir()
