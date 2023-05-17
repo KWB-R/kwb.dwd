@@ -78,8 +78,8 @@ download_and_extract_radolan_url <- function(
   resolution <- info$resolution
   format <- info$format
 
-  stopifnot(resolution %in% c("daily", "hourly"))
-  stopifnot(format %in% c("asc", "bin"))
+  safe_element(resolution, c("daily", "hourly"))
+  safe_element(format, c("asc", "bin"))
 
   file <- download_into_folder_structure(
     url,
