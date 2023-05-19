@@ -61,6 +61,7 @@ if (FALSE)
 #' Get URLs to Zipped Files Containing Grid Data for Germany
 #'
 #' @param resolution one of "monthly", "daily"
+#' @param extension file extension of files to be listed, e.g. ".tgz"
 #' @param variable variable for which to look for URLs. Must be one of
 #'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany(resolution))}
 #' @param from optional. First month to be considered, as "yyyymm" string

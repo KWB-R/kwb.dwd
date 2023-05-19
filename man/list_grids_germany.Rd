@@ -16,6 +16,8 @@ list_grids_germany(
 \arguments{
 \item{resolution}{one of "monthly", "daily"}
 
+\item{extension}{file extension of files to be listed, e.g. ".tgz"}
+
 \item{variable}{variable for which to look for URLs. Must be one of
 \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany(resolution))}}
 
