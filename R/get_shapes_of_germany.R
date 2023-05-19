@@ -11,6 +11,18 @@
 #' @export
 get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 {
+  if (!recreate) {
+
+    # Create the list from the datasets that are stored in this package
+    return(list(
+      gadm40_DEU_0 = shapes_germany_0,
+      gadm40_DEU_1 = shapes_germany_1,
+      gadm40_DEU_2 = shapes_germany_2
+    ))
+  }
+
+  #kwb.utils::assignPackageObjects("kwb.dwd")
+
   # Set cache directory in sub folder within Windows TEMP folder
   cache_dir <- temp_dir("cache")
 
