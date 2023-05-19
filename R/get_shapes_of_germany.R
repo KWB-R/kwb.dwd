@@ -15,9 +15,9 @@ get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 
     # Create the list from the datasets that are stored in this package
     return(list(
-      gadm40_DEU_0 = shapes_germany_0,
-      gadm40_DEU_1 = shapes_germany_1,
-      gadm40_DEU_2 = shapes_germany_2
+      gadm40_DEU_0 = kwb.dwd::shapes_germany_0,
+      gadm40_DEU_1 = kwb.dwd::shapes_germany_1,
+      gadm40_DEU_2 = kwb.dwd::shapes_germany_2
     ))
   }
 
