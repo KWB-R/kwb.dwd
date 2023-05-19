@@ -22,7 +22,7 @@ download_monthly_grids_germany <- function(
   download_into_folder_structure(
     urls,
     target_dir = download_dir("dwd"),
-    skip_url_segments = 4L,
+    skip_url_segments = 3L,
     mode = "wb"
   )
 }
