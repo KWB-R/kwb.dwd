@@ -54,6 +54,12 @@ clean_stop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# contains_file ----------------------------------------------------------------
+contains_file <- function(path, pattern)
+{
+  length(dir(path, pattern)) > 0L
+}
+
 # copy_file --------------------------------------------------------------------
 copy_file <- function(from, to)
 {
@@ -102,17 +108,29 @@ download_if_not_there <- function(
     old_options <- options(timeout = timeout)
     on.exit(options(old_options))
 
-    kwb.utils::catAndRun(
+    result <- kwb.utils::catAndRun(
       sprintf("\nDownloading\n  %s\nto\n  %s", url, file),
       dbg = !quiet,
-      expr = download.file(
+      expr = try(download.file(
         url = url,
         destfile = file,
         method = "auto",
         quiet = TRUE,
         mode = mode
-      )
+      ))
     )
+
+    if (kwb.utils::isTryError(result) || !identical(result, 0L)) {
+      if (file.exists(file)) {
+        if (!identical(unlink(file), 0L)) {
+          message("Could not delete incompletely downloaded file: ", file)
+        }
+      }
+      kwb.utils::stopFormatted(
+        "Could not download %s within %d seconds.", url, timeout
+      )
+    }
+
   }
 
   file

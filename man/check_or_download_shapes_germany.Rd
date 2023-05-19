@@ -4,18 +4,26 @@
 \alias{check_or_download_shapes_germany}
 \title{Check Local Availability or Download Shape Files}
 \usage{
-check_or_download_shapes_germany(quiet = FALSE)
+check_or_download_shapes_germany(
+  url = "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip",
+  quiet = FALSE,
+  timeout = 60
+)
 }
 \arguments{
+\item{url}{URL to publicly available zip file containing shape files for
+Germany. Default:
+\url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}}
+
 \item{quiet}{passed if \code{TRUE} status messages are suppressed}
+
+\item{timeout}{timeout in seconds}
 }
 \value{
 path to folder containing shape files
 }
 \description{
 This function checks if shape files for Germany are available in the folder
-`\%TEMP\%/R_kwb.dwd/gadm40_DEU_shp`. If not, the shape files are downloaded
-from \url{https://gadm.org} (URL to zip-file:
-\url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip})
-and unpacked into that folder.
+\code{\%TEMP\%/R_kwb.dwd/shapes_germany}. If not, the shape files are
+downloaded from the URL given in \code{url} and unpacked into that folder.
 }
