@@ -53,16 +53,3 @@ list_local_shape_files <- function(path)
 {
   dir(path, "shp$", full.names = TRUE)
 }
-
-# read_shape_file --------------------------------------------------------------
-#' @importFrom rgdal readOGR
-read_shape_file <- function(file)
-{
-  rgdal::readOGR(
-    dsn = file,
-    stringsAsFactors = FALSE,
-    encoding = "UTF-8",
-    use_iconv = TRUE
-  )
-}
-

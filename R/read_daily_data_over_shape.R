@@ -45,41 +45,6 @@ read_shape_with_dwd_projection <- function(file, ...)
   read_shape_file(file, target_crs = example_grid@crs, ...)
 }
 
-# read_shape_file --------------------------------------------------------------
-read_shape_file <- function(
-    file,
-    target_crs = NULL,
-    use_sf = FALSE,
-    drop_z = FALSE,
-    as_spatial = FALSE
-)
-{
-  # Stop if this is not a shape file
-  stopifnot(identical(tolower(kwb.utils::fileExtension(file)), "shp"))
-
-  # Read the shape file
-  shape <- if (use_sf) {
-    sf::st_read(file)
-  } else {
-    rgdal::readOGR(file)
-  }
-
-  # Transform to target coordinate reference system if given
-  shape <- transform_coords(shape, target_crs, use_sf)
-
-  # Drop z dimensions if desired
-  if (drop_z) {
-    shape <- sf::st_zm(shape)
-  }
-
-  # Convert to Spatial* object if desired
-  if (as_spatial) {
-    shape <- sf::as_Spatial(shape)
-  }
-
-  shape
-}
-
 # get_daily_data_from_grid_files -----------------------------------------------
 get_daily_data_from_grid_files <- function(grid_files, shape, scale)
 {
