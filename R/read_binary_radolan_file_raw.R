@@ -113,7 +113,7 @@ read_binary_radolan_file_raw_v3 <- function(path)
 }
 
 # read_binary_radolan_header ---------------------------------------------------
-read_binary_radolan_header <- function(path, buffer_size = 1024L, dbg = TRUE)
+read_binary_radolan_header <- function(path, buffer_size = 1024L, dbg = FALSE)
 {
   stream <- open_for_reading_in_binary_mode(path)
 
