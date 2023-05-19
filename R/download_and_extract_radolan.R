@@ -71,15 +71,15 @@ download_and_extract_radolan_url <- function(
   #url <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/radolan/historical/bin/2006/SF-200610.tar.gz"
   #url <- urls[1L]
 
-  stopifnot(length(url) == 1L)
+  assert_url(url)
 
   info <- get_radolan_metadata(url)
 
   resolution <- info$resolution
   format <- info$format
 
-  stopifnot(resolution %in% c("daily", "hourly"))
-  stopifnot(format %in% c("asc", "bin"))
+  safe_element(resolution, c("daily", "hourly"))
+  safe_element(format, c("asc", "bin"))
 
   file <- download_into_folder_structure(
     url,
@@ -91,7 +91,7 @@ download_and_extract_radolan_url <- function(
 
   full_extension <- get_full_extension(url)
 
-  # Extract the binary files and return their paths
+  # Extract the files and return their paths
   unzip_dir <- get_relative_path(file) %>%
     remove_right(nchar(full_extension) + 1L) %>%
     temp_dir()

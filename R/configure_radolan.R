@@ -13,8 +13,8 @@ configure_radolan <- function(
     return(config)
   }
 
-  stopifnot(resolution %in% c("hourly", "daily"))
-  stopifnot(format %in% c("bin", "asc"))
+  safe_element(resolution, c("hourly", "daily"))
+  safe_element(format, c("bin", "asc"))
 
   if (is.null(year)) {
     stopifnot(!is.null(from), !is.null(to))
