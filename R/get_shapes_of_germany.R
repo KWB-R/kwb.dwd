@@ -25,13 +25,23 @@ get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
   # List shape files. If required, the shape files are downloaded, unzipped and
   # stored locally. They are downloaded from:
   # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
-  files <- list_local_shape_files(check_or_download_shapes_germany())[-1L]
+  shape_dir <- check_or_download_shapes_germany()
+  files <- list_local_shape_files(shape_dir)
 
   # Read shapes at different levels of detail
-  shapes_germany <- lapply(stats::setNames(nm = files), read_shape_file)
+  shapes_germany <- lapply(
+    X = stats::setNames(files, kwb.utils::removeExtension(basename(files))),
+    #FUN = read_shape_file_2
+    FUN = read_shape_file,
+    use_sf = TRUE
+  )
 
   # Load an example Raster of Germany, just to ask for its projection
   example_grid <- get_example_grid_germany()
+
+  #crs_lines <- readLines("https://opendata.dwd.de/climate_environment/CDC/help/gk3.prj")
+  #print(example_grid@crs)
+  #cat(crs_lines)
 
   # Transform all shapes according to the projection of the example grid
   shapes_germany <- lapply(
