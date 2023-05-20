@@ -7,7 +7,6 @@ test_that("get_shapes_of_germany() works", {
   result <- f()
 
   expect_true(is.list(result))
-  expect_length(result, 2L)
-
+  expect_length(result, 3L)
   expect_true(all(sapply(result, inherits, "sf")))
 })
