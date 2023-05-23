@@ -13,7 +13,7 @@ load_precipitation_berlin(from = NULL, to = NULL)
 }
 \value{
 data frame with columns \code{file} (name of file downloaded from
-DWD), \code{year} (year number as integer), \code{month number as integer},
+DWD), \code{year} (year number as integer), \verb{month number as integer},
 \code{mean} (mean value), \code{sd} (standard deviation), \code{min}
 (minimum value), \code{max} (maximum value) of precipitation
 calculated for Berlin, Germany

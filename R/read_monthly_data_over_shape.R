@@ -8,11 +8,11 @@
 #' @param to last month as "yyyymm" string
 #' @param quiet passed to [download.file]
 #' @param shape object of class sf or sf_layers or SpatialPolygonsDataFrame.
-#'   If \code{NULL} (the default), this object is obtained by calling
-#'   \code{kwb.dwd:::read_shape_file} on \code{file}.
-#' @param use_sf passed to \code{kwb.dwd:::read_shape_file} if applicable
-#' @param \dots further arguments passed to \code{kwb.dwd:::read_shape_file},
-#'   such as \code{drop_z = TRUE}, if applicable
+#'   If `NULL` (the default), this object is obtained by calling
+#'   `kwb.dwd:::read_shape_file` on `file`.
+#' @param use_sf passed to `kwb.dwd:::read_shape_file` if applicable
+#' @param \dots further arguments passed to `kwb.dwd:::read_shape_file`,
+#'   such as `drop_z = TRUE`, if applicable
 #' @return data frame
 #' @export
 read_monthly_data_over_shape <- function(

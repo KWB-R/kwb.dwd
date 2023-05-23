@@ -5,8 +5,8 @@
 #' @param bin_file path to binary radolan file or vector of such paths
 #' @param target_dir directory in which to create the raster file(s). By default
 #'   the files are created in a subfolder "rst" parallel to the folder in which
-#'   the first element of \code{bin_file} resides.
-#' @param dbg if \code{TRUE}, debug messages are shown
+#'   the first element of `bin_file` resides.
+#' @param dbg if `TRUE`, debug messages are shown
 #' @export
 #' @importFrom kwb.utils createDirectory
 convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)

@@ -24,6 +24,6 @@ path to folder containing shape files
 }
 \description{
 This function checks if shape files for Germany are available in the folder
-\code{\%TEMP\%/R_kwb.dwd/shapes_germany}. If not, the shape files are
+\verb{\\\%TEMP\\\%/R_kwb.dwd/shapes_germany}. If not, the shape files are
 downloaded from the URL given in \code{url} and unpacked into that folder.
 }

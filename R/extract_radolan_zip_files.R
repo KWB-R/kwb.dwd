@@ -6,7 +6,7 @@
 #'   in .tar.gz)
 #'
 #' @return Nothing. Side effect: Unzipped files in subfolder "bin" below
-#'   \code{radolan_dir}.
+#'   `radolan_dir`.
 #'
 #' @export
 #' @importFrom kwb.utils createDirectory

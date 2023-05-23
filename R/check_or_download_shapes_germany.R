@@ -14,13 +14,13 @@ if (FALSE)
 #' Check Local Availability or Download Shape Files
 #'
 #' This function checks if shape files for Germany are available in the folder
-#' \code{\%TEMP\%/R_kwb.dwd/shapes_germany}. If not, the shape files are
-#' downloaded from the URL given in \code{url} and unpacked into that folder.
+#' `\%TEMP\%/R_kwb.dwd/shapes_germany`. If not, the shape files are
+#' downloaded from the URL given in `url` and unpacked into that folder.
 #'
 #' @param url URL to publicly available zip file containing shape files for
 #'   Germany. Default:
 #'   <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
-#' @param quiet passed if \code{TRUE} status messages are suppressed
+#' @param quiet passed if `TRUE` status messages are suppressed
 #' @param timeout timeout in seconds
 #' @return path to folder containing shape files
 #' @export

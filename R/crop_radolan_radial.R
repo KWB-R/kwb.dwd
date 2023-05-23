@@ -6,8 +6,8 @@
 #' @param longitude longitude
 #' @param latitude latitude
 #' @param radius distance from point (latitude/longitude) in km
-#' @param as_data_frame if \code{TRUE}, a data frame with columns
-#'   \code{SAMPLE_DATE} and \code{rain_mean} is returned, otherwise the raster
+#' @param as_data_frame if `TRUE`, a data frame with columns
+#'   `SAMPLE_DATE` and `rain_mean` is returned, otherwise the raster
 #'   object returned by [raster::crop]
 #' @export
 #' @importFrom sf st_buffer st_transform

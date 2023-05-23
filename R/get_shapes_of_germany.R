@@ -2,12 +2,12 @@
 
 #' Provide List of SpatialPolygonsDataFrame for Germany
 #'
-#' @param recreate logical. If \code{TRUE} the required shape files are freshly
+#' @param recreate logical. If `TRUE` the required shape files are freshly
 #'   downloaded from <https://gadm.org/>, transformed to the projection used
 #'   in DWD data files and stored locally in an RData file. The default is
-#'   \code{FALSE}, i.e. the required data are read form the locally stored RData
+#'   `FALSE`, i.e. the required data are read form the locally stored RData
 #'   file, provided that the file exists.
-#' @param use_sf passed to \code{kwb.dwd:::transform_coords}
+#' @param use_sf passed to `kwb.dwd:::transform_coords`
 #' @export
 get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 {

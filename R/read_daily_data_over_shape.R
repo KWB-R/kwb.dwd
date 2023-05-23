@@ -2,7 +2,7 @@
 
 #' Read daily data from DWD, mask region with given shape file
 #'
-#' Currently, only full months of data can be loaded, \code{from} and \code{to}
+#' Currently, only full months of data can be loaded, `from` and `to`
 #' must be given
 #'
 #' @param file path to shape file .shp

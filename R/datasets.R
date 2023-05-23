@@ -23,7 +23,7 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 1 feature and 2 fields:
-#'   \code{COUNTRY}, \code{ID_0}
+#'   `COUNTRY`, `ID_0`
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_0"
@@ -33,9 +33,9 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 16 features and 11 fields:
-#'   \code{ID_0}, \code{COUNTRY}, \code{ID_1}, \code{NAME_1}, \code{VARNAME_1},
-#'   \code{NL_NAME_1}, \code{TYPE_1}, \code{ENGTYPE_1}, \code{CC_1},
-#'   \code{HASC_1}, \code{ISO_1}
+#'   `ID_0`, `COUNTRY`, `ID_1`, `NAME_1`, `VARNAME_1`,
+#'   `NL_NAME_1`, `TYPE_1`, `ENGTYPE_1`, `CC_1`,
+#'   `HASC_1`, `ISO_1`
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_1"
@@ -45,9 +45,9 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 403 features and 12 fields:
-#'   \code{ID_0}, \code{COUNTRY}, \code{NAME_1}, \code{NL_NAME_1}, \code{ID_2},
-#'   \code{NAME_2}, \code{VARNAME_2}, \code{NL_NAME_2}, \code{TYPE_2},
-#'   \code{ENGTYPE_2}, \code{CC_2}, \code{HASC_2}
+#'   `ID_0`, `COUNTRY`, `NAME_1`, `NL_NAME_1`, `ID_2`,
+#'   `NAME_2`, `VARNAME_2`, `NL_NAME_2`, `TYPE_2`,
+#'   `ENGTYPE_2`, `CC_2`, `HASC_2`
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_2"

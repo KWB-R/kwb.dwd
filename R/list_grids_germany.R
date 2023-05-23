@@ -63,10 +63,10 @@ if (FALSE)
 #' @param resolution one of "monthly", "daily"
 #' @param extension file extension of files to be listed, e.g. ".tgz"
 #' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany(resolution))}
+#'   `kwb.dwd::list_url(kwb.dwd:::ftp_path_grids_germany(resolution))`
 #' @param from optional. First month to be considered, as "yyyymm" string
 #' @param to optional. Last month to be considered, as "yyyymm" string
-#' @param recursive whether to list files recursively. Default: \code{TRUE}
+#' @param recursive whether to list files recursively. Default: `TRUE`
 #'
 list_grids_germany <- function(
     resolution, extension, variable, from = NULL, to = NULL, recursive = TRUE

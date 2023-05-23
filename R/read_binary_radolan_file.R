@@ -3,14 +3,14 @@
 #' Read Binary Radolan File
 #'
 #' @param path path to binary Radolan file
-#' @param set_projection_and_extent if \code{TRUE} (default), the projection
+#' @param set_projection_and_extent if `TRUE` (default), the projection
 #'   and extent of the raster object are set to the Radolan specific values,
-#'   returned by \code{kwb.dwd::get_radolan_projection_string()} and
-#'   \code{kwb.dwd::get_radolan_extension()}, respectively.
+#'   returned by `kwb.dwd::get_radolan_projection_string()` and
+#'   `kwb.dwd::get_radolan_extension()`, respectively.
 #' @param consider_flags logical. Should the flags be considered? If
-#'   \code{TRUE}, values where the "invalid" or "clutter" flag is set are set to
-#'   \code{NA} and values where the "negative" flag is set are negated. The
-#'   default is \code{TRUE} (for compatibility reasons) but this should change
+#'   `TRUE`, values where the "invalid" or "clutter" flag is set are set to
+#'   `NA` and values where the "negative" flag is set are negated. The
+#'   default is `TRUE` (for compatibility reasons) but this should change
 #'   in future!
 #' @export
 #' @importFrom sp CRS

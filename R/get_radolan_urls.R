@@ -14,9 +14,9 @@
 #' @param end_daily month string (yyyy-mm) of last daily record. Defaults to the
 #'   current month.
 #' @param end_hourly month string (yyyy-mm) of last hourly records. Defaults to
-#'   \code{end_daily}.
-#' @param \dots further arguments passed to \code{kwb.dwd:::get_radolan_url},
-#'   such as \code{ftp_root}
+#'   `end_daily`.
+#' @param \dots further arguments passed to `kwb.dwd:::get_radolan_url`,
+#'   such as `ftp_root`
 #' @importFrom magrittr %>%
 #' @importFrom kwb.utils left resolve stringList
 #' @importFrom lubridate rollback

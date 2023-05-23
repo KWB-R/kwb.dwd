@@ -4,8 +4,8 @@
 #' @param export_dir export directory (default: "data" in current working
 #'   directory)
 #' @param \dots arguments passed to [get_radolan_urls], such as
-#'   \code{start_daily}, \code{start_hourly}, \code{end_daily},
-#'   \code{end_hourly}
+#'   `start_daily`, `start_hourly`, `end_daily`,
+#'   `end_hourly`
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
 #' @importFrom fs dir_create
 #' @importFrom kwb.utils catAndRun

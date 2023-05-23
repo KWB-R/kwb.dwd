@@ -86,9 +86,9 @@ get_berlin_dwd_mask <- function()
 #' @param matrices matrices
 #' @param geo_mask "mask matrix" defining a geographical subset
 #'
-#' @return data frame with one row per matrix in \code{matrices} and columns
-#'   \code{file}, \code{year}, \code{month}, \code{mean}, \code{sd}, \code{min},
-#'   \code{max}
+#' @return data frame with one row per matrix in `matrices` and columns
+#'   `file`, `year`, `month`, `mean`, `sd`, `min`,
+#'   `max`
 #' @export
 #' @importFrom kwb.utils getAttribute
 #' @importFrom stats sd

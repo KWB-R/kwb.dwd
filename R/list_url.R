@@ -4,15 +4,15 @@
 #'
 #' @param url URL to FTP server, including "ftp://"
 #' @param recursive logical indicating whether to list files in all
-#'   subdirectories (default: \code{FALSE})
+#'   subdirectories (default: `FALSE`)
 #' @param max_depth maximum folder depth to consider when
-#'   \code{recursive = TRUE}
-#' @param full_info if \code{TRUE}, not only the path and filename are returned
-#'   but also the file properties. The default is \code{FALSE}.
-#' @param full_names if \code{TRUE}, the full URLs are returned, otherwise (the
-#'   default) only the paths relative to \code{url}.
-#' @param \dots arguments passed to \code{kwb.dwd:::try_to_get_url}, such as
-#'   \code{n_trials}, \code{timeout}, or \code{sleep_time}
+#'   `recursive = TRUE`
+#' @param full_info if `TRUE`, not only the path and filename are returned
+#'   but also the file properties. The default is `FALSE`.
+#' @param full_names if `TRUE`, the full URLs are returned, otherwise (the
+#'   default) only the paths relative to `url`.
+#' @param \dots arguments passed to `kwb.dwd:::try_to_get_url`, such as
+#'   `n_trials`, `timeout`, or `sleep_time`
 #' @export
 #' @importFrom kwb.utils listToDepth selectColumns
 #' @importFrom RCurl getCurlHandle
