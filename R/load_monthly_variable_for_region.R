@@ -131,8 +131,8 @@ get_shape_of_german_region <- function(name)
   )
 
   configs <- list(
-    berlin = configure(1L, "NAME_1", "Berlin"),
-    cologne = configure(2L, "NAME_2", "K\xF6ln")
+    berlin = configure(2L, "NAME_1", "Berlin"),
+    cologne = configure(3L, "NAME_2", "K.ln")
   )
 
   config <- kwb.utils::selectElements(configs, name)
@@ -143,8 +143,33 @@ get_shape_of_german_region <- function(name)
 # filter_shapes ----------------------------------------------------------------
 filter_shapes <- function(shapes, config)
 {
-  s <- shapes[[config$index]]
-  s[grep(config$pattern, s[[config$variable]]), ]
+  as_configured <- kwb.utils::createAccessor(config)
+
+  s <- shapes[[as_configured("index")]]
+
+  variable <- as_configured("variable")
+  pattern <- as_configured("pattern")
+
+  values <- kwb.utils::selectColumns(s, variable)
+
+  indices <- grep(pattern, values)
+
+  n_selected <- length(indices)
+
+  if (n_selected == 0L) {
+    kwb.utils::stopFormatted(
+      "'%s' does not match pattern '%s'", variable, pattern
+    )
+  }
+
+  if (n_selected > 1L) {
+    kwb.utils::stopFormatted(
+      "'%s' has more than one match with pattern '%s': %s",
+      variable, pattern, kwb.utils::stringList(values[indices])
+    )
+  }
+
+  s[indices, ]
 }
 
 # raster_stats -----------------------------------------------------------------
