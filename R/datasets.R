@@ -23,7 +23,8 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 1 feature and 2 fields:
-#'   `COUNTRY`, `ID_0`
+#'   * `COUNTRY`,
+#'   * `ID_0`.
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_0"
@@ -33,9 +34,17 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 16 features and 11 fields:
-#'   `ID_0`, `COUNTRY`, `ID_1`, `NAME_1`, `VARNAME_1`,
-#'   `NL_NAME_1`, `TYPE_1`, `ENGTYPE_1`, `CC_1`,
-#'   `HASC_1`, `ISO_1`
+#'   * `ID_0`,
+#'   * `COUNTRY`,
+#'   * `ID_1`,
+#'   * `NAME_1`,
+#'   * `VARNAME_1`,
+#'   * `NL_NAME_1`,
+#'   * `TYPE_1`,
+#'   * `ENGTYPE_1`,
+#'   * `CC_1`,
+#'   * `HASC_1`,
+#'   * `ISO_1`.
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_1"
@@ -45,9 +54,18 @@
 #' Object of class "sf" representing a "Simple feature collection".
 #'
 #' @format Simple feature collection with 403 features and 12 fields:
-#'   `ID_0`, `COUNTRY`, `NAME_1`, `NL_NAME_1`, `ID_2`,
-#'   `NAME_2`, `VARNAME_2`, `NL_NAME_2`, `TYPE_2`,
-#'   `ENGTYPE_2`, `CC_2`, `HASC_2`
+#' * `ID_0`,
+#' * `COUNTRY`,
+#' * `NAME_1`,
+#' * `NL_NAME_1`,
+#' * `ID_2`,
+#' * `NAME_2`,
+#' * `VARNAME_2`,
+#' * `NL_NAME_2`,
+#' * `TYPE_2`,
+#' * `ENGTYPE_2`,
+#' * `CC_2`,
+#' * `HASC_2`.
 #' @source
 #' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_2"

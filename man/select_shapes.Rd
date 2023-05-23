@@ -11,12 +11,15 @@ select_shapes(shapes)
 \link{get_shapes_of_germany}}
 }
 \value{
-list with elements \code{index} (index of SpatialPolygonsDataFrame in
-\code{shapes} list), \code{variable} (column in selected
-SpatialPolygonsDataFrame), \code{pattern} pattern (e.g. the name of a city)
-to be matched against the values in the selected column of the
-selected SpatialPolygonsDataFrame. This list simply describes how to select
-a SpatialPolygon from a list of SpatialPolygonsDataFrames
+list with elements
+\itemize{
+\item \code{index} (index of SpatialPolygonsDataFrame in \code{shapes} list),
+\item \code{variable} (column in selected SpatialPolygonsDataFrame),
+\item \code{pattern} pattern (e.g. the name of a city)
+to be matched against the values in the selected column of the selected
+SpatialPolygonsDataFrame. This list simply describes how to select a
+SpatialPolygon from a list of SpatialPolygonsDataFrames
+}
 }
 \description{
 Interactively Configure Selection of SpatialPolygons

@@ -5,10 +5,9 @@
 #' @param url URL to FTP server, including "ftp://"
 #' @param recursive logical indicating whether to list files in all
 #'   subdirectories (default: `FALSE`)
-#' @param max_depth maximum folder depth to consider when
-#'   `recursive = TRUE`
-#' @param full_info if `TRUE`, not only the path and filename are returned
-#'   but also the file properties. The default is `FALSE`.
+#' @param max_depth maximum folder depth to consider when `recursive = TRUE`
+#' @param full_info if `TRUE`, not only the path and filename are returned but
+#'   also the file properties. The default is `FALSE`.
 #' @param full_names if `TRUE`, the full URLs are returned, otherwise (the
 #'   default) only the paths relative to `url`.
 #' @param \dots arguments passed to `kwb.dwd:::try_to_get_url`, such as

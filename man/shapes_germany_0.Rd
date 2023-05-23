@@ -6,7 +6,10 @@
 \title{Shapes of German Regions (0)}
 \format{
 Simple feature collection with 1 feature and 2 fields:
-\code{COUNTRY}, \code{ID_0}
+\itemize{
+\item \code{COUNTRY},
+\item \code{ID_0}.
+}
 }
 \source{
 \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}

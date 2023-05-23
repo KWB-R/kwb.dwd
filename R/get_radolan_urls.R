@@ -22,9 +22,7 @@
 #' @importFrom lubridate rollback
 #' @importFrom stringr str_replace
 #' @importFrom fs dir_create
-#'
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
-#'
 #' @export
 #' @examples
 #' # Get all expected URLs

@@ -4,12 +4,13 @@
 #'
 #' @param shapes list of SpatialPolygonsDataFrame objects, as e.g. returned by
 #'   [get_shapes_of_germany]
-#' @return list with elements `index` (index of SpatialPolygonsDataFrame in
-#'   `shapes` list), `variable` (column in selected
-#'   SpatialPolygonsDataFrame), `pattern` pattern (e.g. the name of a city)
-#'   to be matched against the values in the selected column of the
-#'   selected SpatialPolygonsDataFrame. This list simply describes how to select
-#'   a SpatialPolygon from a list of SpatialPolygonsDataFrames
+#' @return list with elements
+#'   * `index` (index of SpatialPolygonsDataFrame in `shapes` list),
+#'   * `variable` (column in selected SpatialPolygonsDataFrame),
+#'   * `pattern` pattern (e.g. the name of a city)
+#'   to be matched against the values in the selected column of the selected
+#'   SpatialPolygonsDataFrame. This list simply describes how to select a
+#'   SpatialPolygon from a list of SpatialPolygonsDataFrames
 select_shapes <- function(shapes)
 {
   # Let the user select a SpatialPolygonsDataFrame (by name of .shp file)

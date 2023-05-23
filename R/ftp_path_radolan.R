@@ -30,8 +30,6 @@ ftp_path_radolan <- function(
     format = NULL
 )
 {
-  `%>%` <- magrittr::`%>%`
-
   ### Code to generate the following "templates <- c(...)" assignment
   # ftp_path_radolan_all(use_placeholder = TRUE) %>%
   #   dQuote('"') %>%
@@ -87,8 +85,6 @@ ftp_path_radolan <- function(
 # ftp_path_radolan_all ---------------------------------------------------------
 ftp_path_radolan_all <- function(use_placeholder = FALSE)
 {
-  `%>%` <- magrittr::`%>%`
-
   paths <- kwb.dwd::dwd_files$file %>%
     grep(pattern = "/radolan/", value = TRUE) %>%
     dirname() %>%

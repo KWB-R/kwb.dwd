@@ -12,11 +12,18 @@ load_potential_evaporation_berlin_2(from, to)
 \item{to}{optional. Last month to be considered, as yyyymm string}
 }
 \value{
-data frame with columns \code{file} (name of file downloaded from
-DWD), \code{year} (year number as integer), \verb{month number as integer},
-\code{mean} (mean value), \code{sd} (standard deviation), \code{min}
-(minimum value), \code{max} (maximum value), \code{n_values} (number of
-considered values) of potential evaporation calculated for Berlin, Germany
+data frame with columns
+\itemize{
+\item \code{file} (name of file downloaded from DWD),
+\item \code{year} (year number as integer),
+\item \code{month} (month number as integer`,
+\item \code{mean} (mean value),
+\item \code{sd} (standard deviation),
+\item \code{min} (minimum value),
+\item \code{max} (maximum value),
+\item \code{n_values} (number of considered values)
+of potential evaporation calculated for Berlin, Germany
+}
 }
 \description{
 This version uses publicly available shape files to determine the area that

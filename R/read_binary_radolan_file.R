@@ -5,8 +5,8 @@
 #' @param path path to binary Radolan file
 #' @param set_projection_and_extent if `TRUE` (default), the projection
 #'   and extent of the raster object are set to the Radolan specific values,
-#'   returned by `kwb.dwd::get_radolan_projection_string()` and
-#'   `kwb.dwd::get_radolan_extension()`, respectively.
+#'   returned by `kwb.dwd::get_radolan_projection_string` and
+#'   `kwb.dwd::get_radolan_extension`, respectively.
 #' @param consider_flags logical. Should the flags be considered? If
 #'   `TRUE`, values where the "invalid" or "clutter" flag is set are set to
 #'   `NA` and values where the "negative" flag is set are negated. The
