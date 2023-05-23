@@ -9,6 +9,8 @@
 #' @param dbg if `TRUE`, debug messages are shown
 #' @export
 #' @importFrom kwb.utils createDirectory
+#' @seealso
+#'  * [write_raster_to_file].
 convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)
 {
   stopifnot(is.character(bin_file))
@@ -60,6 +62,8 @@ convert_bin_to_raster_file <- function(bin_file, target_dir = NULL, dbg = TRUE)
 #' @export
 #'
 #' @importFrom raster writeRaster
+#' @seealso
+#'  * [convert_bin_to_raster_file].
 write_raster_to_file <- function(rb, file, dbg = TRUE)
 {
   kwb.utils::catAndRun(

@@ -29,3 +29,10 @@ of potential evaporation calculated for Berlin, Germany
 This version uses publicly available shape files to determine the area that
 is covered by Berlin. This function can easily be adopted to other cities!
 }
+\seealso{
+\itemize{
+\item \link{load_potential_evaporation_berlin},
+\item \link{get_berlin_dwd_mask},
+\item \link{load_precipitation_berlin}.
+}
+}

@@ -13,6 +13,11 @@
 #' @param quiet passed to [download.file]
 #' @return data frame
 #' @export
+#' @seealso
+#'  * [read_monthly_data_over_shape],
+#'  * [read_binary_radolan_file],
+#'  * [read_asc_gz_file],
+#'  * [read_relevant_years_radolan].
 read_daily_data_over_shape <- function(file, variable, from, to, quiet = FALSE)
 {
   # Define scaling factors per variable. Depending on the variable, the values

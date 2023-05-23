@@ -33,3 +33,8 @@ default) only the paths relative to \code{url}.}
 \description{
 List Files or Folders in a FTP Directory
 }
+\seealso{
+\itemize{
+\item \link{list_extracted_radolan_files}.
+}
+}

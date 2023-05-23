@@ -28,3 +28,11 @@ object returned by \link[raster:crop]{raster::crop}}
 \description{
 Crop Radolan Data
 }
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{extract_radolan_zip_files},
+\item \link{radolan_raw_to_raster},
+\item \link{download_radolan}.
+}
+}

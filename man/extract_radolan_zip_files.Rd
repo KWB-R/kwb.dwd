@@ -17,3 +17,8 @@ Nothing. Side effect: Unzipped files in subfolder "bin" below
 \description{
 Extract radolan zip files
 }
+\seealso{
+\itemize{
+\item \link{list_extracted_radolan_files}.
+}
+}

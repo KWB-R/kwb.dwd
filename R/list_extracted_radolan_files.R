@@ -14,6 +14,8 @@
 #'   time `resolution` and time interval (specified by `from` and
 #'   `to`).
 #' @export
+#' @seealso
+#'  * [extract_radolan_zip_files].
 list_extracted_radolan_files <- function(from, to, resolution, format)
 {
   # resolution = "daily"

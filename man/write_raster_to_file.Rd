@@ -19,3 +19,8 @@ write raster to file
 \description{
 Write raster to file
 }
+\seealso{
+\itemize{
+\item \link{convert_bin_to_raster_file}.
+}
+}

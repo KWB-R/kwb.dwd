@@ -9,6 +9,11 @@
 #' @return path to the unzipped file
 #' @export
 #' @importFrom kwb.utils removeExtension
+#' @seealso
+#'  * [read_binary_radolan_file],
+#'  * [convert_bin_to_raster_file],
+#'  * [read_asc_gz_file],
+#'  * [write_raster_to_file].
 unzip_asc_gz_file <- function(file, target_dir = tempdir())
 {
   # Path to the target file

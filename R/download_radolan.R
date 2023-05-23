@@ -14,6 +14,11 @@
 #' @export
 #' @examples
 #' \dontrun{download_radolan(resolution = "daily")}
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [extract_radolan_zip_files],
+#'  * [radolan_raw_to_raster],
+#'  * [list_extracted_radolan_files].
 download_radolan <- function(resolution = "daily", export_dir = "data", ...)
 {
   if (! resolution %in% c("daily", "hourly")) {

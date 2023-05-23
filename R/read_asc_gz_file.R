@@ -8,6 +8,9 @@
 #' @export
 #' @importFrom kwb.utils callWith removeExtension tempSubdirectory
 #' @importFrom raster raster
+#' @seealso
+#'  * [read_binary_radolan_file],
+#'  * [unzip_asc_gz_file].
 read_asc_gz_file <- function(file, url = NULL)
 {
   target_dir <- if (is.null(url)) {

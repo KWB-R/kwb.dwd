@@ -62,6 +62,8 @@ load_monthly_variable_for_region <- function(
 #' @importFrom utils read.csv
 #' @examples
 #' get_berlin_dwd_mask()
+#' @seealso
+#'  * [get_dwd_urls_metadata].
 get_berlin_dwd_mask <- function()
 {
   # DWD matrix filled with NA
@@ -97,6 +99,8 @@ get_berlin_dwd_mask <- function()
 #' @export
 #' @importFrom kwb.utils getAttribute
 #' @importFrom stats sd
+#' @seealso
+#'  * [get_example_grid_germany].
 calculate_masked_grid_stats <- function(matrices, geo_mask)
 {
   # Start with metadata from matrices' attributes: file name, year, month

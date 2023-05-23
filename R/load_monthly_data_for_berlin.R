@@ -16,6 +16,10 @@
 #'   * `n_values` (number of considered values)
 #' of potential evaporation calculated for Berlin, Germany
 #' @export
+#' @seealso
+#'  * [load_potential_evaporation_berlin_2],
+#'  * [get_berlin_dwd_mask],
+#'  * [load_precipitation_berlin].
 load_potential_evaporation_berlin <- function(from = NULL, to = NULL)
 {
   load_monthly_variable_for_region(
@@ -40,6 +44,10 @@ load_potential_evaporation_berlin <- function(from = NULL, to = NULL)
 #'   * `max` (maximum value)
 #' of precipitation calculated for Berlin, Germany
 #' @export
+#' @seealso
+#'  * [load_potential_evaporation_berlin_2],
+#'  * [load_potential_evaporation_berlin],
+#'  * [get_berlin_dwd_mask].
 load_precipitation_berlin <- function(from = NULL, to = NULL)
 {
   load_monthly_variable_for_region(
@@ -67,6 +75,10 @@ load_precipitation_berlin <- function(from = NULL, to = NULL)
 #'   * `n_values` (number of considered values)
 #' of potential evaporation calculated for Berlin, Germany
 #' @export
+#' @seealso
+#'  * [load_potential_evaporation_berlin],
+#'  * [get_berlin_dwd_mask],
+#'  * [load_precipitation_berlin].
 load_potential_evaporation_berlin_2 <- function(from, to)
 {
   load_monthly_variable_for_region(

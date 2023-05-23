@@ -11,6 +11,8 @@
 #' @importFrom kwb.utils left
 #' @importFrom raster stack
 #' @importFrom stats setNames
+#' @seealso
+#'  * [read_binary_radolan_file].
 read_relevant_years_radolan <- function(path, years)
 {
   stopifnot(is.numeric(years))

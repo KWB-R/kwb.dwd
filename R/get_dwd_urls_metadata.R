@@ -9,6 +9,9 @@
 #' @export
 #' @importFrom stats setNames
 #' @importFrom kwb.utils pasteColumns
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [get_berlin_dwd_mask].
 get_dwd_urls_metadata <- function()
 {
   # Note: category "solar" is not considered

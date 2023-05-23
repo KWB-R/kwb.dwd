@@ -6,6 +6,9 @@
 #' @examples
 #' get_radolan_projection_string()
 #'
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [get_radolan_extension].
 get_radolan_projection_string <- function()
 {
   to_projection_string(

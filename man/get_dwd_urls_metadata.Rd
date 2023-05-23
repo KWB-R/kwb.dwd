@@ -14,3 +14,9 @@ file provided by Deutscher Wetterdienst (DWT), e.g. files
 \description{
 Get URLs to DWD Metadata
 }
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{get_berlin_dwd_mask}.
+}
+}

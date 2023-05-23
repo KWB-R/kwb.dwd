@@ -18,3 +18,9 @@ file, provided that the file exists.}
 \description{
 Provide List of SpatialPolygonsDataFrame for Germany
 }
+\seealso{
+\itemize{
+\item \link{get_example_grid_germany},
+\item \link{check_or_download_shapes_germany}.
+}
+}
