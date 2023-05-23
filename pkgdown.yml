@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   overview: overview.html
   radolan: radolan.html
-last_built: 2023-05-23T08:27Z
+last_built: 2023-05-23T20:12Z
 urls:
   reference: https://kwb-r.github.io/kwb.dwd/reference
   article: https://kwb-r.github.io/kwb.dwd/articles
