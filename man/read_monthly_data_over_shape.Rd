@@ -41,3 +41,11 @@ data frame
 \description{
 Read monthly data from DWD, mask region with given shape file
 }
+\seealso{
+\itemize{
+\item \link{read_binary_radolan_file},
+\item \link{read_asc_gz_file},
+\item \link{read_relevant_years_radolan},
+\item \link{read_daily_data_over_shape}.
+}
+}

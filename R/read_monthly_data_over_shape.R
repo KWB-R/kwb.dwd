@@ -15,6 +15,11 @@
 #'   such as `drop_z = TRUE`, if applicable
 #' @return data frame
 #' @export
+#' @seealso
+#'  * [read_binary_radolan_file],
+#'  * [read_asc_gz_file],
+#'  * [read_relevant_years_radolan],
+#'  * [read_daily_data_over_shape].
 read_monthly_data_over_shape <- function(
     file = NULL,
     variable,

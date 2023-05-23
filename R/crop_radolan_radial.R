@@ -13,6 +13,11 @@
 #' @importFrom sf st_buffer st_transform
 #' @importFrom raster cellStats crop
 #' @importFrom lubridate ymd
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [extract_radolan_zip_files],
+#'  * [radolan_raw_to_raster],
+#'  * [download_radolan].
 crop_radolan_radial <- function(
   radolan, longitude, latitude, radius = 10, as_data_frame = TRUE
 )

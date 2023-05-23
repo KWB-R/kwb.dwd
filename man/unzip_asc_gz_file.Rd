@@ -19,3 +19,11 @@ path to the unzipped file
 \description{
 Download a .gz File and Unzip it
 }
+\seealso{
+\itemize{
+\item \link{read_binary_radolan_file},
+\item \link{convert_bin_to_raster_file},
+\item \link{read_asc_gz_file},
+\item \link{write_raster_to_file}.
+}
+}

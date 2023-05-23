@@ -7,6 +7,11 @@
 #' @return ???
 #' @export
 #' @importFrom raster flip raster
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [extract_radolan_zip_files],
+#'  * [download_radolan],
+#'  * [list_extracted_radolan_files].
 radolan_raw_to_raster <- function(rbi, version = 3)
 {
   stopifnot(version %in% 1:3)

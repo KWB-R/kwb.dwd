@@ -15,6 +15,8 @@
 #' @export
 #' @importFrom kwb.utils listToDepth selectColumns
 #' @importFrom RCurl getCurlHandle
+#' @seealso
+#'  * [list_extracted_radolan_files].
 list_url <- function(
   url = ftp_path_cdc(),
   recursive = ! is.na(max_depth),

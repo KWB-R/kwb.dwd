@@ -39,6 +39,10 @@
 #'
 #' urls$daily_historical_urls
 #'
+#' @seealso
+#'  * [get_dwd_urls_metadata],
+#'  * [get_radolan_extension],
+#'  * [get_radolan_projection_string].
 get_radolan_urls <- function(
   start_daily = "2006-10",
   start_hourly = "2005-06",

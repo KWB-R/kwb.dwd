@@ -9,3 +9,8 @@ get_example_grid_germany()
 \description{
 Read monthly potential evaporation of January 2022, just as an example.
 }
+\seealso{
+\itemize{
+\item \link{get_shapes_of_germany}.
+}
+}

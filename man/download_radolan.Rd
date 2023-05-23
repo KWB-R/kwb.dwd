@@ -25,3 +25,11 @@ Download Radolan Files on DWD Server
 \examples{
 \dontrun{download_radolan(resolution = "daily")}
 }
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{extract_radolan_zip_files},
+\item \link{radolan_raw_to_raster},
+\item \link{list_extracted_radolan_files}.
+}
+}

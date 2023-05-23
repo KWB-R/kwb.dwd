@@ -15,3 +15,8 @@ Get geographical "stamp" for Berlin area
 \examples{
 get_berlin_dwd_mask()
 }
+\seealso{
+\itemize{
+\item \link{get_dwd_urls_metadata}.
+}
+}

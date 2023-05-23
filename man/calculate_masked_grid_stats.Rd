@@ -26,3 +26,8 @@ data frame with one row per matrix in \code{matrices} and columns
 \description{
 Calculate Stats of Variable for Geographical Subset of a Grid
 }
+\seealso{
+\itemize{
+\item \link{get_example_grid_germany}.
+}
+}

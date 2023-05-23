@@ -24,6 +24,10 @@ if (FALSE)
 #' @param timeout timeout in seconds
 #' @return path to folder containing shape files
 #' @export
+#' @seealso
+#'  * [get_shapes_of_germany],
+#'  * [get_example_grid_germany],
+#'  * [download_radolan].
 check_or_download_shapes_germany <- function(
     url = "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip",
     quiet = FALSE,

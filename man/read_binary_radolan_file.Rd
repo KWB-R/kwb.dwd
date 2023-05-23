@@ -27,3 +27,9 @@ in future!}
 \description{
 Read Binary Radolan File
 }
+\seealso{
+\itemize{
+\item \link{read_asc_gz_file},
+\item \link{read_relevant_years_radolan}.
+}
+}

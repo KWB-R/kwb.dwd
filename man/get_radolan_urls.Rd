@@ -56,3 +56,10 @@ urls <- kwb.dwd::get_radolan_urls(
 urls$daily_historical_urls
 
 }
+\seealso{
+\itemize{
+\item \link{get_dwd_urls_metadata},
+\item \link{get_radolan_extension},
+\item \link{get_radolan_projection_string}.
+}
+}

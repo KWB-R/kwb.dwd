@@ -29,3 +29,10 @@ of potential evaporation calculated for Berlin, Germany
 This function loads monthly potential evaporation for Berlin, Germany,
 from Deutscher Wetterdienst (DWD).
 }
+\seealso{
+\itemize{
+\item \link{load_potential_evaporation_berlin_2},
+\item \link{get_berlin_dwd_mask},
+\item \link{load_precipitation_berlin}.
+}
+}

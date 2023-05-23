@@ -9,6 +9,9 @@
 #'   file, provided that the file exists.
 #' @param use_sf passed to `kwb.dwd:::transform_coords`
 #' @export
+#' @seealso
+#'  * [get_example_grid_germany],
+#'  * [check_or_download_shapes_germany].
 get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 {
   if (!recreate) {

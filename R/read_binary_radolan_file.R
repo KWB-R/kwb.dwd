@@ -15,6 +15,9 @@
 #' @export
 #' @importFrom sp CRS
 #' @importFrom raster extent
+#' @seealso
+#'  * [read_asc_gz_file],
+#'  * [read_relevant_years_radolan].
 read_binary_radolan_file <- function(
     path,
     set_projection_and_extent = TRUE,
@@ -51,6 +54,9 @@ read_binary_radolan_file <- function(
 #' @examples
 #' get_radolan_extension()
 #'
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [get_radolan_projection_string].
 get_radolan_extension <- function()
 {
   c(-523.4622, 376.5378, -4658.645, -3758.645)

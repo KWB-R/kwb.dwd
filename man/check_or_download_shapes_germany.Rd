@@ -27,3 +27,10 @@ This function checks if shape files for Germany are available in the folder
 \verb{\\\%TEMP\\\%/R_kwb.dwd/shapes_germany}. If not, the shape files are
 downloaded from the URL given in \code{url} and unpacked into that folder.
 }
+\seealso{
+\itemize{
+\item \link{get_shapes_of_germany},
+\item \link{get_example_grid_germany},
+\item \link{download_radolan}.
+}
+}

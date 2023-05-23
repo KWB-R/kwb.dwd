@@ -27,3 +27,8 @@ time \code{resolution} and time interval (specified by \code{from} and
 \description{
 List the Locally Available Extracted Files
 }
+\seealso{
+\itemize{
+\item \link{extract_radolan_zip_files}.
+}
+}

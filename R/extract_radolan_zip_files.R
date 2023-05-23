@@ -10,6 +10,8 @@
 #'
 #' @export
 #' @importFrom kwb.utils createDirectory
+#' @seealso
+#'  * [list_extracted_radolan_files].
 extract_radolan_zip_files <- function(radolan_dir)
 {
   #radolan_dir = download_dir("dwd")

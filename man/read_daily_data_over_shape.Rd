@@ -25,3 +25,11 @@ data frame
 Currently, only full months of data can be loaded, \code{from} and \code{to}
 must be given
 }
+\seealso{
+\itemize{
+\item \link{read_monthly_data_over_shape},
+\item \link{read_binary_radolan_file},
+\item \link{read_asc_gz_file},
+\item \link{read_relevant_years_radolan}.
+}
+}
