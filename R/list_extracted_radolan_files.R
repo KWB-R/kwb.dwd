@@ -10,7 +10,7 @@
 #' @param format file format, currently one of "asc" (ASCII text), "bin"
 #'   (binary)
 #' @return paths to files on the local drive, below the folder returned by
-#'   \code{\link{temp_dir}},  that contain data in the requested \code{format},
+#'   [temp_dir], that contain data in the requested \code{format},
 #'   time \code{resolution} and time interval (specified by \code{from} and
 #'   \code{to}).
 #' @export

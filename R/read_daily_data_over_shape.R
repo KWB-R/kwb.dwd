@@ -10,7 +10,7 @@
 #'   "evapo_r", "frost_depth", "soil_moist", "soil_temperature_5cm"
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
-#' @param quiet passed to \code{\link{download.file}}
+#' @param quiet passed to [download.file]
 #' @return data frame
 #' @export
 read_daily_data_over_shape <- function(file, variable, from, to, quiet = FALSE)

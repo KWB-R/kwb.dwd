@@ -8,9 +8,9 @@ temp_dir(..., template = NULL, create = TRUE, dbg = FALSE)
 }
 \arguments{
 \item{\dots}{parts of the path after \code{<TEMP_DIR>/R_kwb.dwd/}, passed to
-\code{\link{file.path}} where \code{<TEMP_DIR>} is either the value of
+\link{file.path}] where \code{<TEMP_DIR>} is either the value of
 environment variable \code{TEMP} (if set) or \code{TMP} (if set) or the
-result of calling \code{\link{tempdir}}.}
+result of calling \link{tempdir}.}
 
 \item{template}{optional. If given, it is assumed to be a path to a file. The
 name of the file without file name extension is then used as folder name

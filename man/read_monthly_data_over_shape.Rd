@@ -24,7 +24,7 @@ read_monthly_data_over_shape(
 
 \item{to}{last month as "yyyymm" string}
 
-\item{quiet}{passed to \code{\link{download.file}}}
+\item{quiet}{passed to \link{download.file}}
 
 \item{shape}{object of class sf or sf_layers or SpatialPolygonsDataFrame.
 If \code{NULL} (the default), this object is obtained by calling

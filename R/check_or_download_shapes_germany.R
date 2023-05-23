@@ -19,7 +19,7 @@ if (FALSE)
 #'
 #' @param url URL to publicly available zip file containing shape files for
 #'   Germany. Default:
-#'   \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}
+#'   <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 #' @param quiet passed if \code{TRUE} status messages are suppressed
 #' @param timeout timeout in seconds
 #' @return path to folder containing shape files

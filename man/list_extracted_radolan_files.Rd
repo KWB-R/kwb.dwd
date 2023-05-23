@@ -20,9 +20,9 @@ month)}
 }
 \value{
 paths to files on the local drive, below the folder returned by
-  \code{\link{temp_dir}},  that contain data in the requested \code{format},
-  time \code{resolution} and time interval (specified by \code{from} and
-  \code{to}).
+\link{temp_dir}, that contain data in the requested \code{format},
+time \code{resolution} and time interval (specified by \code{from} and
+\code{to}).
 }
 \description{
 List the Locally Available Extracted Files

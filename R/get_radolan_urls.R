@@ -1,7 +1,7 @@
 #' Get URLs to Available Radolan Files
 #'
 #' Get URLs to available radolan files on the DWD FTP server below this base
-#' address: \url{ftp://opendata.dwd.de/climate_environment/CDC/grids_germany}.
+#' address: <ftp://opendata.dwd.de/climate_environment/CDC/grids_germany>.
 #' The user can choose between daily records and hourly records that are located
 #' at different paths on the server. The paths to the files are not read from
 #' the FTP server but generated, given the knowledge of where the files should

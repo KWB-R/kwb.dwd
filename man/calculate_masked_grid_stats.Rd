@@ -13,8 +13,8 @@ calculate_masked_grid_stats(matrices, geo_mask)
 }
 \value{
 data frame with one row per matrix in \code{matrices} and columns
-  \code{file}, \code{year}, \code{month}, \code{mean}, \code{sd}, \code{min},
-  \code{max}
+\code{file}, \code{year}, \code{month}, \code{mean}, \code{sd}, \code{min},
+\code{max}
 }
 \description{
 Calculate Stats of Variable for Geographical Subset of a Grid

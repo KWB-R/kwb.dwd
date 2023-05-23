@@ -8,8 +8,8 @@ get_dwd_urls_metadata()
 }
 \value{
 list of character with each element representing a URL to a metadata
-  file provided by Deutscher Wetterdienst (DWT), e.g. files
-  "_Beschreibung_Stationen.txt" describing measurement stations.
+file provided by Deutscher Wetterdienst (DWT), e.g. files
+"_Beschreibung_Stationen.txt" describing measurement stations.
 }
 \description{
 Get URLs to DWD Metadata

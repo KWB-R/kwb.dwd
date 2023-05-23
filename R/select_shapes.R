@@ -3,7 +3,7 @@
 #' Interactively Configure Selection of SpatialPolygons
 #'
 #' @param shapes list of SpatialPolygonsDataFrame objects, as e.g. returned by
-#'   \code{\link{get_shapes_of_germany}}
+#'   [get_shapes_of_germany]
 #' @return list with elements \code{index} (index of SpatialPolygonsDataFrame in
 #'   \code{shapes} list), \code{variable} (column in selected
 #'   SpatialPolygonsDataFrame), \code{pattern} pattern (e.g. the name of a city)

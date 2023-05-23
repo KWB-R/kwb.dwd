@@ -6,7 +6,7 @@
 #' @param variable currently only "evapo_p" is supported
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
-#' @param quiet passed to \code{\link{download.file}}
+#' @param quiet passed to [download.file]
 #' @param shape object of class sf or sf_layers or SpatialPolygonsDataFrame.
 #'   If \code{NULL} (the default), this object is obtained by calling
 #'   \code{kwb.dwd:::read_shape_file} on \code{file}.

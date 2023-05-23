@@ -6,9 +6,9 @@
 \title{Shapes of German Regions (1)}
 \format{
 Simple feature collection with 16 features and 11 fields:
-  \code{ID_0}, \code{COUNTRY}, \code{ID_1}, \code{NAME_1}, \code{VARNAME_1},
-  \code{NL_NAME_1}, \code{TYPE_1}, \code{ENGTYPE_1}, \code{CC_1},
-  \code{HASC_1}, \code{ISO_1}
+\code{ID_0}, \code{COUNTRY}, \code{ID_1}, \code{NAME_1}, \code{VARNAME_1},
+\code{NL_NAME_1}, \code{TYPE_1}, \code{ENGTYPE_1}, \code{CC_1},
+\code{HASC_1}, \code{ISO_1}
 }
 \source{
 \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}

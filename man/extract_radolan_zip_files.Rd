@@ -12,7 +12,7 @@ in .tar.gz)}
 }
 \value{
 Nothing. Side effect: Unzipped files in subfolder "bin" below
-  \code{radolan_dir}.
+\code{radolan_dir}.
 }
 \description{
 Extract radolan zip files

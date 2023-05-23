@@ -1,12 +1,12 @@
 #' Files Available on DWD's FTP Server
 #'
 #' Information on files that are available for download at
-#' \url{ftp://opendata.dwd.de/climate_environment/CDC/} [base_url]. The
+#' <ftp://opendata.dwd.de/climate_environment/CDC/> \[base_url\]. The
 #' information were last updated on 2023-04-26.
 #'
 #' @format A data frame with 838345 observations of 8 variables:
 #' \describe{
-#'   \item{file}{path to the file below [base_url]}
+#'   \item{file}{path to the file below \[base_ur\]}
 #'   \item{isdir}{TRUE for a directory, FALSE for a file}
 #'   \item{size}{file size in bytes}
 #'   \item{permissions}{string indicating file permissions}
@@ -15,7 +15,7 @@
 #'   \item{group}{further column provided by the FTP server}
 #'   \item{links}{further column provided by the FTP server}
 #' }
-#' @source \url{ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt}
+#' @source <ftp://opendata.dwd.de/climate_environment/CDC/Announce_log_CDC_ftp.txt>
 "dwd_files"
 
 #' Shapes of German Regions (0)
@@ -25,7 +25,7 @@
 #' @format Simple feature collection with 1 feature and 2 fields:
 #'   \code{COUNTRY}, \code{ID_0}
 #' @source
-#' \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}
+#' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_0"
 
 #' Shapes of German Regions (1)
@@ -37,7 +37,7 @@
 #'   \code{NL_NAME_1}, \code{TYPE_1}, \code{ENGTYPE_1}, \code{CC_1},
 #'   \code{HASC_1}, \code{ISO_1}
 #' @source
-#' \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}
+#' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_1"
 
 #' Shapes of German Regions (2)
@@ -49,5 +49,5 @@
 #'   \code{NAME_2}, \code{VARNAME_2}, \code{NL_NAME_2}, \code{TYPE_2},
 #'   \code{ENGTYPE_2}, \code{CC_2}, \code{HASC_2}
 #' @source
-#' \url{https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip}
+#' <https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip>
 "shapes_germany_2"
