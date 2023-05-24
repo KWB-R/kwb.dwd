@@ -149,14 +149,15 @@ filter_by_month_range <- function(urls, from = NULL, to = NULL)
     return(urls)
   }
 
-  extract_yyyymm <- function(x) gsub("^.*(\\d{6}).*$", "\\1", basename(x))
+  extract_year_month <- function(x) gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 
-  from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
-  to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
+  first_url <- urls[1L]
+  last_url <- urls[length(urls)]
 
-  pattern <- month_range_pattern(from, to)
+  from <- kwb.utils::defaultIfNULL(from, extract_year_month(first_url))
+  to <- kwb.utils::defaultIfNULL(to, extract_year_month(last_url))
 
-  urls[grep(pattern, urls)]
+  grep(month_range_pattern(from, to), urls, value = TRUE)
 }
 
 # get_date_time_from_bin_filename ----------------------------------------------
