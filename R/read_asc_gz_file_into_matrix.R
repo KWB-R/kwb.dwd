@@ -61,7 +61,7 @@ read_lines_from_gz_file <- function(
     assert_url(file, final_slash = FALSE)
 
     # Download file from URL to temporary directory
-    file <- download_if_not_there(
+    file <- download(
       file,
       target_dir = temp_dir(),
       quiet = TRUE,

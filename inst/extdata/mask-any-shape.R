@@ -56,7 +56,7 @@ if (FALSE)
   ))
 
   # Rainfall in the different Berliner Bezirke
-  zip_file_bezirke_berlin <- kwb.dwd:::download_if_not_there(
+  zip_file_bezirke_berlin <- kwb.dwd:::download(
     "https://tsb-opendata.s3.eu-central-1.amazonaws.com/bezirksgrenzen/bezirksgrenzen.shp.zip",
     target_dir = kwb.dwd:::download_dir("tsb"),
     mode = "wb"

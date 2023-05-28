@@ -6,10 +6,10 @@ if (FALSE)
 
   RCurl::url.exists(url)
 
-  download.file(url, file.path(tempdir(), basename(url)), mode = "wb")
+  file <- kwb.dwd:::download(url, mode = "wb")
 }
 
-# check_or_download_shapes_germany ---------------------------------------------
+# download_shapes_germany ------------------------------------------------------
 
 #' Check Local Availability or Download Shape Files
 #'
@@ -28,7 +28,7 @@ if (FALSE)
 #'  * [get_shapes_of_germany],
 #'  * [get_example_grid_germany],
 #'  * [download_radolan].
-check_or_download_shapes_germany <- function(
+download_shapes_germany <- function(
     url = "https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip",
     quiet = FALSE,
     timeout = 60
@@ -47,7 +47,7 @@ check_or_download_shapes_germany <- function(
 
   # If <shape_dir> does not contain .shp files, download the zip-archive from
   # <url> and extract it into <shape_dir>
-  file <- try(silent = TRUE, suppressWarnings(download_if_not_there(
+  file <- try(silent = TRUE, suppressWarnings(download(
     url,
     target_dir = download_dir("shapes_germany"),
     quiet = quiet,

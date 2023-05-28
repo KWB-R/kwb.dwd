@@ -20,11 +20,15 @@ provide_projection_file <- function(file, dbg = FALSE)
 }
 
 # default_projection_file ------------------------------------------------------
-default_projection_file <- function(quiet = TRUE)
+default_projection_file <- function(quiet = TRUE, download = TRUE)
 {
   url <- "https://opendata.dwd.de/climate_environment/CDC/help/gk3.prj"
 
-  download_if_not_there(url = url, quiet = quiet, file = file.path(
+  if (!download) {
+    return(url)
+  }
+
+  download(url = url, quiet = quiet, file = file.path(
     system.file("extdata", package = "kwb.dwd"),
     basename(url)
   ))

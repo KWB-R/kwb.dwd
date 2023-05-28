@@ -19,7 +19,7 @@ download_and_extract <- function(url, quiet = FALSE)
   target_dir <- temp_dir(template = url)
 
   # Download the file into the dedicated folder
-  file <- download_if_not_there(
+  file <- download(
     url,
     target_dir = target_dir,
     quiet = quiet,

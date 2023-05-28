@@ -87,8 +87,8 @@ download_dir <- function(...)
     kwb.utils::createDirectory(dbg = FALSE)
 }
 
-# download_if_not_there --------------------------------------------------------
-download_if_not_there <- function(
+# download ---------------------------------------------------------------------
+download <- function(
     url,
     file = file.path(target_dir, basename(url)),
     target_dir = download_dir(),
@@ -97,40 +97,42 @@ download_if_not_there <- function(
     timeout = getOption("timeout")
 )
 {
-
   if (file.exists(file)) {
-
     kwb.utils::catIf(!quiet, "\nFile already there:", file, "\n")
+    return(file)
+  }
 
-  } else {
+  # Temporarily set the timeout option
+  old_options <- options(timeout = timeout)
+  on.exit(options(old_options))
 
-    # Temporarily set the timeout option
-    old_options <- options(timeout = timeout)
-    on.exit(options(old_options))
-
-    result <- kwb.utils::catAndRun(
-      sprintf("\nDownloading\n  %s\nto\n  %s", url, file),
-      dbg = !quiet,
-      expr = try(download.file(
+  result <- kwb.utils::catAndRun(
+    sprintf("\nDownloading\n  %s\nto\n  %s", url, file),
+    dbg = !quiet,
+    expr = try(
+      silent = TRUE,
+      download.file(
         url = url,
         destfile = file,
         method = "auto",
         quiet = TRUE,
         mode = mode
-      ))
-    )
-
-    if (kwb.utils::isTryError(result) || !identical(result, 0L)) {
-      if (file.exists(file)) {
-        if (!identical(unlink(file), 0L)) {
-          message("Could not delete incompletely downloaded file: ", file)
-        }
-      }
-      kwb.utils::stopFormatted(
-        "Could not download %s within %d seconds.", url, timeout
       )
+    )
+  )
+
+  if (kwb.utils::isTryError(result) || !identical(result, 0L)) {
+
+    if (file.exists(file)) {
+      if (!identical(unlink(file), 0L)) {
+        message("Could not delete incompletely downloaded file: ", file)
+      }
     }
 
+    kwb.utils::stopFormatted(
+      "Could not download %s within %d seconds.\n%s",
+      url, timeout, as.character(result)
+    )
   }
 
   file

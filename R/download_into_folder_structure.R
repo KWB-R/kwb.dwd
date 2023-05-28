@@ -16,7 +16,7 @@ download_into_folder_structure <- function(
 
   # Download the files that are not yet in the target directory structure
   mapply(
-    FUN = download_if_not_there,
+    FUN = download,
     urls,
     target_files,
     MoreArgs = list(...)

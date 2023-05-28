@@ -182,13 +182,13 @@ head(dir(kwb.dwd:::download_dir("radolan/daily/historical")))
 
 ### Download Shape Files for Germany
 
-Function: `check_or_download_shapes_germany()`
+Function: `download_shapes_germany()`
 
 This function downloads shape files for Germany. They are not provided by DWD
 so this package may not be the best place for this function.
 
 ```{r}
-target_path <- kwb.dwd::check_or_download_shapes_germany()
+target_path <- kwb.dwd::download_shapes_germany()
 ```
 
 Shape files have been downloaded and extracted to the target path:

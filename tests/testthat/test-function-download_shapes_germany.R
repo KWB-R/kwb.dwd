@@ -1,8 +1,8 @@
 #library(testthat)
 
-test_that("check_or_download_shapes_germany() works", {
+test_that("download_shapes_germany() works", {
 
-  f <- kwb.dwd:::check_or_download_shapes_germany
+  f <- kwb.dwd:::download_shapes_germany
 
   result <- try(f(quiet = FALSE, timeout = 1))
 

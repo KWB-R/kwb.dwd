@@ -11,7 +11,7 @@
 #' @export
 #' @seealso
 #'  * [get_example_grid_germany],
-#'  * [check_or_download_shapes_germany].
+#'  * [download_shapes_germany].
 get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
 {
   if (!recreate) {
@@ -40,7 +40,7 @@ get_shapes_of_germany <- function(recreate = FALSE, use_sf = FALSE)
   # List shape files. If required, the shape files are downloaded, unzipped and
   # stored locally. They are downloaded from:
   # https://geodata.ucdavis.edu/gadm/gadm4.0/shp/gadm40_DEU_shp.zip
-  shape_dir <- check_or_download_shapes_germany()
+  shape_dir <- download_shapes_germany()
   files <- list_local_shape_files(shape_dir)
 
   # Read shapes at different levels of detail
