@@ -31,9 +31,6 @@
     <loc>https://kwb-r.github.io/kwb.dwd/reference/calculate_masked_grid_stats.html</loc>
   </url>
   <url>
-    <loc>https://kwb-r.github.io/kwb.dwd/reference/check_or_download_shapes_germany.html</loc>
-  </url>
-  <url>
     <loc>https://kwb-r.github.io/kwb.dwd/reference/convert_bin_to_raster_file.html</loc>
   </url>
   <url>
@@ -44,6 +41,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/reference/download_radolan.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.dwd/reference/download_shapes_germany.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.dwd/reference/dwd_files.html</loc>
