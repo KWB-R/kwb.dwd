@@ -203,7 +203,9 @@ get_full_extension <- function(x)
   selected <- n_parts > 2L
   extension[selected] <- sapply(parts[selected], "[", 2L)
 
-  extension[!looks_like_file_extension(extension)] <- ""
+  is_no_extension <- grepl("(^[0-9]+$)|[_-]", extension)
+
+  extension[is_no_extension] <- ""
   selected <- extension != ""
   result[selected] <- paste0(extension[selected], ".", result[selected])
 
@@ -282,12 +284,6 @@ list_zipped_files <- function(file)
   }
 
   result
-}
-
-# looks_like_file_extension ----------------------------------------------------
-looks_like_file_extension <- function(x)
-{
-  !grepl("(^[0-9]+$)|[_-]", x)
 }
 
 # month_range_pattern ----------------------------------------------------------
