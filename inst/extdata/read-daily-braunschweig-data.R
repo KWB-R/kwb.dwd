@@ -5,16 +5,16 @@ if (FALSE)
 {
   # monthly
 
-  urls_monthly <- kwb.dwd:::list_monthly_grids_germany_asc_gz("x")
+  urls_monthly <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "x")
   # -> error with possible variables
 
-  urls_monthly <- kwb.dwd:::list_monthly_grids_germany_asc_gz("sunshine_duration")
+  urls_monthly <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "sunshine_duration")
 
   # daily
-  urls_daily <- kwb.dwd:::list_daily_grids_germany_tgz("x")
+  urls_daily <- kwb.dwd:::list_grids_germany("daily", ".tgz", "x")
   # -> error with possible variables
 
-  urls_daily <- kwb.dwd:::list_daily_grids_germany_tgz("soil_temperature_5cm")
+  urls_daily <- kwb.dwd:::list_grids_germany("daily", ".tgz", "soil_temperature_5cm")
 
   kwb.file::remove_common_root(urls_monthly)
   kwb.file::remove_common_root(urls_daily)
@@ -42,13 +42,13 @@ if (FALSE)
 
   files <- kwb.dwd:::download_monthly_grids_germany("frost_depth", from, to)
 
-  kwb.file::remove_common_root(files)
-
   file <- files[1L]
 
   kwb.utils::hsOpenWindowsExplorer(dirname(file))
 
-  kwb.dwd:::read_asc_gz_file(file)
+  grid <- kwb.dwd:::read_asc_gz_file(file)
+
+  raster::plot(grid)
 }
 
 #

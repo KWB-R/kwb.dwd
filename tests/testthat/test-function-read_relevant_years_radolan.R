@@ -1,8 +1,10 @@
+#library(testthat)
+
 test_that("read_relevant_years_radolan() works", {
 
-  f <- kwb.dwd:::read_relevant_years_radolan
+  f <- kwb.dwd::read_relevant_years_radolan
 
-  expect_error(f())
+  expect_error(f(), 'argument "years" is missing')
   expect_error(f(years = 1999L))
   expect_error(f("/no/such/path", years = 2000L))
 
@@ -11,6 +13,10 @@ test_that("read_relevant_years_radolan() works", {
 
   writeLines("this is a test", file.path(tempdir(), "0-test.gri"))
 
-  expect_error(result <- f(tempdir(), 2000L), "Cannot create a RasterLayer")
+  expect_error(
+    result <- suppressWarnings(f(path = tempdir(), years = 2000L)),
+    "Cannot create a RasterLayer"
+  )
+
   expect_null(result)
 })

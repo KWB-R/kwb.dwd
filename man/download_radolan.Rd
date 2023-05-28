@@ -13,9 +13,8 @@ download_radolan(resolution = "daily", export_dir = "data", ...)
 \item{export_dir}{export directory (default: "data" in current working
 directory)}
 
-\item{\dots}{arguments passed to \code{\link{get_radolan_urls}}, such as
-\code{start_daily}, \code{start_hourly}, \code{end_daily},
-\code{end_hourly}}
+\item{\dots}{arguments passed to \link{get_radolan_urls}, such as \code{start_daily},
+\code{start_hourly}, \code{end_daily}, \code{end_hourly}.}
 }
 \value{
 list with "daily_historical_urls" and "hourly_historical_urls"
@@ -25,4 +24,12 @@ Download Radolan Files on DWD Server
 }
 \examples{
 \dontrun{download_radolan(resolution = "daily")}
+}
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{extract_radolan_zip_files},
+\item \link{radolan_raw_to_raster},
+\item \link{list_extracted_radolan_files}.
+}
 }

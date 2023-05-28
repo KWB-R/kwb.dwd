@@ -32,7 +32,7 @@ list_ftp_contents <- function(x = character(), full_info = FALSE, ...)
 #' @keywords internal
 #' @noMd
 #' @noRd
-#' @importFrom kwb.utils selectColumns
+#' @importFrom kwb.utils commonNames moveColumnsToFront selectColumns
 response_to_data_frame <- function(response, full_info = FALSE)
 {
   template <- empty_file_info(full_info)
@@ -53,9 +53,17 @@ response_to_data_frame <- function(response, full_info = FALSE)
     return(get_info(c("file", "isdir")))
   }
 
-  # Replace columns "year_or_time", "month", "day" with "modification_time".
-  # Put the most important columns first.
-  main_columns_first(simplify_time_info(info))
+  # Replace columns "year_or_time", "month", "day" with "modification_time"
+  simple_info <- simplify_time_info(info)
+
+  # Put the most important columns first
+  kwb.utils::moveColumnsToFront(
+    simple_info,
+    columns = kwb.utils::commonNames(
+      empty_file_info(full_info = TRUE),
+      simple_info
+    )
+  )
 }
 
 # empty_file_info --------------------------------------------------------------
@@ -156,36 +164,24 @@ simplify_time_info <- function(info)
 #'
 columns_to_timestamp <- function(info)
 {
-  pull <- function(x) kwb.utils::selectColumns(info, x)
+  pull <- kwb.utils::createAccessor(info)
 
   years_or_times <- pull("year_or_time")
 
-  is_year <- ! grepl(":", years_or_times)
+  is_year <- !grepl(":", years_or_times)
+
+  month_numbers <- list(
+    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
+    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
+  )
 
   # Compose a vector of timestamps. Use the current year in case of missing
   # years, and use midnight in case of missing times
   sprintf(
     "%04d-%02d-%02d %s",
     as.integer(ifelse(is_year, years_or_times, format(Sys.Date(), "%Y"))),
-    sapply(pull("month"), kwb.utils::selectElements, x = month_numbers()),
+    sapply(pull("month"), kwb.utils::selectElements, x = month_numbers),
     as.integer(pull("day")),
     ifelse(is_year, "00:00", years_or_times)
   )
-}
-
-# main_columns_first -----------------------------------------------------------
-#' Main Columns first
-#'
-#' @param df data.frame
-#' @return ???
-#' @keywords internal
-#' @noMd
-#' @noRd
-#' @importFrom kwb.utils moveColumnsToFront
-#'
-main_columns_first <- function(df)
-{
-  columns <- intersect(names(empty_file_info(full_info = TRUE)), names(df))
-
-  kwb.utils::moveColumnsToFront(df, columns)
 }

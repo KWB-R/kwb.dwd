@@ -17,3 +17,11 @@ radolan_raw_to_raster(rbi, version = 3)
 \description{
 Radolan raw to raster
 }
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{extract_radolan_zip_files},
+\item \link{download_radolan},
+\item \link{list_extracted_radolan_files}.
+}
+}

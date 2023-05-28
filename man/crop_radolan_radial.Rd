@@ -13,8 +13,7 @@ crop_radolan_radial(
 )
 }
 \arguments{
-\item{radolan}{radolan data as returned by
-\code{\link{read_relevant_years_radolan}}}
+\item{radolan}{radolan data as returned by \link{read_relevant_years_radolan}}
 
 \item{longitude}{longitude}
 
@@ -24,8 +23,16 @@ crop_radolan_radial(
 
 \item{as_data_frame}{if \code{TRUE}, a data frame with columns
 \code{SAMPLE_DATE} and \code{rain_mean} is returned, otherwise the raster
-object returned by \code{\link[raster]{crop}}}
+object returned by \link[raster:crop]{raster::crop}}
 }
 \description{
 Crop Radolan Data
+}
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{extract_radolan_zip_files},
+\item \link{radolan_raw_to_raster},
+\item \link{download_radolan}.
+}
 }

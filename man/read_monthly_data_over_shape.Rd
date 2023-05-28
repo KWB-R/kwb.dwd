@@ -4,7 +4,16 @@
 \alias{read_monthly_data_over_shape}
 \title{Read monthly data from DWD, mask region with given shape file}
 \usage{
-read_monthly_data_over_shape(file, variable, from, to, ...)
+read_monthly_data_over_shape(
+  file = NULL,
+  variable,
+  from,
+  to,
+  quiet = FALSE,
+  shape = NULL,
+  use_sf = TRUE,
+  ...
+)
 }
 \arguments{
 \item{file}{path to shape file .shp}
@@ -15,12 +24,28 @@ read_monthly_data_over_shape(file, variable, from, to, ...)
 
 \item{to}{last month as "yyyymm" string}
 
+\item{quiet}{passed to \link{download.file}}
+
+\item{shape}{object of class sf or sf_layers or SpatialPolygonsDataFrame.
+If \code{NULL} (the default), this object is obtained by calling
+\code{kwb.dwd:::read_shape_file} on \code{file}.}
+
+\item{use_sf}{passed to \code{kwb.dwd:::read_shape_file} if applicable}
+
 \item{\dots}{further arguments passed to \code{kwb.dwd:::read_shape_file},
-such as \code{drop_z = TRUE, use_sf = TRUE}}
+such as \code{drop_z = TRUE}, if applicable}
 }
 \value{
 data frame
 }
 \description{
 Read monthly data from DWD, mask region with given shape file
+}
+\seealso{
+\itemize{
+\item \link{read_binary_radolan_file},
+\item \link{read_asc_gz_file},
+\item \link{read_relevant_years_radolan},
+\item \link{read_daily_data_over_shape}.
+}
 }

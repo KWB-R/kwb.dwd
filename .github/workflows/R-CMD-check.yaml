@@ -22,9 +22,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest, r: 'release'}      
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}      
-          - {os: windows-latest, r: 'devel'}          
+          - {os: macOS-latest, r: 'release'}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: 'oldrel'}
           - {os: windows-latest, r: 'release'}
 
@@ -35,18 +35,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - uses: r-lib/actions/setup-r@master
+
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          
-      - uses: r-lib/actions/setup-pandoc@master
-      
-      - name: Install spatial dependencies
-        if: runner.os != 'Windows'
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install spatial dependencies on macOS
+        if: runner.os == 'macOS'
         run: |
           brew install gdal proj
-          
+
+      - name: Install spatial dependencies on Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install gdal-bin
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -55,7 +60,7 @@ jobs:
 
       - name: Cache R packages
         if: runner.os != 'Windows'
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-3-${{ hashFiles('depends.Rds') }}
@@ -81,7 +86,7 @@ jobs:
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check

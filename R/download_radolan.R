@@ -1,11 +1,11 @@
 #' Download Radolan Files on DWD Server
+#'
 #' @param resolution temporal resolution, one of "daily" or "hourly" (default:
 #'   "daily")
 #' @param export_dir export directory (default: "data" in current working
 #'   directory)
-#' @param \dots arguments passed to \code{\link{get_radolan_urls}}, such as
-#'   \code{start_daily}, \code{start_hourly}, \code{end_daily},
-#'   \code{end_hourly}
+#' @param \dots arguments passed to [get_radolan_urls], such as `start_daily`,
+#'   `start_hourly`, `end_daily`, `end_hourly`.
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
 #' @importFrom fs dir_create
 #' @importFrom kwb.utils catAndRun
@@ -14,6 +14,11 @@
 #' @export
 #' @examples
 #' \dontrun{download_radolan(resolution = "daily")}
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [extract_radolan_zip_files],
+#'  * [radolan_raw_to_raster],
+#'  * [list_extracted_radolan_files].
 download_radolan <- function(resolution = "daily", export_dir = "data", ...)
 {
   if (! resolution %in% c("daily", "hourly")) {

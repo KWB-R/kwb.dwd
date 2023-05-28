@@ -17,3 +17,9 @@ object of class "RasterLayer"
 \description{
 Read Zipped ESRI-Ascii-Grid File (from URL)
 }
+\seealso{
+\itemize{
+\item \link{read_binary_radolan_file},
+\item \link{unzip_asc_gz_file}.
+}
+}

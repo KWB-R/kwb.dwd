@@ -4,14 +4,10 @@ ftp_path_cdc <- function(...)
   file.path("ftp://opendata.dwd.de/climate_environment/CDC", ...)
 }
 
-# ftp_path_monthly_grids -------------------------------------------------------
-ftp_path_monthly_grids <- function(...)
+# ftp_path_grids_germany -------------------------------------------------------
+ftp_path_grids_germany <- function(resolution, ...)
 {
-  ftp_path_cdc("grids_germany/monthly", ...)
-}
+  safe_element(resolution, c("monthly", "daily"))
 
-# ftp_path_daily_grids ---------------------------------------------------------
-ftp_path_daily_grids <- function(...)
-{
-  ftp_path_cdc("grids_germany/daily", ...)
+  ftp_path_cdc("grids_germany", resolution, ...)
 }

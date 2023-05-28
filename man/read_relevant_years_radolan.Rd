@@ -15,3 +15,8 @@ read_relevant_years_radolan(path, years)
 This function reads in relevant radolan data from rst database based on used
 input data
 }
+\seealso{
+\itemize{
+\item \link{read_binary_radolan_file}.
+}
+}

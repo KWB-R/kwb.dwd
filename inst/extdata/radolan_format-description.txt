@@ -1,0 +1,70 @@
+# RADOLAN/RADVOR
+# 
+# Hoch aufgelöste Niederschlagsanalyse und –vorhersage auf der Basis 
+# quantitativer Radar- und Ombrometerdaten für grenzüberschreitende 
+# Fluss-Einzugsgebiete von Deutschland im Echtzeitbetrieb
+#
+# Beschreibung des Kompositformats
+#
+# Version 2.5.7
+#
+# https://www.dwd.de/DE/leistungen/radolan/radolan_info/radolan_radvor_op_komposit_format_pdf.pdf;jsessionid=3176F4BFFE62D621EA073161C78C29F1.live11041?__blob=publicationFile&v=23
+#
+FORTRAN-Bezeichner	Produktkennung	Dateiname	Inhalt
+A2	WX	raa01-wx_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	qualitätskorrigierte Original Radardaten in qualitativen rvp-6-Einheiten, Codierung in 1 Byte, im erweiterten nationalen Ausschnitt
+A2	RX	raa01-rx_10000-YYMMDDhhmm-dwd---bin (INT=5min)	Original Radardaten in qualitativen rvp-6-Einheiten, Codierung in 1 Byte
+A2	RO	termocl.pix (INT=60min) bzw. raa01-ro_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	Original Radardaten, mit Standard-Z-R-Beziehung in Niederschlagshöhen umgerechnet
+A2	RK	antish.pix (INT=60min) bzw. raa01-rk_10000-YYMMDDhhmm-dwd---bin (INT=5min)	Radardaten nach Abschattungskorrektur, mit Standard-Z-R-Beziehung in Niederschlagshöhen umgerechnet
+A2	RZ	raa01-rz_10000-YYMMDDhhmm-dwd---bin (INT=5min)	Radardaten nach Abschattungskorrektur und nach Anwendung der verfeinerten Z-R-Beziehungen in Niederschlagshöhen umgerechnet
+A2	RY	raa01-ry_10000-YYMMDDhhmm-dwd---bin (INT=5min)	durch das Qualitätskomposit (QY s. gesonderte Formatbeschreibung in [DWD, 2005b]) korrigierte Radardaten
+A2	YW	raa01-yw_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	quasi-angeeichte Radardaten (Basis: RY, RH und RW)
+A2	ZW	raa01-zw_10000-YYMMD-Dhhmm-dwd---bin (INT=10min)	quasi-angeeichte Radardaten (Basis: YW)
+A2	RH	trigger.pix (INT=60min; um hh:35) bzw. bestrain.pix (INT=60min; um hh:45) bzw. raa01-rh_10000-YYMMD-Dhhmm-dwd---bin (INT=60min; alle 5 min)	Radardaten nach Abschattungskorrektur und nach Anwendung der verfeinerten Z-R-Beziehungen in Niederschlagshöhen umgerechnet und auf eine Stunde aufsummiert 
+A2	RJ	state.trigger.pix (um hh:35) bzw. state.bestrain.pix (um hh:45)	Anzahl am RH beteiligter fünfminütlicher lokaler Radardaten für jedes Pixel (keine Radardaten)
+A2	RP	kooclu.pix	relative Pixelhäufigkeit (keine Radardaten)
+A2	RT	maxclu.pix	Anzahl Vortermine für jedes Pixel (keine Radardaten)
+A2	RC	ihvkoo.pix	Radardaten nach statistischer Clutterkorrektur ohne Clutterpixel
+A2	RI	intclu.pix	Radardaten nach statistischer Clutterkorrektur ohne Clutterpixel; interpoliert
+A2	RG	glatt8.pix	Radardaten nach Glättung mit dem Mittelwertsfilter (sog. BOGRA-Verfahren)
+A2	RB	borama.pix bzw. raa01-rb_10000-YYMMD-Dhhmm-dwd---bin	Radardaten nach Anwendung eines Faktors (Voraneichung mit dem sog. BORAMA-Verfahren)
+A2	RA	addiff.interim.pix bzw. addiff.relevant.pix	Radardaten nach Aneichung mit dem Differenzenverfahren; interim=ohne Kontrollstationen, relevant=mit allen Stationen
+A2	RM	mulfak.interim.pix bzw. mulfak.relevant.pix	Radardaten nach Aneichung mit dem Faktorenverfahren; interim=ohne Kontrollstationen, relevant=mit allen Stationen
+A2	RL	merge.interim.pix bzw. merge.relevant.pix	Radardaten nach Aneichung mit dem Mergingverfahren; interim=ohne Kontrollstationen, relevant=mit allen Stationen
+A2	RD	dbr.interim.pix bzw. dbr.relevant.pix	interpolierte Aneichdifferenzen (keine Radardaten); interim=ohne Kontrollstationen, relevant=mit allen Stationen
+A2	RF	fbr.interim.pix bzw. fbr.relevant.pix	interpolierte Aneichfaktoren (keine Radardaten); interim=ohne Kontrollstationen, relevant=mit allen Stationen
+A2	RW	adjust.pix bzw. raa01-rw_10000-YYMMD-Dhhmm-dwd---bin	Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren 1
+A2	RU	adjust.merge.pix bzw. raa01-ru_10000-YYMMD-Dhhmm-dwd---bin	Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen-, Faktoren- und Mergingverfahren 1 ab Softwareversion 2.0 werden Radarlücken mit interpolierten Bodenniederschlagshöhen ersetzt
+A2	RR	bod.pix	interpolierte Bodenniederschlagshöhen (keine Radardaten) nach dem RADOLAN-Verfahren
+A2	S2	raa01-s2_10000-YYMMD-Dhhmm-dwd---bin	2h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	S3	raa01-s3_10000-YYMMD-Dhhmm-dwd---bin	3h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SQ	raa01-sq_10000-YYMMD-Dhhmm-dwd---bin	6h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SH	raa01-sh_10000-YYMMD-Dhhmm-dwd---bin	12h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SF	raa01-sf_10000-YYMMDDhhmm-dwd---bin	24h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SM	raa01-sm_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 1. Tag des Monats bis zum 1. Tag des Folgemonats fortlaufend aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SZ	raa01-sz_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 1. Tag der meteorologischen Jahreszeit bis zum 1. Tag der Folgejahreszeit aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SJ	raa01-sj_10000-YYMMDDhhmm-dwd---bin	täglich ab dem 01.01. bis zum 1. Tag des Folgejahres aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	SY	raa01-sy_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 01.11. bis zum 1. Tag des folgenden hydrologischen Jahres aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	%M	raa01-%m_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 1. Tag des Monats bis zum 1. Tag des Folgemonats fortlaufend aufsummiertes, zum 30-jährigen Mittel relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	AM	raa01-am_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 1. Tag des Monats bis zum 1. Tag des Folgemonats fortlaufend aufsummiertes, zum 30-jährigen Mittel des kompletten Monats relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	AZ	raa01-az_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 1. Tag der meteorologischen Jahreszeit bis zum 1. Tag der Folgejahreszeit fortlaufend aufsummiertes, zum 30-jährigen Mittel der kompletten meteorologischen Jahreszeit relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	%J	raa01-%j_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 01.01. bis zum 1. Tag des Folgejahres aufsummiertes, zum 30-jährigen Mittel relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	AJ	raa01-aj_10000-YYMMDDhhmm-dwd---bin	täglich ab dem 01.01. bis zum 1. Tag des Folgejahres aufsummiertes, zum 30-jährigen Mittel des kompletten Jahres relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	%Y	raa01-%y_10000-YYMMD-Dhhmm-dwd---bin	täglich ab dem 01.11. bis zum 1. Tag des folgenden hydrologischen Jahres aufsummiertes, zum 30-jährigen Mittel relatives Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	D2	raa01-d2_10000-YYMMD-Dhhmm-dwd---bin	48h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	D3	raa01-d3_10000-YYMMD-Dhhmm-dwd---bin	72h-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	W1	raa01-w1_10000-YYMMD-Dhhmm-dwd---bin	7d-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	W2	raa01-w2_10000-YYMMD-Dhhmm-dwd---bin	14d-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	W3	raa01-w3_10000-YYMMD-Dhhmm-dwd---bin	21d-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	W4	raa01-w4_10000-YYMMD-Dhhmm-dwd---bin	30d-aufsummiertes Endergebnis der Aneichung nach Durchführung der gewichteten Mittelung von Differenzen- und Faktorenverfahren
+A2	RV	RVYYMMddhhmm_vvv (INT=5min)	Radardaten, vorhergesagt aus den precipitation scan sweeps; YY=Jahr, MM=Monat, dd=Tag, hh=Stunde, mm=Minute, vvv=vorhergesagter Zeitpunkt in Minuten, bis 24.10.2019 noch mit Suffix „_MFxxx“ 2
+A2	RS	RSYYMMddhhmm_vvv (INT=60min; alle 5 min)	Radardaten, vorhergesagt aus den precipitation scan sweeps und auf eine Stunde aufsummiert; YY=Jahr, MM=Monat, dd=Tag, hh=Stunde, mm=Minute, vvv=vorhergesagter Zeitpunkt in Minuten, bis 24.10.2019 noch mit Suffix „MFxxx“
+A2	RQ	RQYYMMddhhmm_vvv bzw. raa01-rq_10000-YYMMD-Dhhmm_vvv-dwd---bin (INT=60min; alle 15 min)	Radardaten: mit der Verschneidung aus dem RW-Produkt quantifiziertes (quasi-angeeichtes) RS-Produkt
+A2	RE	REYYMMddhhmm_vvv (INT=60min; alle 5 min)	Anteil des festen Niederschlags (keine Radardaten) + Hagelflag;
+A2	FS	FSYYMMddhhmm_vvv (INT=60min; alle 15 min)	Schneefallrate in cm/h
+A2	FQ	FQYYMMddhhmm_vvv (INT=360min; alle 15 min)	6h-aufsummierte Schneefallrate in cm/6h 
+A2	EX	raa01-ex_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	mitteleuropäische qualitätskorrigierte qualitative Radardaten analog WX, in qualitativen rvp-6-Einheiten, Codierung in 1 Byte
+A2	EZ	raa01-ez_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	mitteleuropäische quantitative Radardaten analog RZ
+A2	EY	raa01-ey_10000-YYMMD-Dhhmm-dwd---bin (INT=5min)	mitteleuropäische qualitätskorrigierte quantitative Radardaten analog RY
+A2	EH	raa01-eh_10000-YYMMD-Dhhmm-dwd---bin (INT=60min; alle 5 min)	mitteleuropäische quantitative Radardaten analog RH
+A2	EB	raa01-eb_10000-YYMMD-Dhhmm-dwd---bin (INT=60min)	mitteleuropäische quantitative Radardaten analog RB
+A2	EW	raa01-ew_10000-YYMMD-Dhhmm-dwd---bin (INT=60min)	mitteleuropäische quantitative Radardaten analog RW

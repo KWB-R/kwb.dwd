@@ -18,3 +18,8 @@ the first element of \code{bin_file} resides.}
 \description{
 Convert Binary Radolan File to Raster File
 }
+\seealso{
+\itemize{
+\item \link{write_raster_to_file}.
+}
+}

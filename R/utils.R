@@ -6,10 +6,10 @@ add_attributes <- function(x, attrs)
   do.call(structure, c(list(x), attrs))
 }
 
-# assert_ending_gz -------------------------------------------------------------
-assert_ending_gz <- function(x)
+# assert_all_ending_with -------------------------------------------------------------
+assert_all_ending_with <- function(x, suffix)
 {
-  stopifnot(all(endsWith(x, ".gz")))
+  stopifnot(all(endsWith(x, suffix)))
   invisible(x)
 }
 
@@ -54,6 +54,22 @@ clean_stop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# contains_file ----------------------------------------------------------------
+contains_file <- function(path, pattern)
+{
+  length(dir(path, pattern)) > 0L
+}
+
+# copy_file --------------------------------------------------------------------
+copy_file <- function(from, to)
+{
+  success <- file.copy(from = from, to = to)
+
+  if (!all(success)) {
+    kwb.utils::stopFormatted("Could not copy %s to %s", from, to)
+  }
+}
+
 # date_in_bathing_season -------------------------------------------------------
 #' @importFrom lubridate month
 date_in_bathing_season <- function(x)
@@ -62,44 +78,70 @@ date_in_bathing_season <- function(x)
   lubridate::month(x) %in% 5:9
 }
 
-# download_if_not_there --------------------------------------------------------
-download_if_not_there <- function(
+# download_dir -----------------------------------------------------------------
+download_dir <- function(...)
+{
+  ifelse(on_windows(), "~/../Downloads", "~/Downloads") %>%
+    path.expand() %>%
+    file.path(...) %>%
+    kwb.utils::createDirectory(dbg = FALSE)
+}
+
+# download ---------------------------------------------------------------------
+download <- function(
     url,
-    file = file.path(tempdir(), basename(url)),
-    quiet = FALSE
+    file = file.path(target_dir, basename(url)),
+    target_dir = download_dir(),
+    quiet = FALSE,
+    mode = "w",
+    timeout = getOption("timeout")
 )
 {
   if (file.exists(file)) {
-    cat("File already available:", file, "\n")
-  } else {
-    download.file(url, file, method = "auto", quiet = quiet)
+    kwb.utils::catIf(!quiet, "\nFile already there:", file, "\n")
+    return(file)
+  }
+
+  # Temporarily set the timeout option
+  old_options <- options(timeout = timeout)
+  on.exit(options(old_options))
+
+  result <- kwb.utils::catAndRun(
+    sprintf("\nDownloading\n  %s\nto\n  %s", url, file),
+    dbg = !quiet,
+    expr = try(
+      silent = TRUE,
+      download.file(
+        url = url,
+        destfile = file,
+        method = "auto",
+        quiet = TRUE,
+        mode = mode
+      )
+    )
+  )
+
+  if (kwb.utils::isTryError(result) || !identical(result, 0L)) {
+
+    if (file.exists(file)) {
+      if (!identical(unlink(file), 0L)) {
+        message("Could not delete incompletely downloaded file: ", file)
+      }
+    }
+
+    kwb.utils::stopFormatted(
+      "Could not download %s within %d seconds.\n%s",
+      url, timeout, as.character(result)
+    )
   }
 
   file
 }
 
-# extract_yyyymm ---------------------------------------------------------------
-extract_yyyymm <- function(x)
-{
-  gsub("^.*(\\d{6}).*$", "\\1", basename(x))
-}
-
 # filter_by_extension ----------------------------------------------------------
 filter_by_extension <- function(x, extension)
 {
-  x[endsWith(x, extension)]
-}
-
-# filter_by_extension_asc_gz ---------------------------------------------------
-filter_by_extension_asc_gz <- function(x)
-{
-  filter_by_extension(x, ".asc.gz")
-}
-
-# filter_by_extension_tgz ------------------------------------------------------
-filter_by_extension_tgz <- function(x)
-{
-  filter_by_extension(x, ".tgz")
+  x[endsWith(tolower(x), tolower(extension))]
 }
 
 # filter_by_month_range --------------------------------------------------------
@@ -109,12 +151,15 @@ filter_by_month_range <- function(urls, from = NULL, to = NULL)
     return(urls)
   }
 
-  from <- kwb.utils::defaultIfNULL(from, extract_yyyymm(urls[1L]))
-  to <- kwb.utils::defaultIfNULL(to, extract_yyyymm(urls[length(urls)]))
+  extract_year_month <- function(x) gsub("^.*(\\d{6}).*$", "\\1", basename(x))
 
-  pattern <- paste(month_sequence_simple(from, to), collapse = "|")
+  first_url <- urls[1L]
+  last_url <- urls[length(urls)]
 
-  urls[grep(pattern, urls)]
+  from <- kwb.utils::defaultIfNULL(from, extract_year_month(first_url))
+  to <- kwb.utils::defaultIfNULL(to, extract_year_month(last_url))
+
+  grep(month_range_pattern(from, to), urls, value = TRUE)
 }
 
 # get_date_time_from_bin_filename ----------------------------------------------
@@ -143,6 +188,37 @@ get_element_or_stop <- function(x, element, name = deparse(substitute(element)))
   x[safe_element(element, names(x), name)]
 }
 
+# get_full_extension -----------------------------------------------------------
+get_full_extension <- function(x)
+{
+  parts <- lapply(strsplit(x, "\\."), rev)
+
+  result <- extension <- character(length(x))
+
+  n_parts <- lengths(parts)
+
+  selected <- n_parts > 1L
+  result[selected] <- sapply(parts[selected], "[", 1L)
+
+  selected <- n_parts > 2L
+  extension[selected] <- sapply(parts[selected], "[", 2L)
+
+  extension[!looks_like_file_extension(extension)] <- ""
+  selected <- extension != ""
+  result[selected] <- paste0(extension[selected], ".", result[selected])
+
+  result
+}
+
+# get_relative_path ------------------------------------------------------------
+get_relative_path <- function(
+    file,
+    base_dir = kwb.utils::getAttribute(file, "base_dir")
+)
+{
+  remove_left(file, nchar(kwb.utils::assertFinalSlash(base_dir)))
+}
+
 # indicate_directories ---------------------------------------------------------
 #' @importFrom kwb.utils assertFinalSlash
 indicate_directories <- function(x, is_directory)
@@ -161,10 +237,10 @@ is_empty <- function(x)
   (is.data.frame(x) && nrow(x) == 0L) || (length(x) == 0L)
 }
 
-# last_month_as_yyyymm ---------------------------------------------------------
-last_month_as_yyyymm <- function()
+# last_month -------------------------------------------------------------------
+last_month <- function(format = "%Y%m")
 {
-  format(Sys.Date() - 31L, "%Y%m")
+  format.Date(Sys.Date() - 31L, format)
 }
 
 # list_files_in_zip_files ------------------------------------------------------
@@ -172,86 +248,110 @@ last_month_as_yyyymm <- function()
 #' @importFrom utils untar
 list_files_in_zip_files <- function(zip_files, dbg = TRUE)
 {
-  do.call(rbind, lapply(zip_files, function(x) {
+  list_files <- function(file) {
     kwb.utils::catAndRun(
-      messageText = paste("Getting names of files in", x),
+      messageText = paste("Getting names of files in", file),
       dbg = dbg,
       expr = kwb.utils::noFactorDataFrame(
-        zip_file = basename(x),
-        file = utils::untar(x, list = TRUE)
+        zip_file = basename(file),
+        file = list_zipped_files(file)
       )
     )
-  }))
+  }
+
+  lapply(zip_files, list_files) %>%
+    do.call(what = rbind) %>%
+    kwb.utils::orderBy(c("zip_file", "file"))
 }
 
-# list_monthly_grids_germany_asc_gz -------------------------------------------------
-
-#' Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
-#'
-#' @param variable variable for which to look for URLs. Must be one of
-#'   \code{kwb.dwd::list_url(kwb.dwd:::ftp_path_monthly_grids())}
-#' @param from optional. First month to be considered, as "yyyymm" string
-#' @param to optional. Last month to be considered, as "yyyymm" string
-#' @param recursive whether to list files recursively. Default: \code{TRUE}
-list_monthly_grids_germany_asc_gz <- function(
-  variable, from = NULL, to = NULL, recursive = TRUE
-)
+# list_zipped_files ------------------------------------------------------------
+list_zipped_files <- function(file)
 {
-  base_url <- ftp_path_monthly_grids(variable)
+  result <- utils::untar(kwb.utils::safePath(file), list = TRUE)
 
-  # Code to get the possible choices
-  # base_url <- kwb.dwd:::ftp_path_monthly_grids()
-  # kwb.dwd:::url_subdirs_containing_files_with_extension(base_url, ".asc.gz")
+  if (!is.null(attr(result, "status"))) {
 
-  # Make sure that the given variable name is a possible choice
-  variable <- match.arg(variable, c(
-    "air_temperature_max",
-    "air_temperature_mean",
-    "air_temperature_min",
-    "drought_index",
-    "evapo_p",
-    "evapo_r",
-    "frost_depth",
-    "precipitation",
-    "soil_moist",
-    "soil_temperature_5cm",
-    "sunshine_duration"
-  ))
+    tar_message <- grep("tar.exe: ", result, value = TRUE) %>%
+      gsub(pattern = "^.*(tar.exe: .*)$", replacement = "\\1")
 
-  # List data files
-  relative_urls <- base_url %>%
-    list_url(recursive = recursive) %>%
-    filter_by_extension_asc_gz() %>%
-    filter_by_month_range(from, to)
+    clean_stop(
+      "There was a warning listing the files in\n  ", file, ".\n",
+      "The file seems to be corrupt.\n",
+      paste(tar_message, collapse = "\n")
+    )
+  }
 
-  # Provide full paths to zipped files in ESRI-ascii-grid-format
-  file.path(base_url, relative_urls)
+  result
 }
 
-# month_numbers ----------------------------------------------------------------
-month_numbers <- function()
+# looks_like_file_extension ----------------------------------------------------
+looks_like_file_extension <- function(x)
 {
-  list(
-    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 04L, May = 05L, Jun = 06L,
-    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
-  )
+  !grepl("(^[0-9]+$)|[_-]", x)
+}
+
+# month_range_pattern ----------------------------------------------------------
+month_range_pattern <- function(from, to)
+{
+  paste(month_sequence(from, to, simple = TRUE), collapse = "|")
 }
 
 # month_sequence ---------------------------------------------------------------
 #' @importFrom lubridate ymd
-month_sequence <- function(start, end)
+month_sequence <- function(start, end, simple = FALSE)
 {
-  to_date <- function(x) lubridate::ymd(paste0(x, "-01"))
+  if (simple) {
 
-  seq(to_date(start), to_date(end), by = 'months')
+    as_date <- function(x) as.Date(paste0(x, "01"), format = "%Y%m%d")
+    unique(format(seq(as_date(start), as_date(end), 1L), "%Y%m"))
+
+  } else {
+
+    as_date <- function(x) lubridate::ymd(paste0(x, "-01"))
+    seq(as_date(start), as_date(end), by = 'months')
+  }
 }
 
-# month_sequence_simple --------------------------------------------------------
-month_sequence_simple <- function(from, to)
+# on_windows -------------------------------------------------------------------
+on_windows <- function()
 {
-  as_date <- function(x) as.Date(paste0(x, "01"), format = "%Y%m%d")
+  Sys.info()[["sysname"]] == "Windows"
+}
 
-  unique(format(seq(as_date(from), as_date(to), 1L), "%Y%m"))
+# open_for_reading_in_binary_mode ----------------------------------------------
+open_for_reading_in_binary_mode <- function(file)
+{
+  if (endsWith(file, ".gz")) {
+
+    base::gzfile(file, "rb")
+
+  } else {
+
+    base::file(file, "rb")
+  }
+}
+
+# remove_left ------------------------------------------------------------------
+remove_left <- function(x, n)
+{
+  n_char <- nchar(x)
+  stopifnot(all(n_char >= n))
+  substr(x, n + 1L, n_char)
+}
+
+# remove_protocol --------------------------------------------------------------
+remove_protocol <- function(x)
+{
+  gsub("^[^/]+://", "", x)
+}
+
+
+# remove_right -----------------------------------------------------------------
+remove_right <- function(x, n)
+{
+  n_char <- nchar(x)
+  stopifnot(all(n_char >= n))
+  substr(x, 1L, n_char - n)
 }
 
 # safe_element -----------------------------------------------------------------
@@ -267,34 +367,47 @@ safe_element <- function(element, elements, name = deparse(substitute(element)))
 }
 
 # temp_dir ---------------------------------------------------------------------
-temp_dir <- function(..., template. = NULL, create. = TRUE, dbg. = FALSE)
+#' Path to Permanent Temporary Directory
+#'
+#' @param \dots parts of the path after `<TEMP_DIR>/R_kwb.dwd/`, passed to
+#'   [file.path]] where `<TEMP_DIR>` is either the value of environment variable
+#'   `TEMP` (if set) or `TMP` (if set) or the result of calling [tempdir].
+#' @param template optional. If given, it is assumed to be a path to a file. The
+#'   name of the file without file name extension is then used as folder name
+#'   below `<TEMP_DIR>/R_kwb.dwd/`.
+#' @param create logical indicating whether or not to create the folder if it
+#'   does not yet exist. Defaults to `TRUE`.
+#' @param dbg logical indicating whether or not to print debug messages
+#' @return The function returns the path to the temporary folder specified.
+#' @export
+temp_dir <- function(..., template = NULL, create = TRUE, dbg = FALSE)
 {
   dot_args <- list(...)
-
-  stop_on_dot_args <- function() {
-    if (!is_empty(dot_args)) {
-      clean_stop(
-        "Further arguments to temp_dir() not allowed if 'template.' is given."
-      )
-    }
-  }
 
   # If no template (path) is given, use the arguments in ... as sub directory
   # names. Otherwise, use the base file name of the template without the file
   # name extension as sub directory name
-  args <- if (is.null(template.)) {
+  args <- if (is.null(template)) {
+
     dot_args
+
+  } else if (!is_empty(dot_args)) {
+
+    clean_stop(
+      "Further arguments to temp_dir() not allowed if 'template' is given."
+    )
+
   } else {
-    stop_on_dot_args()
-    list(kwb.utils::removeExtension(basename(template.)))
+
+    list(kwb.utils::removeExtension(basename(template)))
   }
 
   tmp_dir <- Sys.getenv("TEMP", Sys.getenv("TMP", tempdir()))
 
   path <- do.call(file.path, c(list(tmp_dir, "R_kwb.dwd"), args))
 
-  if (create.) {
-    kwb.utils::createDirectory(path, dbg = dbg.)
+  if (create) {
+    kwb.utils::createDirectory(path, dbg = dbg)
   }
 
   path

@@ -8,12 +8,15 @@
 #' @export
 #' @importFrom kwb.utils callWith removeExtension tempSubdirectory
 #' @importFrom raster raster
+#' @seealso
+#'  * [read_binary_radolan_file],
+#'  * [unzip_asc_gz_file].
 read_asc_gz_file <- function(file, url = NULL)
 {
   target_dir <- if (is.null(url)) {
     dirname(file)
   } else {
-    temp_dir(template. = kwb.utils::removeExtension(url))
+    temp_dir(template = kwb.utils::removeExtension(url))
   }
 
   # Call the unzip function setting either "url" or "file" argument
@@ -28,4 +31,37 @@ read_asc_gz_file <- function(file, url = NULL)
   provide_projection_file(grid_file)
 
   raster::raster(grid_file)
+}
+
+# read_asc_file ----------------------------------------------------------------
+
+#' Read Raster Data from .ASC File
+#'
+#' @param file path to .asc file
+#' @param projection projection string used in Radolan data
+#' @param dbg logical indicating whether to show debug messages
+#' @importFrom kwb.utils catAndRun
+#' @importFrom raster `crs<-` raster
+read_asc_file <- function(
+    file,
+    projection = get_radolan_projection_string(),
+    #projection = readLines(default_projection_file()),
+    dbg = TRUE
+)
+{
+  kwb.utils::catAndRun(
+    sprintf("Reading %s using raster::raster()", basename(file)),
+    dbg = dbg,
+    expr = {
+
+      # Provide a copy of the projection file in the same folder
+      provide_projection_file(file)
+      result <- raster::raster(file)
+
+      #result <- raster::raster(file, values = TRUE)
+      #raster::crs(result) <- projection
+
+      result
+    }
+  )
 }

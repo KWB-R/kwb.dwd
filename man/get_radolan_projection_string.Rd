@@ -16,3 +16,9 @@ Compose radolan projection string
 get_radolan_projection_string()
 
 }
+\seealso{
+\itemize{
+\item \link{get_radolan_urls},
+\item \link{get_radolan_extension}.
+}
+}

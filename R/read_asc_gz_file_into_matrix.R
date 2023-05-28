@@ -53,7 +53,7 @@ read_lines_from_gz_file <- function(
     encoding = getOption("encoding")
 )
 {
-  assert_ending_gz(file)
+  assert_all_ending_with(file, ".gz")
 
   # If the file does not exist, treat it as an URL
   if (!file.exists(file)) {
@@ -61,10 +61,11 @@ read_lines_from_gz_file <- function(
     assert_url(file, final_slash = FALSE)
 
     # Download file from URL to temporary directory
-    file <- download_if_not_there(
+    file <- download(
       file,
-      file.path(temp_dir(), basename(file)),
-      quiet = TRUE
+      target_dir = temp_dir(),
+      quiet = TRUE,
+      mode = "wb"
     )
   }
 

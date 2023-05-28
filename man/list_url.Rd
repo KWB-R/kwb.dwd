@@ -19,11 +19,10 @@ list_url(
 \item{recursive}{logical indicating whether to list files in all
 subdirectories (default: \code{FALSE})}
 
-\item{max_depth}{maximum folder depth to consider when
-\code{recursive = TRUE}}
+\item{max_depth}{maximum folder depth to consider when \code{recursive = TRUE}}
 
-\item{full_info}{if \code{TRUE}, not only the path and filename are returned
-but also the file properties. The default is \code{FALSE}.}
+\item{full_info}{if \code{TRUE}, not only the path and filename are returned but
+also the file properties. The default is \code{FALSE}.}
 
 \item{full_names}{if \code{TRUE}, the full URLs are returned, otherwise (the
 default) only the paths relative to \code{url}.}
@@ -33,4 +32,9 @@ default) only the paths relative to \code{url}.}
 }
 \description{
 List Files or Folders in a FTP Directory
+}
+\seealso{
+\itemize{
+\item \link{list_extracted_radolan_files}.
+}
 }

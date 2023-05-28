@@ -1,0 +1,483 @@
+---
+title: "Overview on Functions in R-package kwb.dwd"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Overview}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+
+hyperlink <- function(x) sprintf("[%s](%s)", x, x)
+```
+
+## List and Download Data from Deutscher Wetterdienst (DWD)
+
+DWD provides data for download via a web interface. The base address to the web interface is: `r hyperlink("https://opendata.dwd.de")`.
+
+There is also an FTP server. The base address to the ftp server
+is: `r hyperlink("ftp://opendata.dwd.de")`.
+
+The most relevant files are in
+`r hyperlink("ftp://opendata.dwd.de/climate_environment/CDC")`.
+
+You may use the function `ftp_path_cdc` to get this path:
+
+```{r}
+kwb.dwd:::ftp_path_cdc()
+```
+
+### List Files or Folders in a FTP Directory
+
+The package contains a function to list all files below a certain
+FTP address.
+
+Function: `list_url()`
+
+Example:
+
+```{r}
+base_url <- kwb.dwd:::ftp_path_cdc("grids_germany")
+files <- kwb.dwd::list_url(base_url, max_depth = 1L)
+head(files)
+```
+
+Set the argument `full_names` to `TRUE` to get the full addresses.
+
+### What files are available on DWD's FTP Server?
+
+Getting a full list of all available files using the `list_url` function takes a while.
+Therefore this package contains a data frame with all file paths
+as they were available when the package was last updated.
+
+Dataset: `dwd_files`
+
+Example:
+
+```{r}
+file_info <- kwb.dwd::dwd_files
+
+# Which files have "evapo" (evaporation) in their name?
+is_evapo <- grep("evapo", file_info$file)
+
+head(file_info[is_evapo, c("file", "size", "modification_time")])
+```
+
+### Get URLs to Radolan Files
+
+Function: `get_radolan_urls()`
+
+```{r}
+radolan_urls <- kwb.dwd::get_radolan_urls()
+
+head(radolan_urls$daily_historical_urls)
+tail(radolan_urls$hourly_historical_urls)
+```
+
+### Get URLs to Monthly Grids in Zipped ESRI-ascii-grid Format
+
+Function: `list_grids_germany()`
+
+Example:
+
+```{r eval = FALSE}
+urls <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "precipitation")
+
+head(urls)
+```
+
+```
+[1] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188101.asc.gz"
+[2] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188201.asc.gz"
+[3] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188301.asc.gz"
+[4] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188401.asc.gz"
+[5] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188501.asc.gz"
+[6] "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/precipitation/01_Jan/grids_germany_monthly_precipitation_188601.asc.gz"
+```
+
+### Get URLs to DWD Metadata
+
+Function: `get_dwd_urls_metadata()`
+    
+Example:
+
+```{r}
+urls_meta <- kwb.dwd::get_dwd_urls_metadata()
+
+head(urls_meta)
+
+# Read the content of one metadata file
+writeLines(kwb.utils::readLinesWithEncoding(
+  urls_meta[1L], 
+  fileEncoding = "WINDOWS-1252", 
+  n = 10
+))
+```
+
+### For a Given URL, Try to Find Description Files
+
+Function: `find_description_files()`
+
+Once you have a URL to a data file, you can look for description files that may 
+be contained in the same folder:
+
+```{r}
+example_url <- paste0(
+  "ftp://opendata.dwd.de/climate_environment/CDC/observations_germany/",    
+  "climate/daily/kl/historical/tageswerte_KL_05424_19490301_20211231_hist.zip"
+)
+
+kwb.dwd:::find_description_files(example_url)
+```
+
+### Open Description for DWD Record in Web Browser
+
+Function: `open_description()`
+
+Example:
+
+```{r eval = FALSE}
+kwb.dwd::open_description(example_url)
+```
+
+You will be asked something like this if there are description files available:
+
+```
+Which file should I open? (0 = Cancel) 
+
+1: BESCHREIBUNG_obsgermany_climate_daily_kl_historical_de.pdf
+2: DESCRIPTION_obsgermany_climate_daily_kl_historical_en.pdf
+3: KL_Tageswerte_Beschreibung_Stationen.txt
+4: KL_Tageswerte_mn4_Beschreibung_Stationen.txt
+
+Auswahl: 
+```
+
+### Download Radolan Data in Binary Format from DWD Server
+
+Function: `download_radolan()`
+
+Example:
+
+```{r eval = FALSE}
+# Take care, this takes time!
+kwb.dwd::download_radolan(resolution = "daily")
+```
+
+```{r}
+head(dir(kwb.dwd:::download_dir("radolan/daily/historical")))
+```
+
+## Download data from other sources
+
+### Download Shape Files for Germany
+
+Function: `download_shapes_germany()`
+
+This function downloads shape files for Germany. They are not provided by DWD
+so this package may not be the best place for this function.
+
+```{r}
+target_path <- kwb.dwd::download_shapes_germany()
+```
+
+Shape files have been downloaded and extracted to the target path:
+
+```{r}
+shape_files <- dir(target_path, "[.]shp$", recursive = TRUE, full.names = TRUE)
+shape_files
+```
+
+What can we do with these shape files? We can read and show them, for example:
+
+```{r fig.width = 6}
+shape <- sf::read_sf(shape_files[2L])
+plot(shape[, "NAME_1"])
+```
+
+### Provide List of SpatialPolygonsDataFrame for Germany
+
+Function: `get_shapes_of_germany()`
+
+Example:
+
+```{r eval = FALSE}
+shapes <- kwb.dwd::get_shapes_of_germany()
+```
+
+### Interactively Configure Selection of SpatialPolygons
+
+Function: `select_shapes()`
+
+Example:
+
+```{r eval = FALSE}
+kwb.dwd:::select_shapes(shapes)
+```
+
+You will be asked to select a layer...
+
+```
+Select layer 
+
+1: gadm40_DEU_1.shp
+2: gadm40_DEU_2.shp
+3: gadm40_DEU_3.shp
+4: gadm40_DEU_4.shp
+
+Auswahl: 
+```
+
+### Let User Select a Column from a SpatialPolygonsDataFrame
+
+Function: `select_variable()`
+
+Example:
+
+```{r eval = FALSE}
+kwb.dwd:::select_variable(shapes[[2L]])
+```
+
+You will be asked to select a variable...
+
+```
+Select variable 
+
+1: ID_0 (DEU)
+2: COUNTRY (Germany)
+3: NAME_1 (Baden-Württemberg, Bayern, Berlin)
+4: ID_2 (DEU.1.1_1, DEU.1.2_1, DEU.1.3_1)
+5: NAME_2 (Alb-Donau-Kreis, Baden-Baden, Biberach)
+6: TYPE_2 (Landkreis, Stadtkreis, Water body)
+7: ENGTYPE_2 (District, Water body)
+8: CC_2 (08425, 08211, 08426)
+9: HASC_2 (DE.BW.AD, DE.BW.BB, DE.BW.BR)
+```
+
+## Extract downloaded files
+
+### Extract radolan zip files
+
+Function: `extract_radolan_zip_files()`
+
+### Download a .gz File and Unzip it
+
+Function: `unzip_asc_gz_file()`
+
+## Conversion
+
+### Convert Binary Radolan File to Raster File
+
+Function: `convert_bin_to_raster_file()`
+
+We need a binary file as provided by DWD. See above for how to download 
+Radolan binary files.
+
+```{r}
+bin_file <- file.path(
+  kwb.dwd:::download_dir("radolan"), 
+  "raa01-sf_10000-1808041150-dwd---bin"
+)
+
+raster <- kwb.dwd::convert_bin_to_raster_file(bin_file)
+```
+
+We can plot the content of the raster file using the `plot` function of the 
+raster package:
+
+```{r fig.width = 6}
+raster::plot(raster)
+```
+
+### Radolan raw to raster
+
+Function: `radolan_raw_to_raster()`
+
+### Conversion of coordinates
+
+#### Coordinates to EPSG-4326
+
+Function: `coordinates_to_EPSG_4326()`
+
+```{r}
+kwb.dwd::coordinates_to_EPSG_4326(longitude = 0, latitude = 0)
+```
+
+Where do we need this? Good question, next question.
+
+### Cropping
+
+Crop a circle-shaped region from the Radolan data grid of Germany
+
+Function: `crop_radolan_radial()`
+
+We need a folder with rst files...
+
+```{r eval = FALSE}
+rst_path <- kwb.dwd:::download_dir("rst")
+
+files <- dir(rst_path, full.names = TRUE)
+
+radolan_data <- raster::stack(files)
+
+names(radolan_data) <- substr(
+  gsub("raa01-sf_10000-", "", basename(files)), 
+  start = 1, 
+  stop = 6
+)
+  
+# Error!
+#radolan_data <- kwb.dwd::read_relevant_years_radolan(
+#  rst_path, years = 2018
+#)
+
+cropped <- kwb.dwd::crop_radolan_radial(
+  radolan_data, 
+  latitude = 52.520008, 
+  longitude = 13.404954
+)
+
+# What does the warning mean?
+cropped
+```
+
+**Problem here:** `read_relevant_years_radolan` is too specific, expects a certain file name pattern 
+
+## Functions Related to Radolan Data
+
+that are not alread mentioned elsewhere...
+
+### Get Radolan Extension ("Bounding box" of Radolan area)
+
+Function: `get_radolan_extension()`
+
+```{r}
+kwb.dwd::get_radolan_extension()
+```
+
+**Which coordinate system?**
+
+### Compose radolan projection string
+
+Function: `get_radolan_projection_string()`
+
+```{r}
+kwb.dwd::get_radolan_projection_string()
+```
+
+## Read different file formats
+
+### Read Zipped ESRI-Ascii-Grid File (from URL)
+
+Function: `read_asc_gz_file()`
+
+### Read an Example Raster File for Germany
+
+Function: `get_example_grid_germany()`
+
+Example:
+
+```{r}
+grid <- kwb.dwd::get_example_grid_germany()
+raster::plot(grid)
+```
+
+### Read Binary Radolan File
+
+Function: `read_binary_radolan_file()`
+
+### Read Relevant Radolan Data from rst Database
+
+Function: `read_relevant_years_radolan()`
+
+## Write different file formats
+
+### Writing raster data to a file
+
+Function: `write_raster_to_file()`
+
+```{r}
+kwb.dwd::write_raster_to_file(
+  raster, 
+  file.path(tempdir(), "raster.rst")
+)
+```
+
+## High-Level Functions, General
+
+### Read daily data from DWD, mask region with given shape file
+
+Function: `read_daily_data_over_shape()`
+
+### Read monthly data from DWD, mask region with given shape file
+
+Function: `read_monthly_data_over_shape()`
+    
+### Download, crop, summarise
+
+Function: `calculate_masked_grid_stats()`
+
+This seems to be a highly specific function that requires a list of matrices as input. But where to get this list from... ? We can create an example from 
+scratch to demonstrate what the function does:
+
+```{r}
+#writeLines(paste(sample(0:3, 12, replace = TRUE), collapse = ", "))
+to_matrix <- function(...) matrix(c(...), ncol = 3, byrow = TRUE)
+
+matrix_1 <- structure(file = "file_1", year = 2022L, month = 1L,  to_matrix(
+  2, 3, 1, 
+  0, 2, 3, 
+  1, 3, 2, 
+  1, 2, 0
+))
+
+matrix_2 <- structure(file = "file_2", year = 2022L, month = 2L, to_matrix(
+  3, 0, 2, 
+  0, 0, 0, 
+  3, 0, 1, 
+  3, 2, 1
+))
+
+matrices <- list(matrix_1, matrix_2)
+
+# Take car to use NA, not zero!
+geo_mask <- to_matrix(
+  NA, 1, NA, 
+   1, 1,  1, 
+   1, 1,  1, 
+  NA, 1, NA
+)
+
+kwb.dwd::calculate_masked_grid_stats(matrices, geo_mask)
+```
+
+This was a simple example. We have used this function to calculate mean 
+evaporation values for Berlin. Thanks to Andreas Matzinger we have a function 
+that returns the matrix that can be used to crop the Berlin area.
+
+Function: `get_berlin_dwd_mask`
+
+```{r}
+raster::plot(raster::raster(kwb.dwd::get_berlin_dwd_mask()))
+```
+
+## High-Level Functions, Specific to Berlin
+
+### Load monthly potential evaporation for Berlin from DWD
+
+Function: `load_potential_evaporation_berlin()`
+Function: `load_potential_evaporation_berlin_2()` (newer version)
+    
+### Load monthly precipitation for Berlin from DWD
+
+Function: `load_precipitation_berlin()`

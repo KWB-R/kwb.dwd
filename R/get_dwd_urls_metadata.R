@@ -9,6 +9,9 @@
 #' @export
 #' @importFrom stats setNames
 #' @importFrom kwb.utils pasteColumns
+#' @seealso
+#'  * [get_radolan_urls],
+#'  * [get_berlin_dwd_mask].
 get_dwd_urls_metadata <- function()
 {
   # Note: category "solar" is not considered
@@ -128,12 +131,6 @@ dwd_filename_stations <- function(category, frequency)
   sprintf(
     "%s_%swerte_Beschreibung_Stationen.txt",
     get_element_or_stop(get_dwd_url_specification(category), "file_prefix"),
-    frequency_prefix(frequency)
+    get_element_or_stop(c(daily = "Tages", hourly = "Stunden"), frequency)
   )
-}
-
-# frequency_prefix -------------------------------------------------------------
-frequency_prefix <- function(frequency)
-{
-  get_element_or_stop(c(daily = "Tages", hourly = "Stunden"), frequency)
 }

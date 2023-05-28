@@ -1,9 +1,11 @@
+#library(testthat)
+
 test_that("download_monthly_grids_germany() works", {
 
   f <- kwb.dwd:::download_monthly_grids_germany
 
-  expect_error(f())
-  expect_error(f("unknown-variable"), "should be one of")
+  expect_error(f(), 'argument "variable" is missing')
+  expect_error(f("unknown-variable"), "must be one of")
 
   expect_output(result <- f("evapo_p"))
 

@@ -11,5 +11,5 @@ test_that("temp_dir() works", {
   result <- f("test")
   expect_true(file.exists(result))
 
-  expect_error(f("a", "b", template. = "x"), "Further arguments .* not allowed")
+  expect_error(f("a", "b", template = "x"), "Further arguments .* not allowed")
 })

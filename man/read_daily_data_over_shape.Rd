@@ -16,7 +16,7 @@ read_daily_data_over_shape(file, variable, from, to, quiet = FALSE)
 
 \item{to}{last month as "yyyymm" string}
 
-\item{quiet}{passed to \code{\link{download.file}}}
+\item{quiet}{passed to \link{download.file}}
 }
 \value{
 data frame
@@ -24,4 +24,12 @@ data frame
 \description{
 Currently, only full months of data can be loaded, \code{from} and \code{to}
 must be given
+}
+\seealso{
+\itemize{
+\item \link{read_monthly_data_over_shape},
+\item \link{read_binary_radolan_file},
+\item \link{read_asc_gz_file},
+\item \link{read_relevant_years_radolan}.
+}
 }

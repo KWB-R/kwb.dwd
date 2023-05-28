@@ -11,6 +11,8 @@
 #' @importFrom kwb.utils left
 #' @importFrom raster stack
 #' @importFrom stats setNames
+#' @seealso
+#'  * [read_binary_radolan_file].
 read_relevant_years_radolan <- function(path, years)
 {
   stopifnot(is.numeric(years))
@@ -24,8 +26,7 @@ read_relevant_years_radolan <- function(path, years)
   # Get paths of files matching the pattern
   files <- list.files(path, pattern, full.names = TRUE, recursive = TRUE)
 
-  if (length(files) == 0) {
-
+  if (length(files) == 0L) {
     message(sprintf("No files found that match '%s'", pattern))
     return()
   }

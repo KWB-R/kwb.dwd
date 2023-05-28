@@ -1,12 +1,12 @@
 #
 # Ask DWD's documentation for the factor:
 #
-# urls <- kwb.dwd:::list_monthly_grids_germany_asc_gz("sunshine_duration")
+# urls <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "sunshine_duration")
 # kwb.dwd:::open_description(urls[1L])
 # kwb.dwd:::open_description(dirname(urls[1L])) # alternative
 #
 # or:
-# urls <- kwb.dwd:::list_daily_grids_germany_tgz("soil_temperature_5cm")
+# urls <- kwb.dwd:::list_grids_germany("daily", ".tgz", "soil_temperature_5cm")
 # kwb.dwd:::open_description(urls[1L])
 #
 

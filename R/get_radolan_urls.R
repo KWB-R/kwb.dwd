@@ -1,7 +1,7 @@
 #' Get URLs to Available Radolan Files
 #'
 #' Get URLs to available radolan files on the DWD FTP server below this base
-#' address: \url{ftp://opendata.dwd.de/climate_environment/CDC/grids_germany}.
+#' address: <ftp://opendata.dwd.de/climate_environment/CDC/grids_germany>.
 #' The user can choose between daily records and hourly records that are located
 #' at different paths on the server. The paths to the files are not read from
 #' the FTP server but generated, given the knowledge of where the files should
@@ -14,17 +14,15 @@
 #' @param end_daily month string (yyyy-mm) of last daily record. Defaults to the
 #'   current month.
 #' @param end_hourly month string (yyyy-mm) of last hourly records. Defaults to
-#'   \code{end_daily}.
-#' @param \dots further arguments passed to \code{kwb.dwd:::get_radolan_url},
-#'   such as \code{ftp_root}
+#'   `end_daily`.
+#' @param \dots further arguments passed to `kwb.dwd:::get_radolan_url`,
+#'   such as `ftp_root`
 #' @importFrom magrittr %>%
 #' @importFrom kwb.utils left resolve stringList
 #' @importFrom lubridate rollback
 #' @importFrom stringr str_replace
 #' @importFrom fs dir_create
-#'
 #' @return list with "daily_historical_urls" and "hourly_historical_urls"
-#'
 #' @export
 #' @examples
 #' # Get all expected URLs
@@ -41,6 +39,10 @@
 #'
 #' urls$daily_historical_urls
 #'
+#' @seealso
+#'  * [get_dwd_urls_metadata],
+#'  * [get_radolan_extension],
+#'  * [get_radolan_projection_string].
 get_radolan_urls <- function(
   start_daily = "2006-10",
   start_hourly = "2005-06",

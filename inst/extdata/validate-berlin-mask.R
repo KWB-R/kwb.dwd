@@ -5,17 +5,14 @@
 # Open description file (how to interpret the data?) ---------------------------
 if (FALSE)
 {
-  base_url <- kwb.dwd:::ftp_path_monthly_grids("evapo_p")
-  urls <- kwb.dwd::list_url(base_url, full_names = TRUE)
-  (url <- grep("_202201", urls, value = TRUE))
-
-  kwb.dwd::open_description(url)
+  urls <- kwb.dwd:::list_grids_germany("monthly", ".asc.gz", "evapo_p", "202201")
+  kwb.dwd::open_description(urls[1L])
 }
 
 # Compare two versions of reading data for Berlin ------------------------------
 if (FALSE)
 {
-  from <- "199106"
+  from <- "202105"
   to <- "202107"
 
   # Version 1: use Andreas Matzinger's Berlin mask matrix
@@ -54,7 +51,7 @@ if (FALSE)
 # Read polygons of German cities and apply their masks to Germany --------------
 if (FALSE)
 {
-  # We need a target projection, take it from an example grid of Germany
+  # Read shape files for German regions, transformed to projection of DWD grids
   shapes <- kwb.dwd:::get_shapes_of_germany(recreate = TRUE)
 
   # Create a configuration interactively
@@ -99,7 +96,7 @@ if (FALSE)
   raster::plot(munich <- extract("M\xfcnchen$")) # white hole???
 }
 
-# Validat Andreas Matzinger's Berlin mask --------------------------------------
+# Validate Andreas Matzinger's Berlin mask -------------------------------------
 if (FALSE)
 {
   # What is the difference between the Berlin "mask" of Andreas and the mask

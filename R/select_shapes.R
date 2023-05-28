@@ -3,13 +3,14 @@
 #' Interactively Configure Selection of SpatialPolygons
 #'
 #' @param shapes list of SpatialPolygonsDataFrame objects, as e.g. returned by
-#'   \code{\link{get_shapes_of_germany}}
-#' @return list with elements \code{index} (index of SpatialPolygonsDataFrame in
-#'   \code{shapes} list), \code{variable} (column in selected
-#'   SpatialPolygonsDataFrame), \code{pattern} pattern (e.g. the name of a city)
-#'   to be matched against the values in the selected column of the
-#'   selected SpatialPolygonsDataFrame. This list simply describes how to select
-#'   a SpatialPolygon from a list of SpatialPolygonsDataFrames
+#'   [get_shapes_of_germany]
+#' @return list with elements
+#'   * `index` (index of SpatialPolygonsDataFrame in `shapes` list),
+#'   * `variable` (column in selected SpatialPolygonsDataFrame),
+#'   * `pattern` pattern (e.g. the name of a city)
+#'   to be matched against the values in the selected column of the selected
+#'   SpatialPolygonsDataFrame. This list simply describes how to select a
+#'   SpatialPolygon from a list of SpatialPolygonsDataFrames
 select_shapes <- function(shapes)
 {
   # Let the user select a SpatialPolygonsDataFrame (by name of .shp file)
@@ -29,8 +30,12 @@ select_shapes <- function(shapes)
     pattern = pattern
   )
 
-  cat("Code to create this configuration:\n")
-  cat("config <-", kwb.utils::objectToText(result))
+  writeLines(c(
+    "***",
+    "# Code to create this configuration:",
+    paste("config <-", kwb.utils::objectToText(result)),
+    "***"
+  ))
 
   result
 }

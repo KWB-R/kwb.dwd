@@ -2,7 +2,7 @@
 
 #' Read daily data from DWD, mask region with given shape file
 #'
-#' Currently, only full months of data can be loaded, \code{from} and \code{to}
+#' Currently, only full months of data can be loaded, `from` and `to`
 #' must be given
 #'
 #' @param file path to shape file .shp
@@ -10,9 +10,14 @@
 #'   "evapo_r", "frost_depth", "soil_moist", "soil_temperature_5cm"
 #' @param from first month as "yyyymm" string
 #' @param to last month as "yyyymm" string
-#' @param quiet passed to \code{\link{download.file}}
+#' @param quiet passed to [download.file]
 #' @return data frame
 #' @export
+#' @seealso
+#'  * [read_monthly_data_over_shape],
+#'  * [read_binary_radolan_file],
+#'  * [read_asc_gz_file],
+#'  * [read_relevant_years_radolan].
 read_daily_data_over_shape <- function(file, variable, from, to, quiet = FALSE)
 {
   # Define scaling factors per variable. Depending on the variable, the values
@@ -45,47 +50,6 @@ read_shape_with_dwd_projection <- function(file, ...)
   read_shape_file(file, target_crs = example_grid@crs, ...)
 }
 
-# read_shape_file --------------------------------------------------------------
-read_shape_file <- function(
-    file,
-    target_crs = NULL,
-    use_sf = FALSE,
-    drop_z = FALSE,
-    as_spatial = FALSE
-)
-{
-  # Stop if this is not a shape file
-  stopifnot(identical(tolower(kwb.utils::fileExtension(file)), "shp"))
-
-  # Read the shape file
-  shape <- if (use_sf) {
-    sf::st_read(file)
-  } else {
-    rgdal::readOGR(file)
-  }
-
-  # Transform to coordinate reference system if given
-  if (!is.null(target_crs)) {
-    shape <- if (use_sf) {
-      sf::st_transform(shape, target_crs)
-    } else {
-      sp::spTransform(shape, target_crs)
-    }
-  }
-
-  # Drop z dimensions if desired
-  if (drop_z) {
-    shape <- sf::st_zm(shape)
-  }
-
-  # Convert to Spatial* object if desired
-  if (as_spatial) {
-    shape <- sf::as_Spatial(shape)
-  }
-
-  shape
-}
-
 # get_daily_data_from_grid_files -----------------------------------------------
 get_daily_data_from_grid_files <- function(grid_files, shape, scale)
 {
@@ -98,28 +62,19 @@ get_daily_data_from_grid_files <- function(grid_files, shape, scale)
   })
 
   # Provide file metadata (file, year, month, day)
-  metadata <- extract_metadata_from_files_daily(files = grid_files)
+  metadata <- extract_metadata_from_files(files = grid_files, is_daily = TRUE)
 
   # Mask the full grid over Germany with the shape and crop the grid
   grids <- mask_and_crop_grids(grids, shape)
 
-  # Calculate statistics, considering the conversion factor "scale"
-  data <- do.call(rbind, lapply(grids, raster_stats, scale = scale))
-
-  # Add metadata
-  cbind(metadata, data)
+  # Calculate statistics, considering the scaling factor, add metadata
+  cbind(metadata, summarise_over_all_grids(grids, scale))
 }
 
-# extract_metadata_from_files_daily --------------------------------------------
-extract_metadata_from_files_daily <- function(files)
+# summarise_over_all_grids -----------------------------------------------------
+summarise_over_all_grids <- function(grids, scale)
 {
-  extract_metadata_from_files(files, is_daily = TRUE)
-}
-
-# extract_metadata_from_files_monthly ------------------------------------------
-extract_metadata_from_files_monthly <- function(files)
-{
-  extract_metadata_from_files(files, is_daily = FALSE)
+  do.call(rbind, lapply(grids, raster_stats, scale = scale))
 }
 
 # extract_metadata_from_files --------------------------------------------------

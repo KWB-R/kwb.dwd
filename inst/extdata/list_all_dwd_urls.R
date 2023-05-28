@@ -10,7 +10,7 @@ if (FALSE)
   })
 
   #   User      System verstrichen
-  # 122.08        3.12      461.75
+  # 237.30        6.55      763.80
 
   # Save dataset in the package
   usethis::use_data(dwd_files, overwrite = TRUE)

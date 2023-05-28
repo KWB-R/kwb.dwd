@@ -6,7 +6,7 @@
 #' @param timeout timeout (default: NULL)
 #' @param sleep_time sleep time (default: 5)
 #' @param user_pwd user password (default: NULL)
-#' @param ... additional arguments passed to \code{RCurl::getURL}
+#' @param ... additional arguments passed to [RCurl::getURL]
 #' @param dbg debug (default: TRUE)
 #'
 #' @return ???

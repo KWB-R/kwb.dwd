@@ -72,7 +72,7 @@ tail(kwb.utils::resetRowNames(radolan_files))
 
 ```{r}
 # Set the target directory
-export_dir <- "~/Downloads/radolan"
+export_dir <- kwb.dwd:::download_dir("radolan")
 
 # Create required directories
 kwb.utils::createDirectory(file.path(export_dir, "daily/historical"))

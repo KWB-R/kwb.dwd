@@ -9,9 +9,8 @@ load_monthly_variable_for_region <- function(
   variable <- match.arg(variable, c("precipitation", "evapo_p", "evapo_r"))
 
   # Get URLs to .asc.gz files with monthly grids on DWD server
-  urls <- list_monthly_grids_germany_asc_gz(variable, from, to)
+  urls <- list_grids_germany("monthly", ".asc.gz", variable, from, to)
 
-  #
   files <- download_monthly_grids_germany(variable, from, to)
 
   if (version == 1L) {
@@ -63,21 +62,21 @@ load_monthly_variable_for_region <- function(
 #' @importFrom utils read.csv
 #' @examples
 #' get_berlin_dwd_mask()
+#' @seealso
+#'  * [get_dwd_urls_metadata].
 get_berlin_dwd_mask <- function()
 {
-  #DWD matrix filled with NA
+  # DWD matrix filled with NA
   berlin_matrix <- matrix(NA, nrow = 866, ncol = 654)
 
-  #get Berlin coordinates
-  berlin_coordinates <- utils::read.csv(system.file(
-    "extdata/berlin_coordinates.csv", package = "kwb.dwd"
-  ))
+  # file with coordinates of "Berlin cells" within DWD matrix
+  file <- system.file("extdata/berlin_coordinates.csv", package = "kwb.dwd")
 
-  #set Berlin cells to 1
+  # get Berlin coordinates
+  berlin_coordinates <- utils::read.csv(file)
 
-  for (i in seq_along(berlin_coordinates$row)) {
-    berlin_matrix[berlin_coordinates$row[i], berlin_coordinates$col[i]] <- 1
-  }
+  # set Berlin cells to 1
+  berlin_matrix[as.matrix(berlin_coordinates)] <- 1
 
   berlin_matrix
 }
@@ -89,12 +88,19 @@ get_berlin_dwd_mask <- function()
 #' @param matrices matrices
 #' @param geo_mask "mask matrix" defining a geographical subset
 #'
-#' @return data frame with one row per matrix in \code{matrices} and columns
-#'   \code{file}, \code{year}, \code{month}, \code{mean}, \code{sd}, \code{min},
-#'   \code{max}
+#' @return data frame with one row per matrix in `matrices` and columns
+#'   * `file`,
+#'   * `year`,
+#'   * `month`,
+#'   * `mean`,
+#'   * `sd`,
+#'   * `min`,
+#'   * `max`
 #' @export
 #' @importFrom kwb.utils getAttribute
 #' @importFrom stats sd
+#' @seealso
+#'  * [get_example_grid_germany].
 calculate_masked_grid_stats <- function(matrices, geo_mask)
 {
   # Start with metadata from matrices' attributes: file name, year, month
@@ -134,8 +140,8 @@ get_shape_of_german_region <- function(name)
   )
 
   configs <- list(
-    berlin = configure(1L, "NAME_1", "Berlin"),
-    cologne = configure(2L, "NAME_2", "K\xF6ln")
+    berlin = configure(2L, "NAME_1", "Berlin"),
+    cologne = configure(3L, "NAME_2", "K.ln")
   )
 
   config <- kwb.utils::selectElements(configs, name)
@@ -146,15 +152,47 @@ get_shape_of_german_region <- function(name)
 # filter_shapes ----------------------------------------------------------------
 filter_shapes <- function(shapes, config)
 {
-  s <- shapes[[config$index]]
-  s[grep(config$pattern, s[[config$variable]]), ]
-}
+  as_configured <- kwb.utils::createAccessor(config)
 
+  s <- shapes[[as_configured("index")]]
+
+  variable <- as_configured("variable")
+  pattern <- as_configured("pattern")
+
+  values <- kwb.utils::selectColumns(s, variable)
+
+  indices <- grep(pattern, values)
+
+  n_selected <- length(indices)
+
+  if (n_selected == 0L) {
+    kwb.utils::stopFormatted(
+      "'%s' does not match pattern '%s'", variable, pattern
+    )
+  }
+
+  if (n_selected > 1L) {
+    kwb.utils::stopFormatted(
+      "'%s' has more than one match with pattern '%s': %s",
+      variable, pattern, kwb.utils::stringList(values[indices])
+    )
+  }
+
+  s[indices, ]
+}
 
 # raster_stats -----------------------------------------------------------------
 raster_stats <- function(r, scale = NULL)
 {
-  x <- r@data@values
+  stopifnot(inherits(r, "BasicRaster"))
+
+  x <- raster::getValues(r)
+
+  # Just for my understanding: does getValues() return r@data@values?
+  if (length(r@data@values) > 0L) {
+    stopifnot(identical(r@data@values, x))
+  }
+
   x <- x[! is.na(x)]
 
   if (! is.null(scale)) {
