@@ -11,6 +11,9 @@
 #'  * [get_radolan_extension].
 get_radolan_projection_string <- function()
 {
+  # TODO: Is this the same?
+  # readLines(default_projection_file())
+
   to_projection_string(
     parameters = list(
       proj = "stere",

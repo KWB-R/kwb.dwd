@@ -27,10 +27,8 @@ read_asc_gz_file <- function(file, url = NULL)
 
   #dir(target_dir)
 
-  # Provide a copy of the projection file in the download folder
-  provide_projection_file(grid_file)
-
-  raster::raster(grid_file)
+  # Read the .asc file into a raster object (with appropriate projection)
+  read_asc_file(grid_file)
 }
 
 # read_asc_file ----------------------------------------------------------------
@@ -45,7 +43,6 @@ read_asc_gz_file <- function(file, url = NULL)
 read_asc_file <- function(
     file,
     projection = get_radolan_projection_string(),
-    #projection = readLines(default_projection_file()),
     dbg = TRUE
 )
 {
