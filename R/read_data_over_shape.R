@@ -156,10 +156,7 @@ get_data_from_grid_files <- function(
   }
 
   # Provide file metadata (file, year, month[, day])
-  metadata <- extract_metadata_from_files(
-    files = grid_files,
-    is_daily = (resolution == "daily")
-  )
+  metadata <- extract_metadata_from_files(files = grid_files, resolution)
 
   # Calculate statistics, considering the scaling factor, add metadata
   cbind(metadata, summarise_over_all_grids(grids, scale))
@@ -172,37 +169,41 @@ summarise_over_all_grids <- function(grids, scale)
 }
 
 # extract_metadata_from_files --------------------------------------------------
-extract_metadata_from_files <- function(files, is_daily)
+extract_metadata_from_files <- function(files, resolution)
 {
-  base_names <- basename(files)
-
-  date_parts <- if (is_daily) {
-    kwb.utils::extractSubstring(
+  # Define arguments to functions, based on time resolution
+  parameters_by_resolution <- list(
+    daily = list(
       pattern = "_(\\d{4})(\\d{2})(\\d{2})\\.",
-      base_names,
-      c(year = 1L, month = 2L, day = 3L)
-    )
-  } else {
-    kwb.utils::extractSubstring(
+      index = c(year = 1L, month = 2L, day = 3L),
+      date_format = "%04d-%02d-%02d"
+    ),
+    monthly = list(
       pattern = "_(\\d{4})(\\d{2})\\.",
-      base_names,
-      c(year = 1L, month = 2L)
+      index = c(year = 1L, month = 2L),
+      date_format = "%04d-%02d-01"
     )
-  }
+  )
+
+  get_element <- kwb.utils::selectElements
+
+  # Select parameters based on given time resolution
+  parameters <- get_element(parameters_by_resolution, resolution)
+
+  # Provide arguments for the following extractSubstring() call
+  pattern <- get_element(parameters, "pattern")
+  base_names <- basename(files)
+  index <- get_element(parameters, "index")
+
+  # Call extractSubstring() to split the file names into parts
+  date_parts <- kwb.utils::extractSubstring(pattern, base_names, index)
 
   date_parts <- as.data.frame(lapply(date_parts, as.integer))
 
-  date_strings <- if (is_daily) {
-    sprintf(
-      "%04d-%02d-%02d",
-      date_parts$year, date_parts$month, date_parts$day
-    )
-  } else {
-    sprintf(
-      "%04d-%02d-01",
-      date_parts$year, date_parts$month
-    )
-  }
+  date_strings <- do.call(sprintf, args = c(
+    list(get_element(parameters, "date_format")),
+    date_parts[names(index)]
+  ))
 
   metadata <- kwb.utils::noFactorDataFrame(
     file = base_names,
