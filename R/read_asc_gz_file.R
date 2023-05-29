@@ -36,7 +36,7 @@ read_asc_gz_file <- function(file, url = NULL)
 #' Read Raster Data from .ASC File
 #'
 #' @param file path to .asc file
-#' @param projection projection string used in Radolan data
+#' @param projection projection string used in Radolan data. Currently not used!
 #' @param dbg logical indicating whether to show debug messages
 #' @importFrom kwb.utils catAndRun
 #' @importFrom raster `crs<-` raster
