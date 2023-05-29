@@ -129,23 +129,14 @@ get_data_from_grid_files <- function(
     resolution, grid_files, shape, scale, use_sf
 )
 {
-  # Define a suitable read function
-  read <- if (resolution == "daily") {
+  # Define read functions for different file formats (depending on resolution)
+  read_functions <- list(
+    daily = read_asc_file,
+    monthly = read_asc_gz_file
+  )
 
-    function(file) {
-      # Provide a .prj file containing DWD's projection
-      provide_projection_file(file)
-      kwb.utils::catAndRun(paste("Reading", file), raster::raster(file))
-    }
-
-  } else if (resolution == "monthly") {
-
-    read_asc_gz_file
-
-  } else {
-
-    clean_stop("resolution must be one of 'daily', 'monthly'.")
-  }
+  # Select the suitable read function
+  read <- kwb.utils::selectElements(read_functions, resolution)
 
   # Read the files into RasterLayer objects with DWD projection
   grids <- lapply(grid_files, read)
